@@ -18,12 +18,20 @@ public:
 	void setImage(LPCTSTR path);
 	void DrawImage(HDC& mDC, RECT rect);
 
+	CImage getImage() {
+		return cImage;
+	}
+
 	void setPlayer(int player) {
 		this->player = player;
 	}
 
 	void setLevel(int level) {
 		this->level = level;
+	}
+
+	int getLevel() {
+		return level;
 	}
 
 	int getPlayer() {

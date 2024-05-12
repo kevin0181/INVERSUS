@@ -10,6 +10,8 @@
 #include "GameStateManager.h"
 #include "LevelSetting.h"
 #include "CountDown.h"
+#include "GameUI.h"
+
 
 using namespace std;
 
@@ -75,18 +77,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
     PAINTSTRUCT ps;
     HDC hDC, mDC;
-    HBITMAP hBitmap, introImgBitMap;
-    HPEN mPen, oldPen;
-    HBRUSH mBrush, oldBrush;
+    HBITMAP hBitmap;
+
     static RECT rect;
-    static SIZE size;
-    static int Timer1Count = 0;
-    static int cellSizeX;
-    static int cellSizeY;
-    
+
     static GameStateManager gameStateManager;
     static PlayerSetting playerSetting(&gameStateManager);
     static LevelSetting levelSetting(&gameStateManager);
+    static GameUI gameUi(&gameStateManager);
 
     switch (uMsg)
     {
@@ -158,23 +156,28 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         SelectObject(mDC, (HBITMAP)hBitmap);
         FillRect(mDC, &rect, (HBRUSH)GetStockObject(WHITE_BRUSH));
 
-        cellSizeX = rect.right / WIDTH_LINE;
-        cellSizeY = rect.bottom / HEGHIT_LINE;
-
+        RECT gameBord = rect;
+        
         if (gameStateManager.getState() == GameState::GAMEPLAY) {
-            for (int y = 0; y <= WIDTH_LINE; ++y) {
-                MoveToEx(mDC, y * cellSizeX, 0, NULL);
-                LineTo(mDC, y * cellSizeX, WIDTH_LINE * cellSizeY);
+            int line_size = (gameStateManager.getLevel() * 10);
+            int cellSize = (rect.right) / line_size;
+            for (int x = 0; x <= line_size; ++x) {
+                if (x * cellSize + 130 > rect.bottom) {
+                    gameBord.bottom = (x - 1) * cellSize + 130;
+                    break;
+                }
+                MoveToEx(mDC, 0, x * cellSize + 130, NULL);
+                LineTo(mDC, rect.right, x * cellSize + 130);
             }
-
-            for (int x = 0; x <= HEGHIT_LINE; ++x) {
-                MoveToEx(mDC, 0, x * cellSizeY, NULL);
-                LineTo(mDC, HEGHIT_LINE * cellSizeX, x * cellSizeY);
+            for (int y = 0; y <= line_size; ++y) {
+                MoveToEx(mDC, y * cellSize, 130, NULL);
+                LineTo(mDC, y * cellSize, gameBord.bottom);
             }
         }
 
+        gameUi.setGameBord(gameBord);
+
         gameStateManager.DrawImage(mDC, rect); // 이미지 그리기
-        
 
         BitBlt(hDC, 0, 0, rect.right, rect.bottom, mDC, 0, 0, SRCCOPY);
 
