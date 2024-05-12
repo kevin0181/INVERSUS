@@ -44,15 +44,15 @@ void PlayerSetting::game_setting(WPARAM wParam) {
     {
     case 1:
         PlaySecondMP3(L"sound/button sound.MP3"); // 버튼 사운드
-        gameStateManager->setImage((PATH + L"player_1.png").c_str());
+        gameStateManager->setImage((PATH + L"player_1_v2.png").c_str());
         break;
     case 2:
         PlaySecondMP3(L"sound/button sound.MP3"); // 버튼 사운드
-        gameStateManager->setImage((PATH + L"player_2.png").c_str());
+        gameStateManager->setImage((PATH + L"player_2_v2.png").c_str());
         break;
     case 3:
         PlaySecondMP3(L"sound/button sound.MP3"); // 버튼 사운드
-        gameStateManager->setImage((PATH + L"player_back.png").c_str());
+        gameStateManager->setImage((PATH + L"player_back_v2.png").c_str());
         break;
     default:
         break;
@@ -63,12 +63,12 @@ void PlayerSetting::game_setting(WPARAM wParam) {
         switch (player) {
         case 1: // player1
             gameStateManager->setPlayer(player);
-            gameStateManager->setImage(L"img/level/0.png");
+            gameStateManager->setImage(L"img/level/0_v2.png");
             gameStateManager->setCurrentState(GameState::LEVEL);
             break;
         case 2: // player2
             gameStateManager->setPlayer(player);
-            gameStateManager->setImage(L"img/level/0.png");
+            gameStateManager->setImage(L"img/level/0_v2.png");
             gameStateManager->setCurrentState(GameState::LEVEL);
             break;
         case 3: // 뒤로가기

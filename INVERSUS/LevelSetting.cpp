@@ -32,19 +32,19 @@ void LevelSetting::level_setting(WPARAM wParam) {
     switch (level)
     {
     case 1:
-        gameStateManager->setImage((PATH + L"easy.png").c_str());
+        gameStateManager->setImage((PATH + L"easy_v2.png").c_str());
         break;
     case 2:
-        gameStateManager->setImage((PATH + L"nomal.png").c_str());
+        gameStateManager->setImage((PATH + L"nomal_v2.png").c_str());
         break;
     case 3:
-        gameStateManager->setImage((PATH + L"hard.png").c_str());
+        gameStateManager->setImage((PATH + L"hard_v2.png").c_str());
         break;
     case 4:
-        gameStateManager->setImage((PATH + L"very hard.png").c_str());
+        gameStateManager->setImage((PATH + L"very hard_v2.png").c_str());
         break;
     case 5:
-        gameStateManager->setImage((PATH + L"back.png").c_str());
+        gameStateManager->setImage((PATH + L"back_v2.png").c_str());
         break;
     default:
         break;
@@ -71,10 +71,10 @@ void LevelSetting::level_setting(WPARAM wParam) {
             break;
         case 5: // 뒤로가기
             if (gameStateManager->getPlayer() == 1) {
-                gameStateManager->setImage(L"img/player/player_1.png");
+                gameStateManager->setImage(L"img/player/player_1_v2.png");
             }
             else if (gameStateManager->getPlayer() == 2) {
-                gameStateManager->setImage(L"img/player/player_2.png");
+                gameStateManager->setImage(L"img/player/player_2_v2.png");
             }
             gameStateManager->setCurrentState(GameState::PLAYER);
             break;
