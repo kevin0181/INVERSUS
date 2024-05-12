@@ -7,7 +7,7 @@ private:
 	GameStateManager* gameStateManager;
 public:
 
-	PlayerSetting(GameStateManager* instance) : gameStateManager(instance) {};
+	PlayerSetting(GameStateManager* instance) : gameStateManager(instance),player(0) {};
 
 	void game_setting(WPARAM wParam);
 };

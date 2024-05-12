@@ -25,6 +25,12 @@
     <Filter Include="헤더 파일\config">
       <UniqueIdentifier>{fe0393e5-7ac9-4abd-a86e-fa738f927a8d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\Timer">
+      <UniqueIdentifier>{c6ae4e32-f752-4075-8b75-d4389d0f1349}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Timer">
+      <UniqueIdentifier>{660384dc-44a8-4e23-9418-5636f7a04032}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -45,6 +51,12 @@
     <ClCompile Include="LevelSetting.cpp">
       <Filter>소스 파일\gameState</Filter>
     </ClCompile>
+    <ClCompile Include="GameUI.h">
+      <Filter>헤더 파일\gameState</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUI.cpp">
+      <Filter>소스 파일\gameState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameStateManager.h">
@@ -58,6 +70,9 @@
     </ClInclude>
     <ClInclude Include="LevelSetting.h">
       <Filter>헤더 파일\gameState</Filter>
+    </ClInclude>
+    <ClInclude Include="CountDown.h">
+      <Filter>헤더 파일\Timer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

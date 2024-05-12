@@ -130,12 +130,15 @@
   <ItemGroup>
     <ClCompile Include="GameState.h" />
     <ClCompile Include="GameStateManager.cpp" />
+    <ClCompile Include="GameUI.cpp" />
+    <ClCompile Include="GameUI.h" />
     <ClCompile Include="LevelSetting.cpp" />
     <ClCompile Include="PlayerSetting.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="sound.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CountDown.h" />
     <ClInclude Include="GameStateManager.h" />
     <ClInclude Include="LevelSetting.h" />
     <ClInclude Include="PlayerSetting.h" />

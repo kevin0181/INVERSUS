@@ -55,18 +55,22 @@ void LevelSetting::level_setting(WPARAM wParam) {
         switch (level) {
         case 1: // lelvel easy
             gameStateManager->setLevel(level);
+            gameStateManager->setImage(L"img/gamePlay/score bar.png");
             gameStateManager->setCurrentState(GameState::GAMEPLAY);
             break;
         case 2: // level nomal
             gameStateManager->setLevel(level);
+            gameStateManager->setImage(L"img/gamePlay/score bar.png");
             gameStateManager->setCurrentState(GameState::GAMEPLAY);
             break;
         case 3: // level hard
             gameStateManager->setLevel(level);
+            gameStateManager->setImage(L"img/gamePlay/score bar.png");
             gameStateManager->setCurrentState(GameState::GAMEPLAY);
             break;
         case 4: // level very hard
             gameStateManager->setLevel(level);
+            gameStateManager->setImage(L"img/gamePlay/score bar.png");
             gameStateManager->setCurrentState(GameState::GAMEPLAY);
             break;
         case 5: // 뒤로가기

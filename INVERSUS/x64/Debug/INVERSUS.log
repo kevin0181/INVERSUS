@@ -1,13 +1,10 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: 중간 디렉터리(x64\Debug\)에 다른 프로젝트(INVERSUS.vcxproj)에서 공유하는 파일이 포함되어 있습니다.  이로 인해 잘못된 정리 및 다시 빌드 동작이 수행될 수 있습니다.
-  LevelSetting.cpp
-  PlayerSetting.cpp
   main.cpp
 C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(64,19): warning C4244: 'return': 'WPARAM'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(143,9): warning C4065: switch문에 'default'가 있으나 'case' 레이블이 없습니다.
+C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(150,9): warning C4065: switch문에 'default'가 있으나 'case' 레이블이 없습니다.
 C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(81,20): warning C4101: 'oldBrush' :참조되지 않은 지역 변수입니다.
 C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(79,22): warning C4101: 'introImgBitMap' :참조되지 않은 지역 변수입니다.
 C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(81,12): warning C4101: 'mBrush' :참조되지 않은 지역 변수입니다.
 C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(80,10): warning C4101: 'mPen' :참조되지 않은 지역 변수입니다.
 C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(80,16): warning C4101: 'oldPen' :참조되지 않은 지역 변수입니다.
-  코드를 생성하고 있습니다...
   INVERSUS.vcxproj -> C:\Users\영넨이\Desktop\INVERSUS\x64\Debug\INVERSUS_v1.exe

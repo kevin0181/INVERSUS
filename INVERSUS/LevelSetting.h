@@ -8,6 +8,6 @@ private:
 
 	GameStateManager* gameStateManager;
 public:
-	LevelSetting(GameStateManager* instance) :gameStateManager(instance) {};
+	LevelSetting(GameStateManager* instance) :gameStateManager(instance), level(0) {};
 	void level_setting(WPARAM wParam);
 };
