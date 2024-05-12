@@ -1,5 +1,6 @@
-C:\Users\영넨이\Desktop\겜공 2학년\cpp_tuk_2\윈도우 프로그래밍\homework\INVERSUS\INVERSUS\GameState.h;C:\Users\영넨이\Desktop\겜공 2학년\cpp_tuk_2\윈도우 프로그래밍\homework\INVERSUS\INVERSUS\x64\Debug\GameState.obj
-C:\Users\영넨이\Desktop\겜공 2학년\cpp_tuk_2\윈도우 프로그래밍\homework\INVERSUS\INVERSUS\GameStateMachine.cpp;C:\Users\영넨이\Desktop\겜공 2학년\cpp_tuk_2\윈도우 프로그래밍\homework\INVERSUS\INVERSUS\x64\Debug\GameStateMachine.obj
-C:\Users\영넨이\Desktop\겜공 2학년\cpp_tuk_2\윈도우 프로그래밍\homework\INVERSUS\INVERSUS\game_before.cpp;C:\Users\영넨이\Desktop\겜공 2학년\cpp_tuk_2\윈도우 프로그래밍\homework\INVERSUS\INVERSUS\x64\Debug\game_before.obj
-C:\Users\영넨이\Desktop\겜공 2학년\cpp_tuk_2\윈도우 프로그래밍\homework\INVERSUS\INVERSUS\main.cpp;C:\Users\영넨이\Desktop\겜공 2학년\cpp_tuk_2\윈도우 프로그래밍\homework\INVERSUS\INVERSUS\x64\Debug\main.obj
-C:\Users\영넨이\Desktop\겜공 2학년\cpp_tuk_2\윈도우 프로그래밍\homework\INVERSUS\INVERSUS\sound.cpp;C:\Users\영넨이\Desktop\겜공 2학년\cpp_tuk_2\윈도우 프로그래밍\homework\INVERSUS\INVERSUS\x64\Debug\sound.obj
+C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\GameState.h;C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\x64\Debug\GameState.obj
+C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\GameStateManager.cpp;C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\x64\Debug\GameStateManager.obj
+C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\LevelSetting.cpp;C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\x64\Debug\LevelSetting.obj
+C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\PlayerSetting.cpp;C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\x64\Debug\PlayerSetting.obj
+C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp;C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\x64\Debug\main.obj
+C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\sound.cpp;C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\x64\Debug\sound.obj
