@@ -11,6 +11,7 @@
 #include "LevelSetting.h"
 #include "GameUI.h"
 #include "Global.h"
+#include "CountDown.h"
 
 using namespace std;
 
@@ -79,10 +80,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     HBITMAP hBitmap;
 
     static RECT rect;
-
-    static PlayerSetting playerSetting(&gameStateManager);
-    static LevelSetting levelSetting(&gameStateManager);
-    static GameUI gameUi(&gameStateManager, &mDC);
     
     switch (uMsg)
     {
@@ -152,7 +149,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         FillRect(mDC, &rect, (HBRUSH)GetStockObject(WHITE_BRUSH));
 
         RECT gameBord = rect;
-        
+
+        gameStateManager.DrawImage(mDC, rect); // 전체배경
+
         if (gameStateManager.getState() == GameState::GAMEPLAY) {
 
             int line_size = (gameStateManager.getLevel() * 10);
@@ -172,10 +171,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             }
 
             gameUi.setGameBord(gameBord); //게임 보드 사이즈 설정
-            gameUi.drawGameUI();
+            gameUi.drawGameUI(mDC, gameUi);
         }
-
-        gameStateManager.DrawImage(mDC, rect); // 전체배경
 
         BitBlt(hDC, 0, 0, rect.right, rect.bottom, mDC, 0, 0, SRCCOPY);
 
@@ -185,6 +182,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         break;
     }
     case WM_TIMER:
+        switch (wParam)
+        {
+        case 10: //count down
+            setCountDown(gameUi, hWnd);
+            break;
+        default:
+            break;
+        }
         InvalidateRect(hWnd, NULL, false);
         break;
     case WM_DESTROY:

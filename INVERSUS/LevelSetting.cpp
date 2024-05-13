@@ -1,6 +1,5 @@
 #include "LevelSetting.h"
 #include "sound.h"
-#include "CountDown.h"
 
 void LevelSetting::level_setting(WPARAM wParam, HWND& hWnd) {
     PlaySecondMP3(L"sound/button sound.MP3"); // 버튼 사운드
@@ -58,25 +57,25 @@ void LevelSetting::level_setting(WPARAM wParam, HWND& hWnd) {
             gameStateManager->setLevel(level);
             gameStateManager->setImage(L"img/gamePlay/score bar.png");
             gameStateManager->setCurrentState(GameState::GAMEPLAY);
-            SetTimer(hWnd, 1, 1000, countDownTimerCallBack);  // count down start
+            SetTimer(hWnd, 10, 1000, NULL);  // count down start
             break;
         case 2: // level nomal
             gameStateManager->setLevel(level);
             gameStateManager->setImage(L"img/gamePlay/score bar.png");
             gameStateManager->setCurrentState(GameState::GAMEPLAY);
-            SetTimer(hWnd, 1, 1000, countDownTimerCallBack);  // count down start
+            SetTimer(hWnd, 10, 1000, NULL);  // count down start
             break;
         case 3: // level hard
             gameStateManager->setLevel(level);
             gameStateManager->setImage(L"img/gamePlay/score bar.png");
             gameStateManager->setCurrentState(GameState::GAMEPLAY);
-            SetTimer(hWnd, 1, 1000, countDownTimerCallBack);  // count down start
+            SetTimer(hWnd, 10, 1000, NULL);  // count down start
             break;
         case 4: // level very hard
             gameStateManager->setLevel(level);
             gameStateManager->setImage(L"img/gamePlay/score bar.png");
             gameStateManager->setCurrentState(GameState::GAMEPLAY);
-            SetTimer(hWnd, 1, 1000, countDownTimerCallBack);  // count down start
+            SetTimer(hWnd, 10, 1000, NULL);  // count down start
             break;
         case 5: // 뒤로가기
             if (gameStateManager->getPlayer() == 1) {

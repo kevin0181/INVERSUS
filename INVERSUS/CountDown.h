@@ -1,6 +1,10 @@
-#include "GameStateManager.h"
-#include "Global.h"
+#include"GameUI.h"
 
-void CALLBACK countDownTimerCallBack(HWND hwnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime) {
-
+void setCountDown(GameUI& gameUi, HWND& hWnd) {
+    gameUi.countDownStatus = true;
+    if (gameUi.countDown == 3) {
+        gameUi.countDownStatus = false;
+        KillTimer(hWnd, 10);
+    }
+    gameUi.countDown++;
 }
