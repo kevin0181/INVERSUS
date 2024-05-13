@@ -10,9 +10,10 @@ private:
 
 	RECT gameBordRect;
 
+	HDC* mDC;
 	GameStateManager* gameStateManager;
 public:
-	GameUI(GameStateManager* instance) :gameStateManager(instance) {};
+	GameUI(GameStateManager* instance, HDC* m) :gameStateManager(instance), mDC(m) {};
 	
 	void setGameBord(RECT rect) {
 		gameBordRect = rect;
@@ -21,4 +22,6 @@ public:
 	RECT getGameBord() {
 		return gameBordRect;
 	}
+
+	void drawGameUI();
 };

@@ -9,9 +9,8 @@
 #include "GameState.h"
 #include "GameStateManager.h"
 #include "LevelSetting.h"
-#include "CountDown.h"
 #include "GameUI.h"
-
+#include "Global.h"
 
 using namespace std;
 
@@ -81,11 +80,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
     static RECT rect;
 
-    static GameStateManager gameStateManager;
     static PlayerSetting playerSetting(&gameStateManager);
     static LevelSetting levelSetting(&gameStateManager);
-    static GameUI gameUi(&gameStateManager);
-
+    static GameUI gameUi(&gameStateManager, &mDC);
+    
     switch (uMsg)
     {
     case WM_CREATE:
@@ -116,16 +114,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         }
 
         if (gameStateManager.getState() == GameState::LEVEL) { // game level 선택
-            levelSetting.level_setting(wParam);
+            levelSetting.level_setting(wParam, hWnd);
             InvalidateRect(hWnd, NULL, false);
             break;
         }
 
         if (gameStateManager.getState() == GameState::GAMEPLAY) { // game start
 
-
-
-            SetTimer(hWnd, 1, 1000, countDownTimerCallBack);  // count down start
         }
 
         break;
@@ -159,8 +154,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         RECT gameBord = rect;
         
         if (gameStateManager.getState() == GameState::GAMEPLAY) {
+
             int line_size = (gameStateManager.getLevel() * 10);
             int cellSize = (rect.right) / line_size;
+
             for (int x = 0; x <= line_size; ++x) {
                 if (x * cellSize + 130 > rect.bottom) {
                     gameBord.bottom = (x - 1) * cellSize + 130;
@@ -173,11 +170,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 MoveToEx(mDC, y * cellSize, 130, NULL);
                 LineTo(mDC, y * cellSize, gameBord.bottom);
             }
+
+            gameUi.setGameBord(gameBord); //게임 보드 사이즈 설정
+            gameUi.drawGameUI();
         }
 
-        gameUi.setGameBord(gameBord);
-
-        gameStateManager.DrawImage(mDC, rect); // 이미지 그리기
+        gameStateManager.DrawImage(mDC, rect); // 전체배경
 
         BitBlt(hDC, 0, 0, rect.right, rect.bottom, mDC, 0, 0, SRCCOPY);
 

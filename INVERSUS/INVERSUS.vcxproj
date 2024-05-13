@@ -132,6 +132,7 @@
     <ClCompile Include="GameStateManager.cpp" />
     <ClCompile Include="GameUI.cpp" />
     <ClCompile Include="GameUI.h" />
+    <ClCompile Include="Global.h" />
     <ClCompile Include="LevelSetting.cpp" />
     <ClCompile Include="PlayerSetting.cpp" />
     <ClCompile Include="main.cpp" />
