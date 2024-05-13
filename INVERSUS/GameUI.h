@@ -41,4 +41,6 @@ public:
 	}
 
 	void drawGameUI(HDC& mDC, GameUI& gameUi, RECT rect);
+	void drawHP(HDC& mDC, const RECT& rect, int hp, GameUI& gameUi);
+	void drawExp(HDC& mDC, const RECT& rect, int exp);
 };

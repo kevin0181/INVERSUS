@@ -54,27 +54,39 @@ void LevelSetting::level_setting(WPARAM wParam, HWND& hWnd) {
     if (VK_RETURN == wParam) {
         switch (level) {
         case 1: // lelvel easy
+            PlayMP3Close();
+            CloseSecondMP3();
             gameStateManager->setLevel(level);
             gameStateManager->setImage(L"img/gamePlay/score bar.png");
             gameStateManager->setCurrentState(GameState::GAMEPLAY);
+            PlaySecondMP3(L"sound/countdown3.mp3"); // 버튼 사운드
             SetTimer(hWnd, 10, 1000, NULL);  // count down start
             break;
         case 2: // level nomal
+            PlayMP3Close();
+            CloseSecondMP3();
             gameStateManager->setLevel(level);
             gameStateManager->setImage(L"img/gamePlay/score bar.png");
             gameStateManager->setCurrentState(GameState::GAMEPLAY);
+            PlaySecondMP3(L"sound/countdown3.mp3"); // 버튼 사운드
             SetTimer(hWnd, 10, 1000, NULL);  // count down start
             break;
         case 3: // level hard
+            PlayMP3Close();
+            CloseSecondMP3();
             gameStateManager->setLevel(level);
             gameStateManager->setImage(L"img/gamePlay/score bar.png");
             gameStateManager->setCurrentState(GameState::GAMEPLAY);
+            PlaySecondMP3(L"sound/countdown3.mp3"); // 버튼 사운드
             SetTimer(hWnd, 10, 1000, NULL);  // count down start
             break;
         case 4: // level very hard
+            PlayMP3Close();
+            CloseSecondMP3();
             gameStateManager->setLevel(level);
             gameStateManager->setImage(L"img/gamePlay/score bar.png");
             gameStateManager->setCurrentState(GameState::GAMEPLAY);
+            PlaySecondMP3(L"sound/countdown3.mp3"); // 버튼 사운드
             SetTimer(hWnd, 10, 1000, NULL);  // count down start
             break;
         case 5: // 뒤로가기
