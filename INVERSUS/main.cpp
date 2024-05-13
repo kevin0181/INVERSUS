@@ -171,7 +171,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             }
 
             gameUi.setGameBord(gameBord); //게임 보드 사이즈 설정
-            gameUi.drawGameUI(mDC, gameUi);
+            gameUi.drawGameUI(mDC, gameUi, rect);
         }
 
         BitBlt(hDC, 0, 0, rect.right, rect.bottom, mDC, 0, 0, SRCCOPY);

@@ -13,13 +13,16 @@ private:
 	HDC* mDC;
 	GameStateManager* gameStateManager;
 
-	
+	int exp; //°æÇèÄ¡
+	int hp;
+	int score;
+
 public:
 
 	int countDown = 0;
 	bool countDownStatus = false;
 
-	GameUI(GameStateManager* instance) :gameStateManager(instance) {};
+	GameUI(GameStateManager* instance) :gameStateManager(instance),hp(300),exp(0),score(0) {};
 	
 	void setMDC(HDC* mDC) {
 		this->mDC = mDC;
@@ -33,5 +36,9 @@ public:
 		return gameBordRect;
 	}
 
-	void drawGameUI(HDC& mDC, GameUI& gameUi);
+	int getHp() {
+		return hp;
+	}
+
+	void drawGameUI(HDC& mDC, GameUI& gameUi, RECT rect);
 };
