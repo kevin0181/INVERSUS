@@ -59,7 +59,7 @@ void LevelSetting::level_setting(WPARAM wParam, HWND& hWnd) {
             gameStateManager->setLevel(level);
             gameStateManager->setImage(L"img/gamePlay/score bar.png");
             gameStateManager->setCurrentState(GameState::GAMEPLAY);
-            PlaySecondMP3(L"sound/countdown3.mp3"); // 버튼 사운드
+            PlaySecondMP3(L"sound/countdown2.mp3"); // 버튼 사운드
             SetTimer(hWnd, 10, 1000, NULL);  // count down start
             break;
         case 2: // level nomal
@@ -68,7 +68,7 @@ void LevelSetting::level_setting(WPARAM wParam, HWND& hWnd) {
             gameStateManager->setLevel(level);
             gameStateManager->setImage(L"img/gamePlay/score bar.png");
             gameStateManager->setCurrentState(GameState::GAMEPLAY);
-            PlaySecondMP3(L"sound/countdown3.mp3"); // 버튼 사운드
+            PlaySecondMP3(L"sound/countdown2.wav"); // 버튼 사운드
             SetTimer(hWnd, 10, 1000, NULL);  // count down start
             break;
         case 3: // level hard
@@ -77,7 +77,7 @@ void LevelSetting::level_setting(WPARAM wParam, HWND& hWnd) {
             gameStateManager->setLevel(level);
             gameStateManager->setImage(L"img/gamePlay/score bar.png");
             gameStateManager->setCurrentState(GameState::GAMEPLAY);
-            PlaySecondMP3(L"sound/countdown3.mp3"); // 버튼 사운드
+            PlaySecondMP3(L"sound/countdown2.wav"); // 버튼 사운드
             SetTimer(hWnd, 10, 1000, NULL);  // count down start
             break;
         case 4: // level very hard
@@ -86,7 +86,7 @@ void LevelSetting::level_setting(WPARAM wParam, HWND& hWnd) {
             gameStateManager->setLevel(level);
             gameStateManager->setImage(L"img/gamePlay/score bar.png");
             gameStateManager->setCurrentState(GameState::GAMEPLAY);
-            PlaySecondMP3(L"sound/countdown3.mp3"); // 버튼 사운드
+            PlaySecondMP3(L"sound/countdown2.wav"); // 버튼 사운드
             SetTimer(hWnd, 10, 1000, NULL);  // count down start
             break;
         case 5: // 뒤로가기

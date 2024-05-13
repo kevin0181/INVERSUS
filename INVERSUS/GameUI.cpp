@@ -6,11 +6,13 @@ void GameUI::drawGameUI(HDC& mDC, GameUI& gameUi, RECT rect) {
 	HBRUSH oldBrush;
 
 	// main asset
-	hBrush = CreateSolidBrush(RGB(200, 200, 200));
-	oldBrush = (HBRUSH)SelectObject(mDC, hBrush);
-	Rectangle(mDC, 0, 0, 500, 500);
-	SelectObject(mDC, oldBrush);
-	DeleteObject(hBrush);
+	if (gameUi.countDownStatus) { //count down
+		hBrush = CreateSolidBrush(RGB(200, 200, 200));
+		oldBrush = (HBRUSH)SelectObject(mDC, hBrush);
+		Rectangle(mDC, 0, 0, 500, 500);
+		SelectObject(mDC, oldBrush);
+		DeleteObject(hBrush);
+	}
 
 	// hp bar
 	drawHP(mDC, rect, gameUi.hp, gameUi);
