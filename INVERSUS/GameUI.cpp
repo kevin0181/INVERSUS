@@ -40,7 +40,7 @@ void GameUI::printBlackBlock(std::vector<Block> blocks, HDC& mDC) { //검정 블록 
 
 }
 
-void GameUI::setBlackBlock(std::vector<Block> blocks, int cellSize) { // 검정 블럭 보드 크기에 맞춰서 설정
+void GameUI::setBlackBlock(std::vector<Block>& blocks, int cellSize) { // 검정 블럭 보드 크기에 맞춰서 설정
 
 	for (int y = gameBordRect.top; y < gameBordRect.bottom; y += cellSize) {
 		for (int x = gameBordRect.left; x < gameBordRect.right; x += cellSize) {

@@ -51,7 +51,7 @@ public:
 	void drawHP(HDC& mDC, const RECT& rect, int hp, GameUI& gameUi);
 	void drawExp(HDC& mDC, const RECT& rect, int exp);
 	void mainAsset(HDC& mDC, const RECT& rect, GameUI& gameUi);
-	void setBlackBlock(std::vector<Block> blocks, int cellSize);
+	void setBlackBlock(std::vector<Block>& blocks, int cellSize);
 	void printBlackBlock(std::vector<Block> blocks, HDC& mDC);
 
 };
