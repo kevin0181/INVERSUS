@@ -117,11 +117,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         }
 
         if (gameStateManager.getState() == GameState::GAMEPLAY) { // game start
-
+            
         }
 
         break;
     case WM_LBUTTONDOWN:
+        
         break;
     case WM_LBUTTONUP:
         break;
