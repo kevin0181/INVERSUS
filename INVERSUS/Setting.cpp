@@ -28,19 +28,23 @@ void Setting::setting(WPARAM wParam, HWND& hWnd) {
         }
         break;
     case VK_LEFT:
-        if (music_n == 0) {
-            music_n = 2;
-        }
-        else {
-            music_n--;
+        if (se_n == 1) {
+            if (music_n == 0) {
+                music_n = 2;
+            }
+            else {
+                music_n--;
+            }
         }
         break;
     case VK_RIGHT:
-        if (music_n == 2) {
-            music_n = 0;
-        }
-        else {
-            music_n++;
+        if (se_n == 1) {
+            if (music_n == 2) {
+                music_n = 0;
+            }
+            else {
+                music_n++;
+            }
         }
         break;
     default:

@@ -12,6 +12,7 @@
 #include "GameUI.h"
 #include "Global.h"
 #include "CountDown.h"
+#include "Block.h"
 
 using namespace std;
 
@@ -80,11 +81,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     HBITMAP hBitmap;
 
     static RECT rect;
-    
+    static vector<Block> blocks;
+
     switch (uMsg)
     {
     case WM_CREATE:
-    {
+    {   
+        GetClientRect(hWnd, &rect);
+
         gameStateManager.setCurrentState(GameState::START);
         gameStateManager.setImage(L"img/Inversus Intro.png");
         PlayMP3(L"sound/main intro.mp3");
@@ -136,7 +140,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         }
 
         if (gameStateManager.getState() == GameState::LEVEL) { // game level 선택
-            levelSetting.level_setting(wParam, hWnd);
+            levelSetting.level_setting(wParam, hWnd, rect);
             InvalidateRect(hWnd, NULL, false);
             break;
         }
@@ -167,36 +171,28 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         break;
     case WM_PAINT:
     {
-        GetClientRect(hWnd, &rect);
+        
         hDC = BeginPaint(hWnd, &ps);
         mDC = CreateCompatibleDC(hDC);
         hBitmap = CreateCompatibleBitmap(hDC, rect.right, rect.bottom);
         SelectObject(mDC, (HBITMAP)hBitmap);
         FillRect(mDC, &rect, (HBRUSH)GetStockObject(WHITE_BRUSH));
 
-        RECT gameBord = rect;
-
         gameStateManager.DrawImage(mDC, rect); // 전체배경
 
         if (gameStateManager.getState() == GameState::GAMEPLAY) {
 
-            int line_size = (gameStateManager.getLevel() * 10);
-            int cellSize = (rect.right) / line_size;
-
-            for (int x = 0; x <= line_size; ++x) {
-                if (x * cellSize + 130 > rect.bottom) {
-                    gameBord.bottom = (x - 1) * cellSize + 130;
-                    break;
-                }
-                MoveToEx(mDC, 0, x * cellSize + 130, NULL);
-                LineTo(mDC, rect.right, x * cellSize + 130);
-            }
-            for (int y = 0; y <= line_size; ++y) {
-                MoveToEx(mDC, y * cellSize, 130, NULL);
-                LineTo(mDC, y * cellSize, gameBord.bottom);
+            for (int x = 0; x <= gameUi.line_size; ++x) {
+                MoveToEx(mDC, 0, x * gameUi.cellSize + 130, NULL);
+                LineTo(mDC, rect.right, x * gameUi.cellSize + 130);
             }
 
-            gameUi.setGameBord(gameBord); //게임 보드 사이즈 설정
+            for (int y = 0; y <= gameUi.line_size; ++y) {
+                MoveToEx(mDC, y * gameUi.cellSize, 130, NULL);
+                LineTo(mDC, y * gameUi.cellSize, gameUi.gameBordRect.bottom);
+            }
+
+            gameUi.printBlackBlock(blocks, mDC);
             gameUi.drawGameUI(mDC, gameUi, rect);
         }
 

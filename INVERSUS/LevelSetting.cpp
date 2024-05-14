@@ -1,7 +1,9 @@
+#include <vector>
+
 #include "LevelSetting.h"
 #include "sound.h"
 
-void LevelSetting::level_setting(WPARAM wParam, HWND& hWnd) {
+void LevelSetting::level_setting(WPARAM wParam, HWND& hWnd, RECT rect) {
     PlaySecondMP3(L"sound/button sound.MP3"); // 버튼 사운드
     const std::wstring PATH = L"img/level/";
     switch (wParam)
@@ -59,40 +61,18 @@ void LevelSetting::level_setting(WPARAM wParam, HWND& hWnd) {
     if (VK_RETURN == wParam) {
         switch (level) {
         case 1: // lelvel easy
-            PlayMP3Close();
-            CloseSecondMP3();
-            gameStateManager->setLevel(level);
-            gameStateManager->setImage(L"img/gamePlay/score bar.png");
-            gameStateManager->setCurrentState(GameState::GAMEPLAY);
-            PlaySecondMP3(L"sound/countdown2.mp3"); // 버튼 사운드
-            SetTimer(hWnd, 10, 1000, NULL);  // count down start
+            setEnter(hWnd, rect);
             break;
         case 2: // level nomal
-            PlayMP3Close();
-            CloseSecondMP3();
-            gameStateManager->setLevel(level);
-            gameStateManager->setImage(L"img/gamePlay/score bar.png");
-            gameStateManager->setCurrentState(GameState::GAMEPLAY);
-            PlaySecondMP3(L"sound/countdown2.wav"); // 버튼 사운드
-            SetTimer(hWnd, 10, 1000, NULL);  // count down start
+            setEnter(hWnd, rect);
+
             break;
         case 3: // level hard
-            PlayMP3Close();
-            CloseSecondMP3();
-            gameStateManager->setLevel(level);
-            gameStateManager->setImage(L"img/gamePlay/score bar.png");
-            gameStateManager->setCurrentState(GameState::GAMEPLAY);
-            PlaySecondMP3(L"sound/countdown2.wav"); // 버튼 사운드
-            SetTimer(hWnd, 10, 1000, NULL);  // count down start
+            setEnter(hWnd, rect);
+
             break;
         case 4: // level very hard
-            PlayMP3Close();
-            CloseSecondMP3();
-            gameStateManager->setLevel(level);
-            gameStateManager->setImage(L"img/gamePlay/score bar.png");
-            gameStateManager->setCurrentState(GameState::GAMEPLAY);
-            PlaySecondMP3(L"sound/countdown2.wav"); // 버튼 사운드
-            SetTimer(hWnd, 10, 1000, NULL);  // count down start
+            setEnter(hWnd, rect);
             break;
         case 5: // 뒤로가기
             if (gameStateManager->getPlayer() == 1) {
@@ -107,4 +87,33 @@ void LevelSetting::level_setting(WPARAM wParam, HWND& hWnd) {
             break;
         }
     }
+}
+
+void LevelSetting::gameBoard(RECT rect) { //게임 보드 크기, cellSize, gameBord구하기
+
+    gameUi->cellSize = (rect.right) / gameUi->line_size;
+
+    RECT gameBord = rect;
+    gameBord.top += 130;
+
+    for (int x = 0; x <= gameUi->line_size; ++x) {
+        if (x * gameUi->cellSize + 130 > rect.bottom) {
+            gameBord.bottom = (x - 1) * gameUi->cellSize + 130;
+            break;
+        }
+    }
+
+    gameUi->gameBordRect = gameBord;
+}
+
+void LevelSetting::setEnter(HWND hWnd, RECT rect) {
+    PlayMP3Close();
+    CloseSecondMP3();
+    gameStateManager->setLevel(level);
+    gameStateManager->setImage(L"img/gamePlay/score bar.png");
+    gameStateManager->setCurrentState(GameState::GAMEPLAY);
+    PlaySecondMP3(L"sound/countdown2.wav"); // 버튼 사운드
+    SetTimer(hWnd, 10, 1000, NULL);  // count down start
+    gameUi->line_size = (gameStateManager->getLevel() * 10);
+    gameBoard(rect);
 }

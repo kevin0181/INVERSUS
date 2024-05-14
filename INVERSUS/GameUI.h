@@ -1,6 +1,10 @@
 #pragma once
+
+#include<vector>
+
 #include<atlimage.h>
 #include"GameStateManager.h"
+#include"Block.h"
 
 class GameUI {
 private:
@@ -8,7 +12,6 @@ private:
 	int level;
 	int player;
 
-	RECT gameBordRect;
 
 	HDC* mDC;
 	GameStateManager* gameStateManager;
@@ -21,6 +24,10 @@ public:
 
 	int countDown = 0;
 	bool countDownStatus = false;
+	int line_size = 0;
+	int cellSize = 0;
+
+	RECT gameBordRect;
 
 	GameUI(GameStateManager* instance) :gameStateManager(instance), hp(300), exp(0), score(0) {};
 	
@@ -43,4 +50,8 @@ public:
 	void drawGameUI(HDC& mDC, GameUI& gameUi, RECT rect);
 	void drawHP(HDC& mDC, const RECT& rect, int hp, GameUI& gameUi);
 	void drawExp(HDC& mDC, const RECT& rect, int exp);
+	void mainAsset(HDC& mDC, const RECT& rect, GameUI& gameUi);
+	void setBlackBlock(std::vector<Block> blocks, int cellSize);
+	void printBlackBlock(std::vector<Block> blocks, HDC& mDC);
+
 };
