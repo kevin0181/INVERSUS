@@ -96,6 +96,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         break;
     case WM_KEYDOWN:  // 키보드 키가 눌렸을 때
 
+        if (wParam == VK_ESCAPE && gameStateManager.getState() != GameState::SETTING) {
+            
+        }
+
         if (gameStateManager.getState() == GameState::START && wParam == VK_RETURN) { // 시작화면 -> player Select 화면
             PlaySecondMP3(L"sound/button sound.MP3"); // 버튼 사운드
             gameStateManager.setImage(L"img/player/player_0_v2.png");

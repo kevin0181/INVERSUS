@@ -60,6 +60,9 @@
     <ClCompile Include="Global.h">
       <Filter>헤더 파일\config</Filter>
     </ClCompile>
+    <ClCompile Include="Setting.cpp">
+      <Filter>소스 파일\gameState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameStateManager.h">
@@ -76,6 +79,9 @@
     </ClInclude>
     <ClInclude Include="CountDown.h">
       <Filter>헤더 파일\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Setting.h">
+      <Filter>헤더 파일\gameState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
