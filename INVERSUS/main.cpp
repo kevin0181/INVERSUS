@@ -98,6 +98,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
         if (wParam == VK_ESCAPE) { //esc -> 설정
             if (gameStateManager.getState() == GameState::GAMEPLAY) { // game play -> setting
+                if (gameUi.countDown != 1) // 게임이 시작되면 가능하게
+                    break;
                 KillTimer(hWnd, 1);
                 setting.setting(wParam, hWnd);
                 gameStateManager.setCurrentState(GameState::SETTING);

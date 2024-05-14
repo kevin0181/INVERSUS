@@ -51,11 +51,16 @@ void PlayMP3(const WCHAR* filename) {
 }
 
 void PlayMP3Close() {
-    if (pControl) pControl->Release();
-    if (pGraph) pGraph->Release();
-    if (pEvent) pEvent->Release();
-    if (pBasicAudio) pBasicAudio->Release();
-    CoUninitialize();
+    try {
+        if (pControl) pControl->Release();
+        if (pGraph) pGraph->Release();
+        if (pEvent) pEvent->Release();
+        if (pBasicAudio) pBasicAudio->Release();
+        CoUninitialize();
+    }
+    catch (const std::exception& e) {
+        return;
+    }
 }
 
 void MonitorMediaEvent() {
@@ -93,11 +98,16 @@ void PlaySecondMP3(const WCHAR* filename) {
 }
 
 void CloseSecondMP3() {
-    if (pControl2) pControl2->Release();
-    if (pGraph2) pGraph2->Release();
-    if (pEvent2) pEvent2->Release();
-    if (pBasicAudio2) pBasicAudio2->Release();
-    CoUninitialize();
+    try {
+        if (pControl2) pControl2->Release();
+        if (pGraph2) pGraph2->Release();
+        if (pEvent2) pEvent2->Release();
+        if (pBasicAudio2) pBasicAudio2->Release();
+        CoUninitialize();
+    }
+    catch (const std::exception& e) {
+        return;
+    }
 }
 
 void MonitorSecondMediaEvent() {
@@ -143,9 +153,14 @@ void GameBackgroundSound(int num) {
 }
 
 void CloseGameBackgroundSound() {
-    if (pControl3) pControl3->Release();
-    if (pGraph3) pGraph3->Release();
-    if (pEvent3) pEvent3->Release();
-    if (pBasicAudio3) pBasicAudio3->Release();
-    CoUninitialize();
+    try {
+        if (pControl3) pControl3->Release();
+        if (pGraph3) pGraph3->Release();
+        if (pEvent3) pEvent3->Release();
+        if (pBasicAudio3) pBasicAudio3->Release();
+        CoUninitialize();
+    }
+    catch (const std::exception& e) {
+        return;
+    }
 }

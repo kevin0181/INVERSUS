@@ -72,10 +72,16 @@ void Setting::setting(WPARAM wParam, HWND& hWnd) {
           
             break;
         case 3: // 뒤로가기
-          
+            KillTimer(hWnd, 1);
+            CloseGameBackgroundSound();
+            gameStateManager->setImage(L"img/Inversus Intro.png");
+            PlayMP3(L"sound/main intro.mp3");
+            gameStateManager->setCurrentState(GameState::START);
             break;
         default:
             break;
         }
     }
+
+
 };
