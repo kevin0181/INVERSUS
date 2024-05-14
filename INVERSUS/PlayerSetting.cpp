@@ -34,6 +34,11 @@ void PlayerSetting::game_setting(WPARAM wParam) {
         else {
             player--;
         }
+
+        if (player == -1) {
+            player = 2;
+        }
+
         break;
     default:
         break;

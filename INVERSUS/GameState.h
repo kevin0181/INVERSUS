@@ -6,5 +6,6 @@ enum class GameState {
     LEVEL,
     COUNTDOWN,
     GAMEPLAY,
-    GAMEOVER
+    GAMEOVER,
+    SETTING
 };

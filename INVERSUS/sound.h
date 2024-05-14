@@ -1,5 +1,7 @@
 #pragma once
 
+extern std::wstring fileName[3];
+
 void PlayMP3(const WCHAR* filename);
 
 void PlayMP3Close();

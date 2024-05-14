@@ -23,6 +23,11 @@ void LevelSetting::level_setting(WPARAM wParam, HWND& hWnd) {
         else {
             level--;
         }
+
+        if (level == -1) {
+            level = 5;
+        }
+
         break;
     default:
         break;
