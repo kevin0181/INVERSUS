@@ -11,6 +11,10 @@ void GameStateManager::setImage(LPCTSTR path) {
 	cImage.Load(path);
 }
 
+void GameStateManager::destroyImg() {
+	cImage.Destroy();
+}
+
 void GameStateManager::DrawImage(HDC& mDC, RECT rect) {
 
 	if (currentState == GameState::GAMEPLAY) {

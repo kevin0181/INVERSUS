@@ -17,6 +17,7 @@ public:
 	void setCurrentState(GameState state);
 	void setImage(LPCTSTR path);
 	void DrawImage(HDC& mDC, RECT rect);
+	void destroyImg();
 
 	CImage getImage() {
 		return cImage;

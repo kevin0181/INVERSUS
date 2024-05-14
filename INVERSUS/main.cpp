@@ -96,8 +96,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         break;
     case WM_KEYDOWN:  // 키보드 키가 눌렸을 때
 
-        if (wParam == VK_ESCAPE && gameStateManager.getState() != GameState::SETTING) {
-            
+        if (wParam == VK_ESCAPE) { //esc -> 설정
+            if (gameStateManager.getState() == GameState::GAMEPLAY) { // game play -> setting
+                KillTimer(hWnd, 1);
+                setting.setting(wParam, hWnd);
+                gameStateManager.setCurrentState(GameState::SETTING);
+                break;
+            }
+            if (gameStateManager.getState() == GameState::SETTING) { // setting -> game play
+                SetTimer(hWnd, 1, 1, NULL);
+                gameStateManager.setImage(L"img/gamePlay/score bar.png");
+                gameStateManager.setCurrentState(GameState::GAMEPLAY);
+                break;
+            }
+            InvalidateRect(hWnd, NULL, false);
+            break;
+        }
+
+        if (gameStateManager.getState() == GameState::SETTING) { //setting 상태일때 움직임
+            setting.setting(wParam, hWnd);
+            InvalidateRect(hWnd, NULL, false);
+            break;
         }
 
         if (gameStateManager.getState() == GameState::START && wParam == VK_RETURN) { // 시작화면 -> player Select 화면
