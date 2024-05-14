@@ -127,7 +127,7 @@ void MonitorSecondMediaEvent() {
 wstring fileName[3] = {
         L"sound/game Music1.mp3",
         L"sound/game Music2.mp3",
-        L"sound/game Music3.mp3"
+        L"sound/°¡¿À°¶.mp3"
 };
 
 void GameBackgroundSound(int num) {
