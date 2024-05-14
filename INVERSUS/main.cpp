@@ -200,6 +200,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             gameUi.drawGameUI(mDC, gameUi, rect);
         }
 
+        if (gameStateManager.getState() == GameState::SETTING) { //setting draw
+            setting.draw_setting(mDC, rect);
+        }
+
         BitBlt(hDC, 0, 0, rect.right, rect.bottom, mDC, 0, 0, SRCCOPY);
 
         DeleteObject(hBitmap); // 생성한 비트맵 삭제

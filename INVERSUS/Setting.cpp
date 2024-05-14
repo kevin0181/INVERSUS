@@ -29,7 +29,7 @@ void Setting::setting(WPARAM wParam, HWND& hWnd) {
         break;
     case VK_LEFT:
         if (music_n == 0) {
-            music_n = 3;
+            music_n = 2;
         }
         else {
             music_n--;
@@ -85,3 +85,32 @@ void Setting::setting(WPARAM wParam, HWND& hWnd) {
 
 
 };
+
+void Setting::draw_setting(HDC& mDC, RECT rect) {
+    // Set text color to white and background mode to transparent
+    SetTextColor(mDC, RGB(255, 255, 255));
+    SetBkMode(mDC, TRANSPARENT);
+
+    // Create a bold font
+    HFONT hFont = CreateFont(24, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE, DEFAULT_CHARSET,
+        OUT_OUTLINE_PRECIS, CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY,
+        VARIABLE_PITCH, TEXT("Arial"));
+
+    SelectObject(mDC, hFont);
+
+    TextOut(mDC, rect.right / 2 - 110, rect.bottom / 2 - 10, fileName[music_n].c_str(), fileName[music_n].size());
+
+    const std::wstring invi_status1 = L"무적모드 켜기";
+    const std::wstring invi_status2 = L"무적모드 끄기";
+
+    SetTextColor(mDC, RGB(0, 0, 0));
+
+    if (invincibility) {
+        TextOut(mDC, rect.right / 2 - 60, rect.bottom / 2 + 30, invi_status2.c_str(), invi_status2.size());
+    }
+    else {
+        TextOut(mDC, rect.right / 2 - 60, rect.bottom / 2 + 30, invi_status1.c_str(), invi_status1.size());
+    }
+
+    DeleteObject(hFont);
+}

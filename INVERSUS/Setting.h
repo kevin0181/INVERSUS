@@ -15,6 +15,7 @@ public:
 	Setting(GameStateManager* instance) :gameStateManager(instance), se_n(1), music_n(0), invincibility(false) {};
 
 	void setting(WPARAM wParam, HWND& hWnd);
+	void draw_setting(HDC& mDC, RECT rect);
 
 	int getMusic_n() {
 		return music_n;
