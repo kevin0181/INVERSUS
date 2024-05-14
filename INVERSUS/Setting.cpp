@@ -66,10 +66,11 @@ void Setting::setting(WPARAM wParam, HWND& hWnd) {
     if (VK_RETURN == wParam) {
         switch (se_n) {
         case 1:
-           
+            CloseGameBackgroundSound();
+            GameBackgroundSound(music_n);
             break;
         case 2:
-          
+            invincibility = !invincibility;
             break;
         case 3: // 뒤로가기
             KillTimer(hWnd, 1);
