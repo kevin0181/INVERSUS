@@ -22,7 +22,7 @@ public:
 	int countDown = 0;
 	bool countDownStatus = false;
 
-	GameUI(GameStateManager* instance) :gameStateManager(instance),hp(300),exp(0),score(0) {};
+	GameUI(GameStateManager* instance) :gameStateManager(instance),hp(300),exp(30),score(0) {};
 	
 	void setMDC(HDC* mDC) {
 		this->mDC = mDC;
