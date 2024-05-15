@@ -13,6 +13,7 @@
 #include "Global.h"
 #include "CountDown.h"
 #include "Block.h"
+#include "gamePlay.h"
 
 using namespace std;
 
@@ -258,21 +259,24 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         switch (wParam)
         {
         case 1: //game Play
-            
             if (mainBlock.left) {
                 OffsetRect(&mainBlock.rect, -mainBlock.speed, 0);
+                OffsetRect(&mainBlock.rect, checkCrash(blocks, mainBlock), 0);
             }
 
             if (mainBlock.right) {
                 OffsetRect(&mainBlock.rect, mainBlock.speed, 0);
+                OffsetRect(&mainBlock.rect, -checkCrash(blocks, mainBlock), 0);
             }
 
             if (mainBlock.up) {
                 OffsetRect(&mainBlock.rect, 0, -mainBlock.speed);
+                OffsetRect(&mainBlock.rect, 0, checkCrash(blocks, mainBlock));
             }
             
             if (mainBlock.down) {
                 OffsetRect(&mainBlock.rect, 0, mainBlock.speed);
+                OffsetRect(&mainBlock.rect, 0, -checkCrash(blocks, mainBlock));
             }
 
             break;
