@@ -83,7 +83,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     static RECT rect;
 
     static std::vector<Block> blocks;
-    static Block mainBlock(RGB(255, 0, 0), RGB(0, 0, 0), { 0,0, 50, 50 }, true);
+    static Block mainBlock(RGB(0, 0, 0), RGB(0, 0, 0), { 0,0, 50, 50 }, true);
 
     switch (uMsg)
     {
@@ -142,7 +142,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
         if (gameStateManager.getState() == GameState::LEVEL) { // game level 선택
             levelSetting.level_setting(wParam, hWnd, rect, mainBlock, blocks);
-            gameUi.setBlackBlock(blocks, gameUi.cellSize);
+            gameUi.setBlackBlock(blocks, gameUi.cellSize); // 검정 블럭 설정
+            gameUi.blankMain(blocks, &gameUi, &mainBlock); // 빈 부분 만들기
             InvalidateRect(hWnd, NULL, false);
             break;
         }

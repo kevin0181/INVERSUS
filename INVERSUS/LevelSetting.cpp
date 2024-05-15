@@ -119,5 +119,4 @@ void LevelSetting::setEnter(HWND hWnd, RECT rect, Block& mainBlock, std::vector<
     gameUi->line_size = (gameStateManager->getLevel() * 10);
     gameBoard(rect);
     OffsetRect(&mainBlock.rect, (gameUi->gameBordRect.right / 2) - 25, (gameUi->gameBordRect.bottom / 2) + 30);
-    gameUi->blankMain(blocks, gameUi, &mainBlock);
 }

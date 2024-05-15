@@ -24,7 +24,7 @@ void GameUI::printBlackBlock(std::vector<Block> blocks, HDC& mDC) { //검정 블록 
 	for (int i = 0; i < blocks.size(); ++i) {
 
 		if (!blocks[i].status)
-			break;
+			continue;
 
 		// 검은색 브러쉬와 회색 펜 생성
 		HBRUSH hBrush = CreateSolidBrush(blocks[i].color);
@@ -53,7 +53,6 @@ void GameUI::setBlackBlock(std::vector<Block>& blocks, int cellSize) { // 검정 �
 			blocks.push_back(b);
 		}
 	}
-	
 }
 
 void GameUI::mainAsset(HDC& mDC, const RECT& rect, Block& mainBlock) {
@@ -80,10 +79,11 @@ void ExpandRect(RECT& rect) { // 사이즈 확대
 	int centerY = (rect.top + rect.bottom) / 2;
 
 	// 중심점을 유지하면서 각 변을 원래의 너비와 높이의 절반만큼 확장
-	rect.left = centerX - width;
-	rect.right = centerX + width;
-	rect.top = centerY - height;
-	rect.bottom = centerY + height;
+	// 중심점을 유지하면서 각 변을 원래 너비와 높이의 1.5배만큼 확장
+	rect.left = centerX - (int)(width * 1.5);
+	rect.right = centerX + (int)(width * 1.5);
+	rect.top = centerY - (int)(height * 1.5);
+	rect.bottom = centerY + (int)(height * 1.5);
 }
 
 
@@ -91,7 +91,13 @@ void GameUI::blankMain(std::vector<Block>& blocks, GameUI* gameUi, Block* block)
 	RECT blankSizeRect = block->rect;
 	ExpandRect(blankSizeRect);
 
+	RECT selectRect;
 
+	for (int i = 0; i < blocks.size(); ++i) {
+		if (IntersectRect(&selectRect, &blankSizeRect, &blocks[i].rect)) {
+			blocks[i].status = false;
+		}
+	}
 }
 
 void GameUI::drawHP(HDC& mDC, const RECT& rect, int hp, GameUI& gameUi) {
