@@ -4,7 +4,7 @@
 #include "sound.h"
 #include "Global.h"
 
-void LevelSetting::level_setting(WPARAM wParam, HWND& hWnd, RECT rect, Block& mainBlock) {
+void LevelSetting::level_setting(WPARAM wParam, HWND& hWnd, RECT rect, Block& mainBlock, std::vector<Block>& blocks) {
     PlaySecondMP3(L"sound/button sound.MP3"); // 버튼 사운드
     const std::wstring PATH = L"img/level/";
     switch (wParam)
@@ -62,18 +62,18 @@ void LevelSetting::level_setting(WPARAM wParam, HWND& hWnd, RECT rect, Block& ma
     if (VK_RETURN == wParam) {
         switch (level) {
         case 1: // lelvel easy
-            setEnter(hWnd, rect, mainBlock);
+            setEnter(hWnd, rect, mainBlock, blocks);
             break;
         case 2: // level nomal
-            setEnter(hWnd, rect, mainBlock);
+            setEnter(hWnd, rect, mainBlock, blocks);
 
             break;
         case 3: // level hard
-            setEnter(hWnd, rect, mainBlock);
+            setEnter(hWnd, rect, mainBlock, blocks);
 
             break;
         case 4: // level very hard
-            setEnter(hWnd, rect, mainBlock);
+            setEnter(hWnd, rect, mainBlock, blocks);
             break;
         case 5: // 뒤로가기
             if (gameStateManager->getPlayer() == 1) {
@@ -107,7 +107,7 @@ void LevelSetting::gameBoard(RECT rect) { //게임 보드 크기, cellSize, gameBord구
     gameUi->gameBordRect = gameBord;
 }
 
-void LevelSetting::setEnter(HWND hWnd, RECT rect, Block& mainBlock) {
+void LevelSetting::setEnter(HWND hWnd, RECT rect, Block& mainBlock, std::vector<Block>& blocks) {
     mainBlock.rect = { 0,0,50,50 };
     PlayMP3Close();
     CloseSecondMP3();
@@ -119,4 +119,5 @@ void LevelSetting::setEnter(HWND hWnd, RECT rect, Block& mainBlock) {
     gameUi->line_size = (gameStateManager->getLevel() * 10);
     gameBoard(rect);
     OffsetRect(&mainBlock.rect, (gameUi->gameBordRect.right / 2) - 25, (gameUi->gameBordRect.bottom / 2) + 30);
+    gameUi->blankMain(blocks, gameUi, &mainBlock);
 }

@@ -53,5 +53,6 @@ public:
 	void mainAsset(HDC& mDC, const RECT& rect, Block& mainBlock);
 	void setBlackBlock(std::vector<Block>& blocks, int cellSize);
 	void printBlackBlock(std::vector<Block> blocks, HDC& mDC);
+	void blankMain(std::vector<Block>& blocks, GameUI* gameUi, Block* block);
 
 };

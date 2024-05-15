@@ -1,3 +1,5 @@
+#include <vector>
+
 #include "GameUI.h"
 
 void GameUI::drawGameUI(HDC& mDC, GameUI& gameUi, RECT rect) {
@@ -20,6 +22,10 @@ void GameUI::drawGameUI(HDC& mDC, GameUI& gameUi, RECT rect) {
 void GameUI::printBlackBlock(std::vector<Block> blocks, HDC& mDC) { //검정 블록 출력
 
 	for (int i = 0; i < blocks.size(); ++i) {
+
+		if (!blocks[i].status)
+			break;
+
 		// 검은색 브러쉬와 회색 펜 생성
 		HBRUSH hBrush = CreateSolidBrush(blocks[i].color);
 		HPEN hPen = CreatePen(PS_SOLID, 1, blocks[i].borderColor);
@@ -62,6 +68,29 @@ void GameUI::mainAsset(HDC& mDC, const RECT& rect, Block& mainBlock) {
 
 	SelectObject(mDC, oldBrush);
 	DeleteObject(hBrush);
+
+}
+
+void ExpandRect(RECT& rect) { // 사이즈 확대
+	int width = rect.right - rect.left;  // 원래의 너비
+	int height = rect.bottom - rect.top;  // 원래의 높이
+
+	// 중심점 계산
+	int centerX = (rect.left + rect.right) / 2;
+	int centerY = (rect.top + rect.bottom) / 2;
+
+	// 중심점을 유지하면서 각 변을 원래의 너비와 높이의 절반만큼 확장
+	rect.left = centerX - width;
+	rect.right = centerX + width;
+	rect.top = centerY - height;
+	rect.bottom = centerY + height;
+}
+
+
+void GameUI::blankMain(std::vector<Block>& blocks, GameUI* gameUi, Block* block) { // 메인 에셋 생성시, 가운데 빈칸만들기
+	RECT blankSizeRect = block->rect;
+	ExpandRect(blankSizeRect);
+
 
 }
 
@@ -108,3 +137,5 @@ void GameUI::drawExp(HDC& mDC, const RECT& rect, int exp) {
 	SelectObject(mDC, oldBrush);
 	DeleteObject(hBrush);
 }
+
+

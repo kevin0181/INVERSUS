@@ -141,7 +141,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         }
 
         if (gameStateManager.getState() == GameState::LEVEL) { // game level º±≈√
-            levelSetting.level_setting(wParam, hWnd, rect, mainBlock);
+            levelSetting.level_setting(wParam, hWnd, rect, mainBlock, blocks);
             gameUi.setBlackBlock(blocks, gameUi.cellSize);
             InvalidateRect(hWnd, NULL, false);
             break;

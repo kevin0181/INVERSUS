@@ -10,7 +10,7 @@ public:
 	bool status;
 	Bullet bullet;
 
-	Block(COLORREF color, COLORREF borderColor, RECT rect) :rect(rect), status(false), color(color), borderColor(borderColor) {};
+	Block(COLORREF color, COLORREF borderColor, RECT rect) :rect(rect), status(true), color(color), borderColor(borderColor) {};
 
 	Block(COLORREF color, COLORREF borderColor, RECT rect, bool status) : rect(rect), status(status), color(color), borderColor(borderColor) {};
 
