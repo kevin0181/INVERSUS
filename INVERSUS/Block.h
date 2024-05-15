@@ -10,6 +10,13 @@ public:
 	bool status;
 	Bullet bullet;
 
+	bool left = false;
+	bool right = false;
+	bool up = false;
+	bool down = false;
+
+	int speed = 2;
+
 	Block(COLORREF color, COLORREF borderColor, RECT rect) :rect(rect), status(true), color(color), borderColor(borderColor) {};
 
 	Block(COLORREF color, COLORREF borderColor, RECT rect, bool status) : rect(rect), status(status), color(color), borderColor(borderColor) {};

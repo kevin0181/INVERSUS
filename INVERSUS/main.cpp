@@ -98,6 +98,28 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     case WM_COMMAND:
         break;
     case WM_KEYUP:
+        if (gameStateManager.getState() == GameState::GAMEPLAY) { // game start
+
+            switch (wParam)
+            {
+            case 65:
+                mainBlock.left = false;
+                break;
+            case 68:
+                mainBlock.right = false;
+                break;
+            case 87:
+                mainBlock.up = false;
+                break;
+            case 83:
+                mainBlock.down = false;
+                break;
+            default:
+                break;
+            }
+            InvalidateRect(hWnd, NULL, false);
+        }
+
         break;
     case WM_KEYDOWN:  // 키보드 키가 눌렸을 때
 
@@ -150,6 +172,24 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
         if (gameStateManager.getState() == GameState::GAMEPLAY) { // game start
             
+            switch (wParam)
+            {
+            case 65:
+                mainBlock.left = true;
+                break;
+            case 68:
+                mainBlock.right = true;
+                break;
+            case 87:
+                mainBlock.up = true;
+                break;
+            case 83:
+                mainBlock.down = true;
+                break;
+            default:
+                break;
+            }
+            InvalidateRect(hWnd, NULL, false);
         }
 
         break;
@@ -198,9 +238,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             gameUi.printBlackBlock(blocks, mDC);
             gameUi.drawGameUI(mDC, gameUi, rect);
 
-            if (gameUi.countDownStatus) { //count down
+            //if (gameUi.countDownStatus) { //count down
                 gameUi.mainAsset(mDC, rect, mainBlock);
-            }
+           // }
         }
 
         if (gameStateManager.getState() == GameState::SETTING) { //setting draw
@@ -217,6 +257,25 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     case WM_TIMER:
         switch (wParam)
         {
+        case 1: //game Play
+            
+            if (mainBlock.left) {
+                OffsetRect(&mainBlock.rect, -mainBlock.speed, 0);
+            }
+
+            if (mainBlock.right) {
+                OffsetRect(&mainBlock.rect, mainBlock.speed, 0);
+            }
+
+            if (mainBlock.up) {
+                OffsetRect(&mainBlock.rect, 0, -mainBlock.speed);
+            }
+            
+            if (mainBlock.down) {
+                OffsetRect(&mainBlock.rect, 0, mainBlock.speed);
+            }
+
+            break;
         case 10: //count down
             setCountDown(gameUi, hWnd);
             break;
