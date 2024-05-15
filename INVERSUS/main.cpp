@@ -166,7 +166,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         if (gameStateManager.getState() == GameState::LEVEL) { // game level 선택
             levelSetting.level_setting(wParam, hWnd, rect, mainBlock, blocks);
             gameUi.setBlackBlock(blocks, gameUi.cellSize); // 검정 블럭 설정
-            gameUi.blankMain(blocks, &gameUi, &mainBlock); // 빈 부분 만들기
+            blankMain(blocks, &mainBlock); // 빈 부분 만들기
             InvalidateRect(hWnd, NULL, false);
             break;
         }
@@ -239,9 +239,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             gameUi.printBlackBlock(blocks, mDC);
             gameUi.drawGameUI(mDC, gameUi, rect);
 
-            //if (gameUi.countDownStatus) { //count down
+            if (mainBlock.status) { //살아 있을 경우
                 gameUi.mainAsset(mDC, rect, mainBlock);
-           // }
+            }
+            else { //죽고 난 뒤, 리스폰
+                SetTimer(hWnd, 2, 1000, NULL); // 죽고 난 뒤 생성 타이머
+                
+            }
+                
+           
         }
 
         if (gameStateManager.getState() == GameState::SETTING) { //setting draw
