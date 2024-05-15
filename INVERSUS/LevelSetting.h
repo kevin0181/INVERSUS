@@ -13,7 +13,7 @@ private:
 	GameUI* gameUi;
 public:
 	LevelSetting(GameStateManager* instance, GameUI* g_instance) :gameStateManager(instance), gameUi(g_instance), level(0) {};
-	void level_setting(WPARAM wParam, HWND& hWnd, RECT rect);
+	void level_setting(WPARAM wParam, HWND& hWnd, RECT rect, Block& mainBlock);
 	void gameBoard(RECT rect);
-	void setEnter(HWND hWnd, RECT rect);
+	void setEnter(HWND hWnd, RECT rect, Block& mainBlock);
 };

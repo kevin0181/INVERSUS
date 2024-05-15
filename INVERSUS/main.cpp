@@ -81,15 +81,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     HBITMAP hBitmap;
 
     static RECT rect;
-    static vector<Block> blocks;
-    static Block mainBlock(RGB(0, 0, 0), RGB(0, 0, 0), { 0,0, 50, 50 }, true);
+
+    static std::vector<Block> blocks;
+    static Block mainBlock(RGB(255, 0, 0), RGB(0, 0, 0), { 0,0, 50, 50 }, true);
 
     switch (uMsg)
     {
     case WM_CREATE:
     {   
         GetClientRect(hWnd, &rect);
-
         gameStateManager.setCurrentState(GameState::START);
         gameStateManager.setImage(L"img/Inversus Intro.png");
         PlayMP3(L"sound/main intro.mp3");
@@ -141,7 +141,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         }
 
         if (gameStateManager.getState() == GameState::LEVEL) { // game level º±≈√
-            levelSetting.level_setting(wParam, hWnd, rect);
+            levelSetting.level_setting(wParam, hWnd, rect, mainBlock);
             gameUi.setBlackBlock(blocks, gameUi.cellSize);
             InvalidateRect(hWnd, NULL, false);
             break;

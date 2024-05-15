@@ -39,7 +39,7 @@ void GameUI::printBlackBlock(std::vector<Block> blocks, HDC& mDC) { //검정 블록 
 }
 
 void GameUI::setBlackBlock(std::vector<Block>& blocks, int cellSize) { // 검정 블럭 보드 크기에 맞춰서 설정
-
+	blocks.clear();
 	for (int y = gameBordRect.top; y < gameBordRect.bottom; y += cellSize) {
 		for (int x = gameBordRect.left; x < gameBordRect.right; x += cellSize) {
 			RECT blockRect = { x, y, x + cellSize, y + cellSize };
@@ -50,7 +50,7 @@ void GameUI::setBlackBlock(std::vector<Block>& blocks, int cellSize) { // 검정 �
 	
 }
 
-void GameUI::mainAsset(HDC& mDC, const RECT& rect, Block mainBlock) { 
+void GameUI::mainAsset(HDC& mDC, const RECT& rect, Block& mainBlock) {
 
 	HBRUSH hBrush;
 	HBRUSH oldBrush;

@@ -2,8 +2,9 @@
 
 #include "LevelSetting.h"
 #include "sound.h"
+#include "Global.h"
 
-void LevelSetting::level_setting(WPARAM wParam, HWND& hWnd, RECT rect) {
+void LevelSetting::level_setting(WPARAM wParam, HWND& hWnd, RECT rect, Block& mainBlock) {
     PlaySecondMP3(L"sound/button sound.MP3"); // 버튼 사운드
     const std::wstring PATH = L"img/level/";
     switch (wParam)
@@ -61,18 +62,18 @@ void LevelSetting::level_setting(WPARAM wParam, HWND& hWnd, RECT rect) {
     if (VK_RETURN == wParam) {
         switch (level) {
         case 1: // lelvel easy
-            setEnter(hWnd, rect);
+            setEnter(hWnd, rect, mainBlock);
             break;
         case 2: // level nomal
-            setEnter(hWnd, rect);
+            setEnter(hWnd, rect, mainBlock);
 
             break;
         case 3: // level hard
-            setEnter(hWnd, rect);
+            setEnter(hWnd, rect, mainBlock);
 
             break;
         case 4: // level very hard
-            setEnter(hWnd, rect);
+            setEnter(hWnd, rect, mainBlock);
             break;
         case 5: // 뒤로가기
             if (gameStateManager->getPlayer() == 1) {
@@ -106,7 +107,8 @@ void LevelSetting::gameBoard(RECT rect) { //게임 보드 크기, cellSize, gameBord구
     gameUi->gameBordRect = gameBord;
 }
 
-void LevelSetting::setEnter(HWND hWnd, RECT rect) {
+void LevelSetting::setEnter(HWND hWnd, RECT rect, Block& mainBlock) {
+    mainBlock.rect = { 0,0,50,50 };
     PlayMP3Close();
     CloseSecondMP3();
     gameStateManager->setLevel(level);
@@ -116,4 +118,5 @@ void LevelSetting::setEnter(HWND hWnd, RECT rect) {
     SetTimer(hWnd, 10, 1000, NULL);  // count down start
     gameUi->line_size = (gameStateManager->getLevel() * 10);
     gameBoard(rect);
+    OffsetRect(&mainBlock.rect, (gameUi->gameBordRect.right / 2) - 25, (gameUi->gameBordRect.bottom / 2) + 30);
 }

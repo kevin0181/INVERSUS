@@ -1,5 +1,7 @@
 #pragma once
 
+#include<vector>
+
 #include "GameStateManager.h"
 #include "LevelSetting.h"
 #include "GameUI.h"
