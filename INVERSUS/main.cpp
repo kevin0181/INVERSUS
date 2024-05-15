@@ -84,7 +84,24 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     static RECT rect;
 
     static std::vector<Block> blocks;
-    static Block mainBlock(RGB(0, 0, 0), RGB(0, 0, 0), { 0,0, 50, 50 }, true);
+    static Block mainBlock(RGB(0, 0, 0), RGB(0, 0, 0), { 0,0, 50, 50 }, false);
+    static CImage mainResp;
+    static int c_n = 0; //response 이미지
+
+    std::wstring mainRespW[12] = {
+            L"img/gamePlay/spawn/1.png",
+            L"img/gamePlay/spawn/2.png",
+            L"img/gamePlay/spawn/3.png",
+            L"img/gamePlay/spawn/4.png",
+            L"img/gamePlay/spawn/5.png",
+            L"img/gamePlay/spawn/6.png",
+            L"img/gamePlay/spawn/7.png",
+            L"img/gamePlay/spawn/8.png",
+            L"img/gamePlay/spawn/9.png",
+            L"img/gamePlay/spawn/10.png",
+            L"img/gamePlay/spawn/11.png",
+            L"img/gamePlay/spawn/12.png",
+    };
 
     switch (uMsg)
     {
@@ -94,6 +111,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         gameStateManager.setCurrentState(GameState::START);
         gameStateManager.setImage(L"img/Inversus Intro.png");
         PlayMP3(L"sound/main intro.mp3");
+        mainResp.Load(mainRespW[c_n].c_str());
+
+        SetTimer(hWnd, 2, 100, NULL); // 죽고 난 뒤 생성 타이머
+
         break;
     }
     case WM_COMMAND:
@@ -208,6 +229,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     case WM_CHAR:
         switch (wParam)
         {
+        case '1':
+            mainBlock.status = false;
+            SetTimer(hWnd, 2, 100, NULL); // 죽고 난 뒤 생성 타이머
+            break;
         default:
             break;
         }
@@ -243,8 +268,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 gameUi.mainAsset(mDC, rect, mainBlock);
             }
             else { //죽고 난 뒤, 리스폰
-                SetTimer(hWnd, 2, 1000, NULL); // 죽고 난 뒤 생성 타이머
-                
+                resRet(mDC, { 0,0,50,50 }, mainResp);
             }
                 
            
@@ -286,8 +310,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             }
 
             break;
+        case 2:
+            c_n++;
+            if (c_n == 12) {
+                c_n = 0;
+                break;
+            }
+            mainResp.Destroy();
+            mainResp.Load(mainRespW[c_n].c_str());
+            break;
         case 10: //count down
-            setCountDown(gameUi, hWnd);
+            setCountDown(gameUi, hWnd, mainBlock);
             break;
         default:
             break;

@@ -11,8 +11,8 @@ int checkCrash(std::vector<Block> blocks, Block mainBlock) { // 메인 에셋이랑 검
 	return 0;
 }
 
-void resRet(HDC &mDC, COLORREF color, RECT rect) { // 사각형으로 생성하는 부분
-
+void resRet(HDC &mDC, RECT rect, CImage& mainResp) { // 사각형으로 생성하는 부분
+	mainResp.Draw(mDC, rect.left, rect.top, rect.right, rect.bottom, 0, 0, mainResp.GetWidth(), mainResp.GetHeight());
 }
 
 void ExpandRect(RECT& rect) { // 사이즈 확대
