@@ -2,11 +2,9 @@
 
 void GameUI::drawGameUI(HDC& mDC, GameUI& gameUi, RECT rect) {
 
-
-
 	// main asset
 	if (gameUi.countDownStatus) { //count down
-		mainAsset(mDC, rect, gameUi);
+		//mainAsset(mDC, rect, gameUi);
 	}
 
 	// hp bar
@@ -52,16 +50,19 @@ void GameUI::setBlackBlock(std::vector<Block>& blocks, int cellSize) { // ∞À¡§ ∫
 	
 }
 
-void GameUI::mainAsset(HDC& mDC, const RECT& rect, GameUI& gameUi) { 
+void GameUI::mainAsset(HDC& mDC, const RECT& rect, Block mainBlock) { 
+
 	HBRUSH hBrush;
 	HBRUSH oldBrush;
 
-	hBrush = CreateSolidBrush(RGB(200, 200, 200));
+	hBrush = CreateSolidBrush(mainBlock.color);
 	oldBrush = (HBRUSH)SelectObject(mDC, hBrush);
-	Rectangle(mDC, 0, 0, 500, 500);
+
+	RoundRect(mDC, mainBlock.rect.left, mainBlock.rect.top, mainBlock.rect.right, mainBlock.rect.bottom, 20, 20);
 
 	SelectObject(mDC, oldBrush);
 	DeleteObject(hBrush);
+
 }
 
 void GameUI::drawHP(HDC& mDC, const RECT& rect, int hp, GameUI& gameUi) {

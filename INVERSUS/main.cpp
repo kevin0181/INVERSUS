@@ -82,6 +82,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
     static RECT rect;
     static vector<Block> blocks;
+    static Block mainBlock(RGB(0, 0, 0), RGB(0, 0, 0), { 0,0, 50, 50 }, true);
 
     switch (uMsg)
     {
@@ -195,6 +196,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
             gameUi.printBlackBlock(blocks, mDC);
             gameUi.drawGameUI(mDC, gameUi, rect);
+
+            if (gameUi.countDownStatus) { //count down
+                gameUi.mainAsset(mDC, rect, mainBlock);
+            }
         }
 
         if (gameStateManager.getState() == GameState::SETTING) { //setting draw
