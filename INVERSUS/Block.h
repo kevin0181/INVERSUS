@@ -1,12 +1,16 @@
 #pragma once
+
 #include<atlimage.h>
 #include <Windows.h>
 #include <string>
 #include"Bullet.h"
+
 class Block {
 public:
 	
 	RECT rect;
+	RECT aroundRect;
+
 	COLORREF borderColor;
 	COLORREF color;
 	bool status;
@@ -58,7 +62,7 @@ public:
 
 	void print_red_Block(HDC& mDC, Block& redBlock);
 
-	void print_red_res(HDC& mDC, Block& redBlock, int r_n);
+	void print_red_res(HDC& mDC, Block& redBlock, int r_n, int cellSize);
 
 	void setRect(RECT rect) {
 		this->rect = rect;

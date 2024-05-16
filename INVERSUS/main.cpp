@@ -208,7 +208,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     case WM_LBUTTONUP:
         break;
     case WM_RBUTTONDOWN:
-        break;
+        break;  
     case WM_RBUTTONUP:
         break;
     case WM_MOUSEMOVE:
@@ -260,7 +260,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                     redB.print_red_Block(mDC, redB);
                 }
                 else {
-                    redB.print_red_res(mDC, redB, r_n);
+                    redB.print_red_res(mDC, redB, r_n, gameUi.cellSize);
                 }
             }
 
@@ -301,6 +301,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                     OffsetRect(&mainBlock.rect, 0, mainBlock.speed);
                     OffsetRect(&mainBlock.rect, 0, -checkCrash(blocks, mainBlock));
                 }
+
+                moveRedBlock(redBlocks, mainBlock); // redBlock이 mainBlock을 향해감
+
             }
             break;
         case 2: // main block resp 타이머

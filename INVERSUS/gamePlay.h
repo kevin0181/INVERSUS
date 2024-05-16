@@ -44,3 +44,38 @@ void blankMain(std::vector<Block>& blocks, Block* block) { // 메인 에셋 생성시, 
 		}
 	}
 }
+
+void moveRedBlock(std::vector<Block>& redBlocks, Block& mainBlock) {
+
+	for (Block& redBlock : redBlocks) { 
+		if (redBlock.status) {
+			// mainBlock의 중심 계산
+			int mainCenterX = (mainBlock.rect.left + mainBlock.rect.right) / 2;
+			int mainCenterY = (mainBlock.rect.top + mainBlock.rect.bottom) / 2;
+
+			// redBlock의 중심 계산
+			int redCenterX = (redBlock.rect.left + redBlock.rect.right) / 2;
+			int redCenterY = (redBlock.rect.top + redBlock.rect.bottom) / 2;
+
+			// mainBlock을 향해 이동할 좌표 계산
+			if (redCenterX < mainCenterX) {
+				redBlock.rect.left += redBlock.speed;
+				redBlock.rect.right += redBlock.speed;
+			}
+			else if (redCenterX > mainCenterX) {
+				redBlock.rect.left -= redBlock.speed;
+				redBlock.rect.right -= redBlock.speed;
+			}
+
+			if (redCenterY < mainCenterY) {
+				redBlock.rect.top += redBlock.speed;
+				redBlock.rect.bottom += redBlock.speed;
+			}
+			else if (redCenterY > mainCenterY) {
+				redBlock.rect.top -= redBlock.speed;
+				redBlock.rect.bottom -= redBlock.speed;
+			}
+		}
+	}
+
+}

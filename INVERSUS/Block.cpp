@@ -14,7 +14,7 @@ void Block::print_red_Block(HDC& mDC, Block& redBlock) {
 
 }
 
-void Block::print_red_res(HDC& mDC, Block& redBlock, int r_n) {
+void Block::print_red_res(HDC& mDC, Block& redBlock, int r_n, int cellSize) {
 
 	int maxShrink = 30;  // 최대 축소 크기
 	int shrink = (maxShrink * r_n) / 12;  // r_n에 따른 축소량 계산
@@ -41,4 +41,5 @@ void Block::print_red_res(HDC& mDC, Block& redBlock, int r_n) {
 	SelectObject(mDC, hOldPen);
 	DeleteObject(hPen);
 	SelectObject(mDC, oldBrush);
+
 };
