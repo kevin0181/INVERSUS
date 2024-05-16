@@ -137,12 +137,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 KillTimer(hWnd, 1);
                 setting.setting(wParam, hWnd);
                 gameStateManager.setCurrentState(GameState::SETTING);
+                InvalidateRect(hWnd, NULL, false);
                 break;
             }
             if (gameStateManager.getState() == GameState::SETTING) { // setting -> game play
                 SetTimer(hWnd, 1, 1, NULL);
                 gameStateManager.setImage(L"img/gamePlay/score bar.png");
                 gameStateManager.setCurrentState(GameState::GAMEPLAY);
+                InvalidateRect(hWnd, NULL, false);
                 break;
             }
             break;
@@ -173,6 +175,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             gameUi.setBlackBlock(blocks, gameUi.cellSize); // 검정 블럭 설정
             blankMain(blocks, &mainBlock); // 빈 부분 만들기
             redBlocks.clear();
+            mainBlock.status = false;
             InvalidateRect(hWnd, NULL, false);
             break;
         }

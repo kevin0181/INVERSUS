@@ -1,14 +1,25 @@
 #pragma once
 
-int checkCrash(std::vector<Block> blocks, Block mainBlock) { // 메인 에셋이랑 검은돌이랑 충돌 체크
+//int checkCrash(const std::vector<Block> blocks, const Block mainBlock) { // 메인 에셋이랑 검은돌이랑 충돌 체크
+//	RECT checkRect;
+//
+//	for (int i = 0; i < blocks.size(); ++i) {
+//		if (IntersectRect(&checkRect, &blocks[i].rect, &mainBlock.rect) && blocks[i].status) {
+//			return mainBlock.speed;
+//		}
+//	}
+//	return 0;
+//}
+
+int checkCrash(const std::vector<Block>& blocks, const Block& mainBlock) {
 	RECT checkRect;
 
-	for (int i = 0; i < blocks.size(); ++i) {
-		if (IntersectRect(&checkRect, &blocks[i].rect, &mainBlock.rect) && blocks[i].status) {
-			return mainBlock.speed;
+	for (const Block& block : blocks) { // 범위 기반 for 루프 사용
+		if (block.status && IntersectRect(&checkRect, &block.rect, &mainBlock.rect)) {
+			return mainBlock.speed; // 충돌이 감지되면 mainBlock의 속도만큼 반환
 		}
 	}
-	return 0;
+	return 0; // 충돌이 없으면 0 반환
 }
 
 void resRet(HDC &mDC, RECT rect, CImage& mainResp) { // 사각형으로 생성하는 부분
