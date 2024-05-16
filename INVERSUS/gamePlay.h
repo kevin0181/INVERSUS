@@ -61,19 +61,27 @@ void moveRedBlock(std::vector<Block>& redBlocks, Block& mainBlock) {
 			if (redCenterX < mainCenterX) {
 				redBlock.rect.left += redBlock.speed;
 				redBlock.rect.right += redBlock.speed;
+				redBlock.aroundRect.left += redBlock.speed;
+				redBlock.aroundRect.right += redBlock.speed;
 			}
 			else if (redCenterX > mainCenterX) {
 				redBlock.rect.left -= redBlock.speed;
 				redBlock.rect.right -= redBlock.speed;
+				redBlock.aroundRect.left -= redBlock.speed;
+				redBlock.aroundRect.right -= redBlock.speed;
 			}
 
 			if (redCenterY < mainCenterY) {
 				redBlock.rect.top += redBlock.speed;
 				redBlock.rect.bottom += redBlock.speed;
+				redBlock.aroundRect.top += redBlock.speed;
+				redBlock.aroundRect.bottom += redBlock.speed;
 			}
 			else if (redCenterY > mainCenterY) {
 				redBlock.rect.top -= redBlock.speed;
 				redBlock.rect.bottom -= redBlock.speed;
+				redBlock.aroundRect.top -= redBlock.speed;
+				redBlock.aroundRect.bottom -= redBlock.speed;
 			}
 		}
 	}

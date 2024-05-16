@@ -4,6 +4,16 @@ void Block::print_red_Block(HDC& mDC, Block& redBlock) {
 	HBRUSH hBrush;
 	HBRUSH oldBrush;
 
+	SetBkMode(mDC, TRANSPARENT);
+
+	hBrush = CreateHatchBrush(HS_DIAGCROSS, RGB(255, 0, 0));
+	oldBrush = (HBRUSH)SelectObject(mDC, hBrush);
+
+	RoundRect(mDC, redBlock.aroundRect.left, aroundRect.top, aroundRect.right, aroundRect.bottom, 20, 20);
+
+	SelectObject(mDC, oldBrush);
+	DeleteObject(hBrush);
+
 	hBrush = CreateSolidBrush(redBlock.color);
 	oldBrush = (HBRUSH)SelectObject(mDC, hBrush);
 
@@ -11,7 +21,6 @@ void Block::print_red_Block(HDC& mDC, Block& redBlock) {
 
 	SelectObject(mDC, oldBrush);
 	DeleteObject(hBrush);
-
 }
 
 void Block::print_red_res(HDC& mDC, Block& redBlock, int r_n, int cellSize) {

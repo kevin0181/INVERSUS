@@ -53,7 +53,7 @@ public:
 		  L"img/gamePlay/redspawn/12.png",
 	};
 
-	int speed = 2;
+	int speed = 3;
 
 	Block() {};
 	Block(COLORREF color, COLORREF borderColor, RECT rect) :rect(rect), status(true), color(color), borderColor(borderColor) {};
