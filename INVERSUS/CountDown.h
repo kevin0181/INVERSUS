@@ -3,7 +3,7 @@
 
 void setCountDown(GameUI& gameUi, HWND& hWnd, Block& mainBlock) {
     gameUi.countDownStatus = true;
-    if (gameUi.countDown == 3) {
+    if (gameUi.countDown == 2) {
         gameUi.countDownStatus = false;
         gameUi.countDown = 0;
         KillTimer(hWnd, 10);
