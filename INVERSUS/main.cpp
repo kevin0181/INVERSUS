@@ -140,7 +140,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 break;
             }
             if (gameStateManager.getState() == GameState::SETTING) { // setting -> game play
-                SetTimer(hWnd, 1, 16, NULL);
+                SetTimer(hWnd, 1, 1, NULL);
                 gameStateManager.setImage(L"img/gamePlay/score bar.png");
                 gameStateManager.setCurrentState(GameState::GAMEPLAY);
                 break;
@@ -240,7 +240,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 gameUi.mainAsset(mDC, mainBlock);
             }
             else { //죽고 난 뒤, 리스폰
-                resRet(mDC, mainBlock.rect, mainBlock.respImg);
+                //resRet(mDC, mainBlock.rect, mainBlock.respImg);
+                mainBlock.print_main_res(mDC, mainBlock, c_n, gameUi.cellSize);
             }
 
         }
@@ -287,7 +288,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             break;
         case 2: // main block resp 타이머
         {
-            static int count = 0;
+            /*static int count = 0;
             c_n++;
             if (c_n == 12) {
                 c_n = 0;
@@ -303,6 +304,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
             mainBlock.respImg.Destroy();
             mainBlock.respImg.Load(mainBlock.mainRespW[c_n].c_str());
+            InvalidateRect(hWnd, NULL, false);*/
+
+            static int count = 0;
+            c_n++;
+            if (c_n == 12) {
+                c_n = 0;
+                count++;
+            }
+
+            if (count == 3) {
+                count = 0;
+                mainBlock.status = true;
+                KillTimer(hWnd, 2);
+                break;
+            }
+
             InvalidateRect(hWnd, NULL, false);
             break;
         }
