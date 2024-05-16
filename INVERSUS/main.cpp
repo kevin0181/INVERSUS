@@ -228,6 +228,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         mDC = CreateCompatibleDC(hDC);
         hBitmap = CreateCompatibleBitmap(hDC, rect.right, rect.bottom);
         SelectObject(mDC, (HBITMAP)hBitmap);
+
         FillRect(mDC, &rect, (HBRUSH)GetStockObject(WHITE_BRUSH));
 
         gameStateManager.DrawImage(mDC, rect); // 전체배경
@@ -248,13 +249,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             gameUi.drawGameUI(mDC, gameUi, rect);
 
             if (mainBlock.status) { //살아 있을 경우
-                gameUi.mainAsset(mDC, rect, mainBlock);
+                gameUi.mainAsset(mDC, mainBlock);
             }
             else { //죽고 난 뒤, 리스폰
                 resRet(mDC, mainBlock.rect, mainBlock.respImg);
             }
-                
-           
+            
+            for (auto& redB : redBlocks) {
+                if (redB.status) {
+                    redB.print_red_Block(mDC, redB);
+                }
+                else {
+                    redB.print_red_res(mDC, redB, r_n);
+                }
+            }
+
         }
 
         if (gameStateManager.getState() == GameState::SETTING) { //setting draw
@@ -315,10 +324,26 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             break;
         }
         case 3: //red block resp 타이머
-            
+        {
+            static int r_count = 0;
+            r_n++;
+            if (r_n == 12) {
+                r_n = 0;
+                r_count++;
+            }
+
+            if (r_count == 3) {
+                r_count = 0;
+                for (Block& redB : redBlocks) {
+                    redB.status = true;
+                }
+                KillTimer(hWnd, 3);
+                break;
+            }
             break;
+        }
         case 4: //red block 생성 타이머
-            if (mainBlock.status && redBlocks.size() == 0) { // 메인 블럭이 활성화 되어 있는 상태에만 redBlock 생성
+            if (mainBlock.status && redBlocks.size() <= 0) { // 메인 블럭이 활성화 되어 있는 상태에만 redBlock 생성
                 uniform_int_distribution<int> uid_redBlock(1, gameStateManager.getLevel() * 2 + 2);
                 uniform_int_distribution<int> uid_redBlockRect(1, blocks.size());
 
@@ -335,7 +360,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                         rand_i.push_back(num);
                     }
                 }
+                
+                for (int i = 0; i < rand_i.size(); ++i) {
+                    Block redB(RGB(255, 0, 0), RGB(0, 0, 0), blocks[rand_i[i]].rect, false);
+                    //redB.respImg.Load(redB.redRespW[r_n].c_str());
+                    redBlocks.push_back(redB);
+                }
 
+                SetTimer(hWnd, 3, 100, NULL);
             }
             break;
         case 10: //count down
