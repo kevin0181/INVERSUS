@@ -112,9 +112,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         gameStateManager.setImage(L"img/Inversus Intro.png");
         PlayMP3(L"sound/main intro.mp3");
         mainResp.Load(mainRespW[c_n].c_str());
-
-        SetTimer(hWnd, 2, 100, NULL); // 죽고 난 뒤 생성 타이머
-
         break;
     }
     case WM_COMMAND:
@@ -188,6 +185,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             levelSetting.level_setting(wParam, hWnd, rect, mainBlock, blocks);
             gameUi.setBlackBlock(blocks, gameUi.cellSize); // 검정 블럭 설정
             blankMain(blocks, &mainBlock); // 빈 부분 만들기
+
+            SetTimer(hWnd, 2, 100, NULL); // 죽고 난 뒤 생성 타이머
+
             InvalidateRect(hWnd, NULL, false);
             break;
         }
@@ -311,14 +311,24 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
             break;
         case 2:
+        {
+            static int count = 0;
             c_n++;
             if (c_n == 12) {
                 c_n = 0;
+                count++;
+            }
+
+            if (count == 3) {
+                count = 0;
+                KillTimer(hWnd, 2);
                 break;
             }
+
             mainResp.Destroy();
             mainResp.Load(mainRespW[c_n].c_str());
             break;
+        }
         case 10: //count down
             setCountDown(gameUi, hWnd, mainBlock);
             break;

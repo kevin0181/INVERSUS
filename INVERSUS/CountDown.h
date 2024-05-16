@@ -7,7 +7,6 @@ void setCountDown(GameUI& gameUi, HWND& hWnd, Block& mainBlock) {
         gameUi.countDownStatus = false;
         gameUi.countDown = 0;
         KillTimer(hWnd, 10);
-        KillTimer(hWnd, 2);
         mainBlock.status = true;
         SetTimer(hWnd, 1, 1, NULL); //game play timer
         GameBackgroundSound(setting.getMusic_n());
