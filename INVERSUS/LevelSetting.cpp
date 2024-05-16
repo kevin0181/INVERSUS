@@ -63,17 +63,23 @@ void LevelSetting::level_setting(WPARAM wParam, HWND& hWnd, RECT rect, Block& ma
         switch (level) {
         case 1: // lelvel easy
             setEnter(hWnd, rect, mainBlock, blocks);
+            SetTimer(hWnd, 2, 100, NULL); // 죽고 난 뒤 생성 타이머
+            SetTimer(hWnd, 4, 1000, NULL); // red block 생성 타이머
             break;
         case 2: // level nomal
             setEnter(hWnd, rect, mainBlock, blocks);
-
+            SetTimer(hWnd, 2, 100, NULL); // 죽고 난 뒤 생성 타이머
+            SetTimer(hWnd, 4, 1000, NULL); // red block 생성 타이머
             break;
         case 3: // level hard
             setEnter(hWnd, rect, mainBlock, blocks);
-
+            SetTimer(hWnd, 2, 100, NULL); // 죽고 난 뒤 생성 타이머
+            SetTimer(hWnd, 4, 1000, NULL); // red block 생성 타이머
             break;
         case 4: // level very hard
             setEnter(hWnd, rect, mainBlock, blocks);
+            SetTimer(hWnd, 2, 100, NULL); // 죽고 난 뒤 생성 타이머
+            SetTimer(hWnd, 4, 1000, NULL); // red block 생성 타이머
             break;
         case 5: // 뒤로가기
             if (gameStateManager->getPlayer() == 1) {

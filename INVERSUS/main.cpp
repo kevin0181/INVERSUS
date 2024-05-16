@@ -3,6 +3,7 @@
 #include <random>
 #include <vector>
 #include <string>
+#include <set>
 
 #include "sound.h"
 #include "PlayerSetting.h"
@@ -74,7 +75,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 
 random_device rd;
 mt19937 gen(rd());
-uniform_int_distribution<int> uid_RGB(0, 255);
+
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
     PAINTSTRUCT ps;
@@ -83,25 +85,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
     static RECT rect;
 
-    static std::vector<Block> blocks;
+    static vector<Block> blocks;
     static Block mainBlock(RGB(0, 0, 0), RGB(0, 0, 0), { 0,0, 50, 50 }, false);
-    static CImage mainResp;
-    static int c_n = 0; //response 이미지
 
-    std::wstring mainRespW[12] = {
-            L"img/gamePlay/spawn/1.png",
-            L"img/gamePlay/spawn/2.png",
-            L"img/gamePlay/spawn/3.png",
-            L"img/gamePlay/spawn/4.png",
-            L"img/gamePlay/spawn/5.png",
-            L"img/gamePlay/spawn/6.png",
-            L"img/gamePlay/spawn/7.png",
-            L"img/gamePlay/spawn/8.png",
-            L"img/gamePlay/spawn/9.png",
-            L"img/gamePlay/spawn/10.png",
-            L"img/gamePlay/spawn/11.png",
-            L"img/gamePlay/spawn/12.png",
-    };
+    static int c_n = 0; //response 이미지
+    static int r_n = 0;
+
+    static vector<Block> redBlocks;
 
     switch (uMsg)
     {
@@ -111,7 +101,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         gameStateManager.setCurrentState(GameState::START);
         gameStateManager.setImage(L"img/Inversus Intro.png");
         PlayMP3(L"sound/main intro.mp3");
-        mainResp.Load(mainRespW[c_n].c_str());
+        mainBlock.respImg.Load(mainBlock.mainRespW[c_n].c_str());
         break;
     }
     case WM_COMMAND:
@@ -185,9 +175,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             levelSetting.level_setting(wParam, hWnd, rect, mainBlock, blocks);
             gameUi.setBlackBlock(blocks, gameUi.cellSize); // 검정 블럭 설정
             blankMain(blocks, &mainBlock); // 빈 부분 만들기
-
-            SetTimer(hWnd, 2, 100, NULL); // 죽고 난 뒤 생성 타이머
-
             InvalidateRect(hWnd, NULL, false);
             break;
         }
@@ -229,10 +216,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     case WM_CHAR:
         switch (wParam)
         {
-        case '1':
-            mainBlock.status = false;
-            SetTimer(hWnd, 2, 100, NULL); // 죽고 난 뒤 생성 타이머
-            break;
         default:
             break;
         }
@@ -268,7 +251,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 gameUi.mainAsset(mDC, rect, mainBlock);
             }
             else { //죽고 난 뒤, 리스폰
-                resRet(mDC, { 0,0,50,50 }, mainResp);
+                resRet(mDC, mainBlock.rect, mainBlock.respImg);
             }
                 
            
@@ -288,29 +271,30 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     case WM_TIMER:
         switch (wParam)
         {
-        case 1: //game Play
-            if (mainBlock.left) {
-                OffsetRect(&mainBlock.rect, -mainBlock.speed, 0);
-                OffsetRect(&mainBlock.rect, checkCrash(blocks, mainBlock), 0);
-            }
+        case 1: //main block move
+            if (mainBlock.status) {
+                if (mainBlock.left) {
+                    OffsetRect(&mainBlock.rect, -mainBlock.speed, 0);
+                    OffsetRect(&mainBlock.rect, checkCrash(blocks, mainBlock), 0);
+                }
 
-            if (mainBlock.right) {
-                OffsetRect(&mainBlock.rect, mainBlock.speed, 0);
-                OffsetRect(&mainBlock.rect, -checkCrash(blocks, mainBlock), 0);
-            }
+                if (mainBlock.right) {
+                    OffsetRect(&mainBlock.rect, mainBlock.speed, 0);
+                    OffsetRect(&mainBlock.rect, -checkCrash(blocks, mainBlock), 0);
+                }
 
-            if (mainBlock.up) {
-                OffsetRect(&mainBlock.rect, 0, -mainBlock.speed);
-                OffsetRect(&mainBlock.rect, 0, checkCrash(blocks, mainBlock));
-            }
-            
-            if (mainBlock.down) {
-                OffsetRect(&mainBlock.rect, 0, mainBlock.speed);
-                OffsetRect(&mainBlock.rect, 0, -checkCrash(blocks, mainBlock));
-            }
+                if (mainBlock.up) {
+                    OffsetRect(&mainBlock.rect, 0, -mainBlock.speed);
+                    OffsetRect(&mainBlock.rect, 0, checkCrash(blocks, mainBlock));
+                }
 
+                if (mainBlock.down) {
+                    OffsetRect(&mainBlock.rect, 0, mainBlock.speed);
+                    OffsetRect(&mainBlock.rect, 0, -checkCrash(blocks, mainBlock));
+                }
+            }
             break;
-        case 2:
+        case 2: // main block resp 타이머
         {
             static int count = 0;
             c_n++;
@@ -321,14 +305,39 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
             if (count == 3) {
                 count = 0;
+                mainBlock.status = true;
                 KillTimer(hWnd, 2);
                 break;
             }
 
-            mainResp.Destroy();
-            mainResp.Load(mainRespW[c_n].c_str());
+            mainBlock.respImg.Destroy();
+            mainBlock.respImg.Load(mainBlock.mainRespW[c_n].c_str());
             break;
         }
+        case 3: //red block resp 타이머
+            
+            break;
+        case 4: //red block 생성 타이머
+            if (mainBlock.status && redBlocks.size() == 0) { // 메인 블럭이 활성화 되어 있는 상태에만 redBlock 생성
+                uniform_int_distribution<int> uid_redBlock(1, gameStateManager.getLevel() * 2 + 2);
+                uniform_int_distribution<int> uid_redBlockRect(1, blocks.size());
+
+                int rand = uid_redBlock(gen); // redBlock 개수
+                vector<int> rand_i; //redBlock 수
+                set<int> uniqueNumbers; // 중복 방지를 위한 집합
+
+                while (rand_i.size() < rand) {
+                    int num = uid_redBlockRect(gen);
+
+                    // 중복 여부 검사
+                    if (uniqueNumbers.find(num) == uniqueNumbers.end()) {
+                        uniqueNumbers.insert(num);
+                        rand_i.push_back(num);
+                    }
+                }
+
+            }
+            break;
         case 10: //count down
             setCountDown(gameUi, hWnd, mainBlock);
             break;
