@@ -418,6 +418,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                             //만약 충돌된 상태면 총알 지워버리기
                             mainBullets.erase(mainBullets.begin() + i);
                         }
+                        RECT r;
+                        if (!IntersectRect(&r, &mainBullets[i].rect, &gameUi.gameBordRect)) {
+                            mainBullets.erase(mainBullets.begin() + i);
+                        }
 
                     }
                 }
