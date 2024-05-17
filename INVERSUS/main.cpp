@@ -140,7 +140,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                         b->left = true;
                         b->status = true;
                         if (vk_count >= 15) {
-                            b->speed = 15;
+                            b->speed = b->max_speed;
                         }
                     }
                     vk_count = 0;
@@ -154,7 +154,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                         b->right = true;
                         b->status = true;
                         if (vk_count >= 15) {
-                            b->speed = 15;
+                            b->speed = b->max_speed;
                         }
                     }
                     vk_count = 0;
@@ -168,7 +168,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                         b->up = true;
                         b->status = true;
                         if (vk_count >= 15) {
-                            b->speed = 15;
+                            b->speed = b->max_speed;
                         }
                     }
                     vk_count = 0;
@@ -182,7 +182,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                         b->down = true;
                         b->status = true;
                         if (vk_count >= 15) {
-                            b->speed = 15;
+                            b->speed = b->max_speed;
                         }
                     }
                     vk_count = 0;
