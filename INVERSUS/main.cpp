@@ -15,10 +15,9 @@
 #include "CountDown.h"
 #include "Block.h"
 #include "gamePlay.h"
+#include "Explodes.h"
 
 using namespace std;
-
-ULONG_PTR gdiplusToken;
 
 HINSTANCE g_hInst;
 LPCTSTR lpszClass = L"INVERSUS";
@@ -95,6 +94,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     static int r_n = 0;
   
     static vector<Block> redBlocks;
+
+    static vector<Explosion> explodes;
 
     switch (uMsg)
     {
@@ -245,7 +246,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         if (gameStateManager.getState() == GameState::LEVEL) { // game level 선택
             levelSetting.level_setting(wParam, hWnd, rect, mainBlock, blocks);
             gameUi.setBlackBlock(blocks, gameUi.cellSize); // 검정 블럭 설정
-            //blankMain(blocks, &mainBlock, redBlocks); // 빈 부분 만들기
             redBlocks.clear();
             mainBlock.status = false;
             InvalidateRect(hWnd, NULL, false);
@@ -337,6 +337,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             else { //죽고 난 뒤, 리스폰
                 mainBlock.print_main_res(mDC, mainBlock, c_n, gameUi.cellSize);
             }
+
+            // 폭발 그리기
+            for (const auto& explosion : explodes) {
+                explosion.draw(mDC, explosion);
+            }
+
         }
 
         if (gameStateManager.getState() == GameState::SETTING) { //setting draw
@@ -376,7 +382,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                     OffsetRect(&mainBlock.rect, 0, -checkCrash(blocks, mainBlock));
                 }
 
-                if (moveRedBlock(redBlocks, mainBlock, mDC)) { // redBlock이 mainBlock을 향해감 + main + red충돌체크
+                if (moveRedBlock(redBlocks, mainBlock, mDC, explodes)) { // redBlock이 mainBlock을 향해감 + main + red충돌체크
                     mainBlock.rect = { 0,0,50,50 };
                     OffsetRect(&mainBlock.rect, (gameUi.gameBordRect.right / 2) - 25, (gameUi.gameBordRect.bottom / 2) + 30);
                     SetTimer(hWnd, 2, 100, NULL); // 죽고 난 뒤 생성 타이머
@@ -404,16 +410,25 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
                         checkBulletBlock(mainBullets[i], blocks); // 총알 + 검은 블록 충돌 검사
                         
-                        if (checkRedBlockBullet(mainBullets[i], redBlocks, blocks, mDC, gameUi)) { // 총알 + 빨간 블록 충돌 검사
+                        if (checkRedBlockBullet(mainBullets[i], redBlocks, blocks, mDC, gameUi, explodes)) { // 총알 + 빨간 블록 충돌 검사
                             //만약 충돌된 상태면 총알 지워버리기
                             mainBullets.erase(mainBullets.begin() + i);
                         }
 
                     }
                 }
-
-                InvalidateRect(hWnd, NULL, false);
             }
+
+            for (auto it = explodes.begin(); it != explodes.end(); ) { // 폭발 애니메이션 프레임
+                if (!it->update()) {
+                    it = explodes.erase(it);
+                }
+                else {
+                    ++it;
+                }
+            }
+
+            InvalidateRect(hWnd, NULL, false);
             break;
         case 2: // main block resp 타이머
         {

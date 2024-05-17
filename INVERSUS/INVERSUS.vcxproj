@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="CountDown.h" />
+    <ClInclude Include="Explodes.h" />
     <ClInclude Include="gamePlay.h" />
     <ClInclude Include="GameStateManager.h" />
     <ClInclude Include="LevelSetting.h" />
