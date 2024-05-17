@@ -89,6 +89,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     static vector<Bullet> mainBullets; //player 1 bullet
     static int vk_count = 0; //press bullet count
     static bool vk_status = false;
+    static int reloadCnt = 0; // 재장전 쿨타임 1발씩.
 
     static int c_n = 0; //response 이미지
     static int r_n = 0;
@@ -511,6 +512,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             if (vk_status) {
                 vk_count++;
             }
+
+            if (mainBullets.size() < 6) { //재장전
+                if (reloadCnt >= 20) {
+                    Bullet bullet;
+                    mainBullets.push_back(bullet);
+                    reloadCnt = 0;
+                }
+            }
+
             break;
         case 10: //count down
             setCountDown(gameUi, hWnd, mainBlock);

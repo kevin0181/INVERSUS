@@ -10,7 +10,7 @@ int checkCrash(const std::vector<Block>& blocks, const Block& mainBlock,const Ga
 		}
 	}
 	RECT changeGameBordRect = gameUi.gameBordRect;
-		InflateRect(&changeGameBordRect, -gameUi.cellSize, -gameUi.cellSize);
+	InflateRect(&changeGameBordRect, -(mainBlock.rect.right - mainBlock.rect.left), -(mainBlock.rect.bottom - mainBlock.rect.top));
 	if (!IntersectRect(&checkRect, &changeGameBordRect, &mainBlock.rect)) {
 		return mainBlock.speed;
 	}
