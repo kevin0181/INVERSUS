@@ -94,6 +94,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     static int c_n = 0; //response 이미지
     static int r_n = 0;
   
+    static int combo = 0;
+    static RECT comboRect;
+
     static vector<Block> redBlocks;
 
     static vector<Explosion> explodes;
@@ -343,8 +346,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             // 폭발 그리기
             for (const auto& explosion : explodes) {
                 explosion.draw(mDC, explosion);
+                comboRect = explosion.rect;
             }
 
+            if (combo > 1) //combo
+                print_combo(mDC, combo, comboRect);
+
+            print_score(mDC, gameUi); //score
         }
 
         if (gameStateManager.getState() == GameState::SETTING) { //setting draw
@@ -430,7 +438,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                         }
 
                         if (mainBullets.size() > 0) {
-                            if (checkRedBlockBullet(mainBullets[i], redBlocks, blocks, mDC, gameUi, explodes)) { // 총알 + 빨간 블록 충돌 검사
+                            if (checkRedBlockBullet(mainBullets[i], redBlocks, blocks, mDC, gameUi, explodes, combo)) { // 총알 + 빨간 블록 충돌 검사
                                 //만약 충돌된 상태면 총알 지워버리기
                                 mainBullets.erase(mainBullets.begin() + i);
                             }
@@ -442,6 +450,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             for (auto it = explodes.begin(); it != explodes.end(); ) { // 폭발 애니메이션 프레임
                 if (!it->update()) {
                     it = explodes.erase(it);
+                    
+                    gameUi.setScore(gameUi.getScore() + 100 * combo); // 기본 죽였을때 점수
                     gameUi.setExp(gameUi.getExp() + 5);
                     if (gameUi.getExp() >= 100) {
                         gameUi.setExp(0);
@@ -451,6 +461,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                     ++it;
                 }
             }
+
+            gameUi.setScore(gameUi.getScore() + 1);
 
             InvalidateRect(hWnd, NULL, false);
             break;

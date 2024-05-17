@@ -118,7 +118,7 @@ void LevelSetting::setEnter(HWND hWnd, RECT rect, Block& mainBlock, std::vector<
     PlayMP3Close();
     CloseSecondMP3();
     gameStateManager->setLevel(level);
-    gameStateManager->setImage(L"img/gamePlay/score bar.png");
+    gameStateManager->setImage(L"img/gamePlay/score bar_v2.png");
     gameStateManager->setCurrentState(GameState::GAMEPLAY);
     PlaySecondMP3(L"sound/countdown2.wav"); // 버튼 사운드
     SetTimer(hWnd, 10, 1000, NULL);  // count down start

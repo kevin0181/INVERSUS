@@ -166,10 +166,12 @@ void checkBulletBlock(const Bullet& bullet, std::vector<Block>& blocks) {
 	}
 }
 
-void aroundBroken(std::vector<Block>& redBlocks, Block& redBlock, std::vector<Explosion>& explodes, std::vector<Block>& blocks) { //연쇄폭발.
+void aroundBroken(std::vector<Block>& redBlocks, Block& redBlock, std::vector<Explosion>& explodes, std::vector<Block>& blocks, int& combo) { //연쇄폭발.
 	RECT ch_rect;
+	combo = 0;
 	for (int i = redBlocks.size() - 1; i >= 0; --i) {
 		if (IntersectRect(&ch_rect, &redBlocks[i].rect, &redBlock.aroundRect)) {
+			combo++;
 			// 폭발
 			Explosion b(redBlocks[i].rect, redBlocks[i].color);
 			explodes.push_back(b);
@@ -186,7 +188,7 @@ void aroundBroken(std::vector<Block>& redBlocks, Block& redBlock, std::vector<Ex
 	}
 }
 
-bool checkRedBlockBullet(Bullet& bullet, std::vector<Block>& redBlocks, std::vector<Block>& blocks, HDC& mDC, const GameUI& gameUi, std::vector<Explosion>& explodes) {
+bool checkRedBlockBullet(Bullet& bullet, std::vector<Block>& redBlocks, std::vector<Block>& blocks, HDC& mDC, const GameUI& gameUi, std::vector<Explosion>& explodes, int& combo) {
 	RECT ch_rect;
 	for (int i = redBlocks.size() - 1; i >= 0; --i) {
 		if (IntersectRect(&ch_rect, &redBlocks[i].rect, &bullet.rect) && redBlocks[i].status) {
@@ -202,7 +204,7 @@ bool checkRedBlockBullet(Bullet& bullet, std::vector<Block>& redBlocks, std::vec
 			}
 
 			// game score 및 주변 터짐
-			aroundBroken(redBlocks, redBlocks[i], explodes, blocks);
+			aroundBroken(redBlocks, redBlocks[i], explodes, blocks, combo);
 
 			if (!bullet.through) {
 				return true;
@@ -210,4 +212,43 @@ bool checkRedBlockBullet(Bullet& bullet, std::vector<Block>& redBlocks, std::vec
 		}
 	}
 	return false;
+}
+
+void print_score(HDC& mDC, const GameUI& gameUi) { // const 제거
+    // 폰트 생성
+    HFONT hFont = CreateFont(
+        36,                        // 글자 높이
+        0,                         // 글자 폭
+        0,                         // 글자 각도
+        0,                         // 기준선 각도
+        FW_BOLD,                   // 글자 굵기
+        FALSE,                     // 기울임 글자
+        FALSE,                     // 밑줄
+        FALSE,                     // 취소선
+        DEFAULT_CHARSET,           // 문자 집합
+        OUT_DEFAULT_PRECIS,        // 출력 정확도
+        CLIP_DEFAULT_PRECIS,       // 클립 정확도
+        DEFAULT_QUALITY,           // 출력 품질
+        DEFAULT_PITCH | FF_SWISS,  // 글꼴 및 글꼴 패밀리
+        L"Arial");                 // 글꼴 이름
+
+    // 폰트 선택
+    HFONT hOldFont = (HFONT)SelectObject(mDC, hFont);
+
+    // 스코어 출력
+    int score = gameUi.getScore();
+    std::wstring scoreText = L"Score: " + std::to_wstring(score);
+    RECT scoreRect = { 10, 10, 200, 50 };
+    DrawText(mDC, scoreText.c_str(), -1, &scoreRect, DT_LEFT | DT_TOP | DT_SINGLELINE);
+
+    // 이전 폰트 복원 및 새 폰트 삭제
+    SelectObject(mDC, hOldFont);
+    DeleteObject(hFont);
+}
+
+void print_combo(HDC& mDC, const int& combo, RECT rect) {
+	std::wstring scoreText = L"combo X " + std::to_wstring(combo);
+	RECT scoreRect = rect;
+	InflateRect(&scoreRect, 10, 0);
+	DrawText(mDC, scoreText.c_str(), -1, &scoreRect, DT_LEFT | DT_TOP | DT_SINGLELINE);
 }

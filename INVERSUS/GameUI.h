@@ -66,4 +66,11 @@ public:
 		return exp;
 	}
 
+	void setScore(int score) {
+		this->score = score;
+	}
+
+	int getScore() const {
+		return score;
+	}
 };
