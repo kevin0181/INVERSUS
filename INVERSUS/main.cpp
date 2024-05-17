@@ -384,6 +384,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 }
 
                 if (moveRedBlock(redBlocks, mainBlock, mDC, explodes)) { // redBlock이 mainBlock을 향해감 + main + red충돌체크
+
+                    gameUi.setHp(gameUi.getHp() - 30);
+
+                    if (gameUi.getHp() <= 0) {
+                        //game over
+
+                    }
+
                     mainBlock.rect = { 0,0,50,50 }; //main block 리스폰 부분
                     mainBlock.left = false;
                     mainBlock.right = false;
@@ -414,16 +422,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                         }
 
                         checkBulletBlock(mainBullets[i], blocks); // 총알 + 검은 블록 충돌 검사
-                        
-                        if (checkRedBlockBullet(mainBullets[i], redBlocks, blocks, mDC, gameUi, explodes)) { // 총알 + 빨간 블록 충돌 검사
-                            //만약 충돌된 상태면 총알 지워버리기
-                            mainBullets.erase(mainBullets.begin() + i);
-                        }
+
                         RECT r;
                         if (!IntersectRect(&r, &mainBullets[i].rect, &gameUi.gameBordRect)) {
                             mainBullets.erase(mainBullets.begin() + i);
                         }
 
+                        if (checkRedBlockBullet(mainBullets[i], redBlocks, blocks, mDC, gameUi, explodes)) { // 총알 + 빨간 블록 충돌 검사
+                            //만약 충돌된 상태면 총알 지워버리기
+                            mainBullets.erase(mainBullets.begin() + i);
+                        }
+                       
                     }
                 }
             }
@@ -431,6 +440,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             for (auto it = explodes.begin(); it != explodes.end(); ) { // 폭발 애니메이션 프레임
                 if (!it->update()) {
                     it = explodes.erase(it);
+                    gameUi.setExp(gameUi.getExp() + 5);
+                    if (gameUi.getExp() >= 100) {
+                        gameUi.setExp(0);
+                    }
                 }
                 else {
                     ++it;
@@ -514,7 +527,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             }
 
             if (mainBullets.size() < 6) { //재장전
-                if (reloadCnt >= 20) {
+                reloadCnt++;
+                if (reloadCnt >= 15) {
                     Bullet bullet;
                     mainBullets.push_back(bullet);
                     reloadCnt = 0;

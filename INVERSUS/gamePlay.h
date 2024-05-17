@@ -127,11 +127,12 @@ void moveChangeBackgroundBlack(const std::vector<Block>& redBlocks, std::vector<
 }
 
 bool findFalseBullet(std::vector<Bullet>& mainBullets, Bullet*& b) {
-	//for (int i = mainBullets.size()-1; i >= 0; --i) {
-	for (int i = 0; i < mainBullets.size(); ++i) {
-		if (!mainBullets[i].bullet_move_status) {
-			b = &mainBullets[i];
-			return true;
+	if (mainBullets.size() > 0) {
+		for (int i = 0; i < mainBullets.size(); ++i) {
+			if (!mainBullets[i].bullet_move_status) {
+				b = &mainBullets[i];
+				return true;
+			}
 		}
 	}
 	return false;
@@ -203,9 +204,9 @@ bool checkRedBlockBullet(Bullet& bullet, std::vector<Block>& redBlocks, std::vec
 			}
 
 			//game score 및 주변 터짐
-			aroundBroken(redBlocks, redBlocks[i], explodes, blocks);
+			//aroundBroken(redBlocks, redBlocks[i], explodes, blocks);
 
-			//redBlocks.erase(redBlocks.begin() + i);
+			redBlocks.erase(redBlocks.begin() + i);
 
 			if (!bullet.through) {
 				return true;

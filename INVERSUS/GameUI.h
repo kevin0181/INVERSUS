@@ -47,11 +47,23 @@ public:
 		return hp;
 	}
 
+	void setHp(int hp) {
+		this->hp = hp;
+	}
+
 	void drawGameUI(HDC& mDC, GameUI& gameUi, RECT rect);
 	void drawHP(HDC& mDC, const RECT& rect, int hp, GameUI& gameUi);
 	void drawExp(HDC& mDC, const RECT& rect, int exp);
 	void mainAsset(HDC& mDC, const Block& mainBlock);
 	void setBlackBlock(std::vector<Block>& blocks, int cellSize);
 	void printBlackBlock(std::vector<Block> blocks, HDC& mDC);
+
+	void setExp(int exp) {
+		this->exp = exp;
+	}
+
+	int getExp() {
+		return exp;
+	}
 
 };
