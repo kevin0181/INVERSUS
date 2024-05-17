@@ -159,10 +159,33 @@ void checkBulletBlock(const Bullet& bullet, std::vector<Block>& blocks) {
 	}
 }
 
+void aroundBroken(std::vector<Block>& redBlocks, Block& redBlock, std::vector<Explosion>& explodes, std::vector<Block>& blocks) { //연쇄폭발.
+	RECT ch_rect;
+	for (int i = 0; i < redBlocks.size(); ++i) {
+		if (IntersectRect(&ch_rect, &redBlocks[i].rect, &redBlock.aroundRect)) {
+			// 폭발
+			Explosion b(redBlocks[i].rect, redBlocks[i].color);
+			explodes.push_back(b);
+			RECT r_ch = redBlocks[i].rect; // 없어질 검은 부분
+			InflateRect(&r_ch, gameUi.cellSize, gameUi.cellSize);
+			for (auto& block : blocks) {
+				if (IntersectRect(&ch_rect, &r_ch, &block.rect)) {
+					block.status = false;
+				}
+			}
+			
+			redBlocks.erase(redBlocks.begin() + i);
+		}
+	}
+}
+
 bool checkRedBlockBullet(Bullet& bullet, std::vector<Block>& redBlocks, std::vector<Block>& blocks, HDC& mDC, const GameUI& gameUi, std::vector<Explosion>& explodes) {
+	
 	RECT ch_rect;
 	for (int i = 0; i < redBlocks.size(); ++i) {
 		if (IntersectRect(&ch_rect, &redBlocks[i].rect, &bullet.rect) && redBlocks[i].status) {
+			
+			// 폭발
 			Explosion b(redBlocks[i].rect, redBlocks[i].color);
 			explodes.push_back(b);
 			RECT r_ch = redBlocks[i].rect; // 없어질 검은 부분
@@ -173,7 +196,10 @@ bool checkRedBlockBullet(Bullet& bullet, std::vector<Block>& redBlocks, std::vec
 				}
 			}
 
-			redBlocks.erase(redBlocks.begin() + i);
+			//game score 및 주변 터짐
+			aroundBroken(redBlocks, redBlocks[i], explodes, blocks);
+
+			//redBlocks.erase(redBlocks.begin() + i);
 
 			if (!bullet.through) {
 				return true;
