@@ -249,6 +249,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             gameUi.setBlackBlock(blocks, gameUi.cellSize); // 검정 블럭 설정
             redBlocks.clear();
             mainBlock.status = false;
+            gameUi.setHp(300);
+            gameUi.setExp(0);
             InvalidateRect(hWnd, NULL, false);
             break;
         }
@@ -329,14 +331,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
             if (mainBlock.status) { //살아 있을 경우
                 gameUi.mainAsset(mDC, mainBlock);
-
-                for (auto& bullet : mainBullets) { // bullet
-                    bullet.print(mDC, bullet);
-                }
-
             }
             else { //죽고 난 뒤, 리스폰
                 mainBlock.print_main_res(mDC, mainBlock, c_n, gameUi.cellSize);
+            }
+
+            for (auto& bullet : mainBullets) { // bullet
+                bullet.print(mDC, bullet);
             }
 
             // 폭발 그리기

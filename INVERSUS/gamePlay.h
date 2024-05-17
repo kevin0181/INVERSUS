@@ -168,7 +168,7 @@ void checkBulletBlock(const Bullet& bullet, std::vector<Block>& blocks) {
 
 void aroundBroken(std::vector<Block>& redBlocks, Block& redBlock, std::vector<Explosion>& explodes, std::vector<Block>& blocks) { //¿¬¼âÆø¹ß.
 	RECT ch_rect;
-	for (int i = 0; i < redBlocks.size(); ++i) {
+	for (int i = redBlocks.size() - 1; i >= 0; --i) {
 		if (IntersectRect(&ch_rect, &redBlocks[i].rect, &redBlock.aroundRect)) {
 			// Æø¹ß
 			Explosion b(redBlocks[i].rect, redBlocks[i].color);
@@ -180,18 +180,16 @@ void aroundBroken(std::vector<Block>& redBlocks, Block& redBlock, std::vector<Ex
 					block.status = false;
 				}
 			}
-			
+
 			redBlocks.erase(redBlocks.begin() + i);
 		}
 	}
 }
 
 bool checkRedBlockBullet(Bullet& bullet, std::vector<Block>& redBlocks, std::vector<Block>& blocks, HDC& mDC, const GameUI& gameUi, std::vector<Explosion>& explodes) {
-	
 	RECT ch_rect;
-	for (int i = 0; i < redBlocks.size(); ++i) {
+	for (int i = redBlocks.size() - 1; i >= 0; --i) {
 		if (IntersectRect(&ch_rect, &redBlocks[i].rect, &bullet.rect) && redBlocks[i].status) {
-			
 			// Æø¹ß
 			Explosion b(redBlocks[i].rect, redBlocks[i].color);
 			explodes.push_back(b);
@@ -203,10 +201,8 @@ bool checkRedBlockBullet(Bullet& bullet, std::vector<Block>& redBlocks, std::vec
 				}
 			}
 
-			//game score ¹× ÁÖº¯ ÅÍÁü
-			//aroundBroken(redBlocks, redBlocks[i], explodes, blocks);
-
-			redBlocks.erase(redBlocks.begin() + i);
+			// game score ¹× ÁÖº¯ ÅÍÁü
+			aroundBroken(redBlocks, redBlocks[i], explodes, blocks);
 
 			if (!bullet.through) {
 				return true;
