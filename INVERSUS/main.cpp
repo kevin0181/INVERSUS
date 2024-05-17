@@ -219,7 +219,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             }
             if (gameStateManager.getState() == GameState::SETTING) { // setting -> game play
                 SetTimer(hWnd, 1, 1, NULL);
-                gameStateManager.setImage(L"img/gamePlay/score bar.png");
+                gameStateManager.setImage(L"img/gamePlay/score bar_v2.png");
                 gameStateManager.setCurrentState(GameState::GAMEPLAY);
                 InvalidateRect(hWnd, NULL, false);
                 break;
