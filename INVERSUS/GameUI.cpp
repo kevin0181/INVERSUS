@@ -55,7 +55,7 @@ void GameUI::setBlackBlock(std::vector<Block>& blocks, int cellSize) { // ∞À¡§ ∫
 	}
 }
 
-void GameUI::mainAsset(HDC& mDC, Block& mainBlock) {
+void GameUI::mainAsset(HDC& mDC,const Block& mainBlock) {
 
 	HBRUSH hBrush;
 	HBRUSH oldBrush;

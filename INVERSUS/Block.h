@@ -60,10 +60,10 @@ public:
 
 	Block(COLORREF color, COLORREF borderColor, RECT rect, bool status) : rect(rect), status(status), color(color), borderColor(borderColor) {};
 
-	void print_red_Block(HDC& mDC, Block& redBlock);
+	void print_red_Block(HDC& mDC, const Block& redBlock);
 
-	void print_red_res(HDC& mDC, Block& redBlock, int r_n, int cellSize);
-	void print_main_res(HDC& mDC, Block& mainBlock, int c_n, int cellSize);
+	void print_red_res(HDC& mDC,const Block& redBlock, const int& r_n, const int& cellSize);
+	void print_main_res(HDC& mDC, const Block& mainBlock, const int& c_n, const int& cellSize);
 
 	void setRect(RECT rect) {
 		this->rect = rect;

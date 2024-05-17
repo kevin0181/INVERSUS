@@ -1,16 +1,5 @@
 #pragma once
 
-//int checkCrash(const std::vector<Block> blocks, const Block mainBlock) { // 메인 에셋이랑 검은돌이랑 충돌 체크
-//	RECT checkRect;
-//
-//	for (int i = 0; i < blocks.size(); ++i) {
-//		if (IntersectRect(&checkRect, &blocks[i].rect, &mainBlock.rect) && blocks[i].status) {
-//			return mainBlock.speed;
-//		}
-//	}
-//	return 0;
-//}
-
 int checkCrash(const std::vector<Block>& blocks, const Block& mainBlock) {
 	RECT checkRect;
 
@@ -22,7 +11,7 @@ int checkCrash(const std::vector<Block>& blocks, const Block& mainBlock) {
 	return 0; // 충돌이 없으면 0 반환
 }
 
-void resRet(HDC &mDC, RECT rect, CImage& mainResp) { // 사각형으로 생성하는 부분
+void resRet(HDC& mDC, const RECT rect, const CImage& mainResp) { // 사각형으로 생성하는 부분
 	mainResp.Draw(mDC, rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top, 0, 0, mainResp.GetWidth(), mainResp.GetHeight());
 }
 
@@ -97,4 +86,19 @@ void moveRedBlock(std::vector<Block>& redBlocks, Block& mainBlock) {
 		}
 	}
 
+}
+
+void moveChangeBackgroundBlack(const std::vector<Block>& redBlocks, std::vector<Block>& blocks) {
+	RECT c_rect;
+	for (auto& block : blocks) {
+		if (!block.status) {
+			for (auto& redBlock : redBlocks) {
+				if (redBlock.status) {
+					if (IntersectRect(&c_rect, &block.rect, &redBlock.rect)) {
+						block.status = true;
+					}
+				}
+			}
+		}
+	}
 }

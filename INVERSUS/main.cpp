@@ -243,7 +243,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 gameUi.mainAsset(mDC, mainBlock);
             }
             else { //죽고 난 뒤, 리스폰
-                //resRet(mDC, mainBlock.rect, mainBlock.respImg);
                 mainBlock.print_main_res(mDC, mainBlock, c_n, gameUi.cellSize);
             }
 
@@ -286,29 +285,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 }
 
                 moveRedBlock(redBlocks, mainBlock); // redBlock이 mainBlock을 향해감
+                moveChangeBackgroundBlack(redBlocks, blocks);
                 InvalidateRect(hWnd, NULL, false);
             }
             break;
         case 2: // main block resp 타이머
         {
-            /*static int count = 0;
-            c_n++;
-            if (c_n == 12) {
-                c_n = 0;
-                count++;
-            }
-
-            if (count == 3) {
-                count = 0;
-                mainBlock.status = true;
-                KillTimer(hWnd, 2);
-                break;
-            }
-
-            mainBlock.respImg.Destroy();
-            mainBlock.respImg.Load(mainBlock.mainRespW[c_n].c_str());
-            InvalidateRect(hWnd, NULL, false);*/
-
             static int count = 0;
             c_n++;
             if (c_n == 12) {
@@ -366,7 +348,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
                 int cellSize = gameUi.cellSize;
                 for (int i = 0; i < rand_i.size(); ++i) {
-                    Block redB(RGB(255, 0, 0), RGB(0, 0, 0), blocks[rand_i[i]].rect, false);
+                    Block redB(RGB(255, 0, 0), RGB(0, 0, 0), blocks[rand_i[i]].rect, true);
                     redB.speed = uid_red_speed(gen);
                     redB.aroundRect = { redB.rect.left - cellSize, redB.rect.top - cellSize,redB.rect.right + cellSize,redB.rect.bottom + cellSize };
                     redBlocks.push_back(redB);
