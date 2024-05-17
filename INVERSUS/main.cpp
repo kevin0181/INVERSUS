@@ -86,11 +86,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     static RECT rect;
 
     static vector<Block> blocks;
-    static Block mainBlock(RGB(0, 0, 0), RGB(0, 0, 0), { 0,0, 50, 50 }, false);
+    static Block mainBlock(RGB(0, 0, 0), RGB(0, 0, 0), { 0,0, 50, 50 }, false); //player 1
+    static vector<Bullet> mainBullets; //player 1 bullet
+    static int vk_count = 0; //press bullet count
 
     static int c_n = 0; //response 이미지
     static int r_n = 0;
-
+  
     static vector<Block> redBlocks;
 
     switch (uMsg)
@@ -102,6 +104,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         gameStateManager.setImage(L"img/Inversus Intro.png");
         PlayMP3(L"sound/main intro.mp3");
         mainBlock.respImg.Load(mainBlock.mainRespW[c_n].c_str());
+
+        for (int i = 0; i < 6; ++i) {
+            Bullet bullet;
+            mainBullets.push_back(bullet);
+        }
+        
         break;
     }
     case WM_COMMAND:
@@ -109,22 +117,80 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     case WM_KEYUP:
         if (gameStateManager.getState() == GameState::GAMEPLAY) { // game start
 
-            switch (wParam)
-            {
-            case 65:
-                mainBlock.left = false;
-                break;
-            case 68:
-                mainBlock.right = false;
-                break;
-            case 87:
-                mainBlock.up = false;
-                break;
-            case 83:
-                mainBlock.down = false;
-                break;
-            default:
-                break;
+            if (mainBlock.status) {
+                switch (wParam)
+                {
+                case 65:
+                    mainBlock.left = false;
+                    break;
+                case 68:
+                    mainBlock.right = false;
+                    break;
+                case 87:
+                    mainBlock.up = false;
+                    break;
+                case 83:
+                    mainBlock.down = false;
+                    break;
+                case VK_LEFT:
+                {
+                    Bullet* b = nullptr;
+                    if (findFalseBullet(mainBullets, b) && b != nullptr) {
+                        b->rect = mainBlock.rect;
+                        b->left = true;
+                        b->status = true;
+                        if (vk_count >= 50) {
+                            b->speed = 4;
+                        }
+                    }
+                    vk_count = 0;
+                    break;
+                }
+                case VK_RIGHT:
+                {
+                    Bullet* b = nullptr;
+                    if (findFalseBullet(mainBullets, b) && b != nullptr) {
+                        b->rect = mainBlock.rect;
+                        b->right = true;
+                        b->status = true;
+                        if (vk_count >= 50) {
+                            b->speed = 4;
+                        }
+                    }
+                    vk_count = 0;
+                    break;
+                }
+                case VK_UP:
+                {
+                    Bullet* b = nullptr;
+                    if (findFalseBullet(mainBullets, b) && b != nullptr) {
+                        b->rect = mainBlock.rect;
+                        b->up = true;
+                        b->status = true;
+                        if (vk_count >= 50) {
+                            b->speed = 4;
+                        }
+                    }
+                    vk_count = 0;
+                    break;
+                }
+                case VK_DOWN:
+                {
+                    Bullet* b = nullptr;
+                    if (findFalseBullet(mainBullets, b) && b != nullptr) {
+                        b->rect = mainBlock.rect;
+                        b->down = true;
+                        b->status = true;
+                        if (vk_count >= 50) {
+                            b->speed = 4;
+                        }
+                    }
+                    vk_count = 0;
+                    break;
+                }
+                default:
+                    break;
+                }
             }
         }
         break;
@@ -182,23 +248,38 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
         if (gameStateManager.getState() == GameState::GAMEPLAY) { // game start
             
-            switch (wParam)
-            {
-            case 65:
-                mainBlock.left = true;
-                break;
-            case 68:
-                mainBlock.right = true;
-                break;
-            case 87:
-                mainBlock.up = true;
-                break;
-            case 83:
-                mainBlock.down = true;
-                break;
-            default:
-                break;
+            if (mainBlock.status) {
+                switch (wParam)
+                {
+                case 65:
+                    mainBlock.left = true;
+                    break;
+                case 68:
+                    mainBlock.right = true;
+                    break;
+                case 87:
+                    mainBlock.up = true;
+                    break;
+                case 83:
+                    mainBlock.down = true;
+                    break;
+                case VK_LEFT:
+                    vk_count++;
+                    break;
+                case VK_RIGHT:
+                    vk_count++;
+                    break;
+                case VK_UP:
+                    vk_count++;
+                    break;
+                case VK_DOWN:
+                    vk_count++;
+                    break;
+                default:
+                    break;
+                }
             }
+            
         }
 
         break;
@@ -241,11 +322,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
             if (mainBlock.status) { //살아 있을 경우
                 gameUi.mainAsset(mDC, mainBlock);
+
+                for (auto& bullet : mainBullets) { // bullet
+                    if (bullet.status)
+                        bullet.print(mDC, bullet);
+                }
+
             }
             else { //죽고 난 뒤, 리스폰
                 mainBlock.print_main_res(mDC, mainBlock, c_n, gameUi.cellSize);
             }
-
         }
 
         if (gameStateManager.getState() == GameState::SETTING) { //setting draw
@@ -285,7 +371,28 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 }
 
                 moveRedBlock(redBlocks, mainBlock); // redBlock이 mainBlock을 향해감
-                moveChangeBackgroundBlack(redBlocks, blocks);
+                //moveChangeBackgroundBlack(redBlocks, blocks); //redBlock이 지나가는 자리는 black으로 바꿈
+
+                for (auto& bullet : mainBullets) { // 총알 보내기
+                    if (bullet.status) {
+                        if (bullet.left) {
+                            OffsetRect(&bullet.rect, -bullet.speed, 0);
+                        }
+
+                        if (bullet.right) {
+                            OffsetRect(&bullet.rect, bullet.speed, 0);
+                        }
+
+                        if (bullet.up) {
+                            OffsetRect(&bullet.rect, 0, -bullet.speed);
+                        }
+
+                        if (bullet.down) {
+                            OffsetRect(&bullet.rect, 0, bullet.speed);
+                        }
+                    }
+                }
+
                 InvalidateRect(hWnd, NULL, false);
             }
             break;
@@ -348,7 +455,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
                 int cellSize = gameUi.cellSize;
                 for (int i = 0; i < rand_i.size(); ++i) {
-                    Block redB(RGB(255, 0, 0), RGB(0, 0, 0), blocks[rand_i[i]].rect, true);
+                    Block redB(RGB(255, 0, 0), RGB(0, 0, 0), blocks[rand_i[i]].rect, false);
                     redB.speed = uid_red_speed(gen);
                     redB.aroundRect = { redB.rect.left - cellSize, redB.rect.top - cellSize,redB.rect.right + cellSize,redB.rect.bottom + cellSize };
                     redBlocks.push_back(redB);

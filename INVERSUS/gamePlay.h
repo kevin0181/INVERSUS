@@ -102,3 +102,13 @@ void moveChangeBackgroundBlack(const std::vector<Block>& redBlocks, std::vector<
 		}
 	}
 }
+
+bool findFalseBullet(std::vector<Bullet>& mainBullets, Bullet*& b) {
+	for (int i = mainBullets.size()-1; i >= 0; --i) {
+		if (!mainBullets[i].status) {
+			b = &mainBullets[i];
+			return true;
+		}
+	}
+	return false;
+}
