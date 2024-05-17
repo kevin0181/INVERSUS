@@ -139,8 +139,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                         bulletScaleDown(b, mainBlock);
                         b->left = true;
                         b->status = true;
-                        if (vk_count >= 50) {
+                        if (vk_count >= 15) {
                             b->speed = 15;
+                            KillTimer(hWnd, 6);
                         }
                     }
                     vk_count = 0;
@@ -153,8 +154,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                         bulletScaleDown(b, mainBlock);
                         b->right = true;
                         b->status = true;
-                        if (vk_count >= 50) {
+                        if (vk_count >= 15) {
                             b->speed = 15;
+                            KillTimer(hWnd, 6);
                         }
                     }
                     vk_count = 0;
@@ -167,8 +169,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                         bulletScaleDown(b, mainBlock);
                         b->up = true;
                         b->status = true;
-                        if (vk_count >= 50) {
+                        if (vk_count >= 15) {
                             b->speed = 15;
+                            KillTimer(hWnd, 6);
                         }
                     }
                     vk_count = 0;
@@ -181,8 +184,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                         bulletScaleDown(b, mainBlock);
                         b->down = true;
                         b->status = true;
-                        if (vk_count >= 50) {
+                        if (vk_count >= 15) {
                             b->speed = 15;
+                            KillTimer(hWnd, 6);
                         }
                     }
                     vk_count = 0;
@@ -264,16 +268,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                     mainBlock.down = true;
                     break;
                 case VK_LEFT:
-                    vk_count++;
+                    SetTimer(hWnd, 6, 100, NULL); // press bullet timer
                     break;
                 case VK_RIGHT:
-                    vk_count++;
+                    SetTimer(hWnd, 6, 100, NULL);
                     break;
                 case VK_UP:
-                    vk_count++;
+                    SetTimer(hWnd, 6, 100, NULL);
                     break;
                 case VK_DOWN:
-                    vk_count++;
+                    SetTimer(hWnd, 6, 100, NULL);
                     break;
                 default:
                     break;
@@ -463,6 +467,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 KillTimer(hWnd, 4);
                 SetTimer(hWnd, 3, 100, NULL);
             }
+            break;
+        case 6: //press bullet
+            if (vk_count >= 15) {
+                break;
+            }
+            vk_count++;
             break;
         case 10: //count down
             setCountDown(gameUi, hWnd, mainBlock);
