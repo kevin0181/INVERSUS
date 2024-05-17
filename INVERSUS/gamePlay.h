@@ -32,7 +32,7 @@ void ExpandRect(RECT& rect) { // 사이즈 확대
 }
 
 
-void blankMain(std::vector<Block>& blocks, Block* block) { // 메인 에셋 생성시, 가운데 빈칸만들기
+void blankMain(std::vector<Block>& blocks, const Block* block, std::vector<Block>& redBlocks) { // 메인 에셋 생성시, 가운데 빈칸만들기
 	RECT blankSizeRect = block->rect;
 	ExpandRect(blankSizeRect);
 
@@ -41,6 +41,11 @@ void blankMain(std::vector<Block>& blocks, Block* block) { // 메인 에셋 생성시, 
 	for (int i = 0; i < blocks.size(); ++i) {
 		if (IntersectRect(&selectRect, &blankSizeRect, &blocks[i].rect)) {
 			blocks[i].status = false;
+		}
+		for (int i = 0; i < redBlocks.size(); ++i) {
+			if (IntersectRect(&selectRect, &blankSizeRect, &redBlocks[i].rect)) {
+				redBlocks.erase(redBlocks.begin() + i);
+			}
 		}
 	}
 }

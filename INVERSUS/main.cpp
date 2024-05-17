@@ -245,7 +245,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         if (gameStateManager.getState() == GameState::LEVEL) { // game level 선택
             levelSetting.level_setting(wParam, hWnd, rect, mainBlock, blocks);
             gameUi.setBlackBlock(blocks, gameUi.cellSize); // 검정 블럭 설정
-            blankMain(blocks, &mainBlock); // 빈 부분 만들기
+            //blankMain(blocks, &mainBlock, redBlocks); // 빈 부분 만들기
             redBlocks.clear();
             mainBlock.status = false;
             InvalidateRect(hWnd, NULL, false);
@@ -427,6 +427,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             if (count == 3) {
                 count = 0;
                 mainBlock.status = true;
+                blankMain(blocks, &mainBlock, redBlocks); // 빈 부분 만들기
                 KillTimer(hWnd, 2);
                 break;
             }
