@@ -1,7 +1,7 @@
 #pragma once
 #include"Explodes.h"
 
-int checkCrash(const std::vector<Block>& blocks, const Block& mainBlock) {
+int checkCrash(const std::vector<Block>& blocks, const Block& mainBlock,const GameUI& gameUi) {
 	RECT checkRect;
 
 	for (const Block& block : blocks) { // 범위 기반 for 루프 사용
@@ -9,6 +9,12 @@ int checkCrash(const std::vector<Block>& blocks, const Block& mainBlock) {
 			return mainBlock.speed; // 충돌이 감지되면 mainBlock의 속도만큼 반환
 		}
 	}
+	RECT changeGameBordRect = gameUi.gameBordRect;
+		InflateRect(&changeGameBordRect, -gameUi.cellSize, -gameUi.cellSize);
+	if (!IntersectRect(&checkRect, &changeGameBordRect, &mainBlock.rect)) {
+		return mainBlock.speed;
+	}
+
 	return 0; // 충돌이 없으면 0 반환
 }
 

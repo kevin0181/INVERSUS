@@ -364,22 +364,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             if (mainBlock.status) {
                 if (mainBlock.left) {
                     OffsetRect(&mainBlock.rect, -mainBlock.speed, 0);
-                    OffsetRect(&mainBlock.rect, checkCrash(blocks, mainBlock), 0);
+                    OffsetRect(&mainBlock.rect, checkCrash(blocks, mainBlock, gameUi), 0);
                 }
 
                 if (mainBlock.right) {
                     OffsetRect(&mainBlock.rect, mainBlock.speed, 0);
-                    OffsetRect(&mainBlock.rect, -checkCrash(blocks, mainBlock), 0);
+                    OffsetRect(&mainBlock.rect, -checkCrash(blocks, mainBlock, gameUi), 0);
                 }
 
                 if (mainBlock.up) {
                     OffsetRect(&mainBlock.rect, 0, -mainBlock.speed);
-                    OffsetRect(&mainBlock.rect, 0, checkCrash(blocks, mainBlock));
+                    OffsetRect(&mainBlock.rect, 0, checkCrash(blocks, mainBlock, gameUi));
                 }
 
                 if (mainBlock.down) {
                     OffsetRect(&mainBlock.rect, 0, mainBlock.speed);
-                    OffsetRect(&mainBlock.rect, 0, -checkCrash(blocks, mainBlock));
+                    OffsetRect(&mainBlock.rect, 0, -checkCrash(blocks, mainBlock, gameUi));
                 }
 
                 if (moveRedBlock(redBlocks, mainBlock, mDC, explodes)) { // redBlock이 mainBlock을 향해감 + main + red충돌체크
