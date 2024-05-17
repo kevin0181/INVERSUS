@@ -136,11 +136,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 {
                     Bullet* b = nullptr;
                     if (findFalseBullet(mainBullets, b) && b != nullptr) {
-                        b->rect = mainBlock.rect;
+                        bulletScaleDown(b, mainBlock);
                         b->left = true;
                         b->status = true;
                         if (vk_count >= 50) {
-                            b->speed = 4;
+                            b->speed = 15;
                         }
                     }
                     vk_count = 0;
@@ -150,11 +150,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 {
                     Bullet* b = nullptr;
                     if (findFalseBullet(mainBullets, b) && b != nullptr) {
-                        b->rect = mainBlock.rect;
+                        bulletScaleDown(b, mainBlock);
                         b->right = true;
                         b->status = true;
                         if (vk_count >= 50) {
-                            b->speed = 4;
+                            b->speed = 15;
                         }
                     }
                     vk_count = 0;
@@ -164,11 +164,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 {
                     Bullet* b = nullptr;
                     if (findFalseBullet(mainBullets, b) && b != nullptr) {
-                        b->rect = mainBlock.rect;
+                        bulletScaleDown(b, mainBlock);
                         b->up = true;
                         b->status = true;
                         if (vk_count >= 50) {
-                            b->speed = 4;
+                            b->speed = 15;
                         }
                     }
                     vk_count = 0;
@@ -178,11 +178,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 {
                     Bullet* b = nullptr;
                     if (findFalseBullet(mainBullets, b) && b != nullptr) {
-                        b->rect = mainBlock.rect;
+                        bulletScaleDown(b, mainBlock);
                         b->down = true;
                         b->status = true;
                         if (vk_count >= 50) {
-                            b->speed = 4;
+                            b->speed = 15;
                         }
                     }
                     vk_count = 0;

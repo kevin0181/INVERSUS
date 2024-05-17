@@ -112,3 +112,20 @@ bool findFalseBullet(std::vector<Bullet>& mainBullets, Bullet*& b) {
 	}
 	return false;
 }
+
+void bulletScaleDown(Bullet*& b, const Block& mainBlock) {
+	// mainBlock.rect의 중앙을 기준으로 크기를 60%로 줄여서 b->rect에 할당
+	int width = mainBlock.rect.right - mainBlock.rect.left;
+	int height = mainBlock.rect.bottom - mainBlock.rect.top;
+
+	int newWidth = static_cast<int>(width * 0.3);
+	int newHeight = static_cast<int>(height * 0.3);
+
+	int centerX = mainBlock.rect.left + width / 2;
+	int centerY = mainBlock.rect.top + height / 2;
+
+	b->rect.left = centerX - newWidth / 2;
+	b->rect.top = centerY - newHeight / 2;
+	b->rect.right = centerX + newWidth / 2;
+	b->rect.bottom = centerY + newHeight / 2;
+}

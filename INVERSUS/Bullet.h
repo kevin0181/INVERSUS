@@ -7,9 +7,9 @@ public:
 	//int capacity; //총알 수
 	RECT rect;
 	COLORREF color = RGB(0, 0, 0);
-	int speed = 1;
+	int speed = 6;
 
-	bool status = false; // 발사 상태
+	bool status = false; // 총알 발사 상태
 
 	bool left = false;
 	bool right = false;
