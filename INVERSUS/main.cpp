@@ -404,7 +404,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
                         checkBulletBlock(mainBullets[i], blocks); // 총알 + 검은 블록 충돌 검사
                         
-                        if (checkRedBlockBullet(mainBullets[i], redBlocks, mDC)) { // 총알 + 빨간 블록 충돌 검사
+                        if (checkRedBlockBullet(mainBullets[i], redBlocks, blocks, mDC, gameUi)) { // 총알 + 빨간 블록 충돌 검사
                             //만약 충돌된 상태면 총알 지워버리기
                             mainBullets.erase(mainBullets.begin() + i);
                         }

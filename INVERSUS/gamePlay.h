@@ -91,9 +91,11 @@ bool moveRedBlock(std::vector<Block>& redBlocks, Block& mainBlock, HDC& mDC) {
 		RECT c_rect;
 		// 메인 블럭 + 레드 블럭 부딪히면
 		if (IntersectRect(&c_rect, &redBlock.rect, &mainBlock.rect)) {
-			broken_print(mDC, RGB(0, 0, 0));
-			mainBlock.status = false;
-			return true;
+			if (redBlock.status) {
+				broken_print(mDC, RGB(0, 0, 0));
+				mainBlock.status = false;
+				return true;
+			}
 		}
 	}
 
@@ -154,12 +156,22 @@ void checkBulletBlock(const Bullet& bullet, std::vector<Block>& blocks) {
 	}
 }
 
-bool checkRedBlockBullet(Bullet& bullet, std::vector<Block>& redBlocks, HDC& mDC) {
+bool checkRedBlockBullet(Bullet& bullet, std::vector<Block>& redBlocks, std::vector<Block>& blocks, HDC& mDC, const GameUI& gameUi) {
 	RECT ch_rect;
 	for (int i = 0; i < redBlocks.size(); ++i) {
 		if (IntersectRect(&ch_rect, &redBlocks[i].rect, &bullet.rect) && redBlocks[i].status) {
 			broken_print(mDC, RGB(0, 0, 0));
+			
+			RECT r_ch = redBlocks[i].rect; // 없어질 검은 부분
+			InflateRect(&r_ch, gameUi.cellSize, gameUi.cellSize);
+			for (auto& block : blocks) {
+				if (IntersectRect(&ch_rect, &r_ch, &block.rect)) {
+					block.status = false;
+				}
+			}
+
 			redBlocks.erase(redBlocks.begin() + i);
+
 			if (!bullet.through) {
 				return true;
 			}
