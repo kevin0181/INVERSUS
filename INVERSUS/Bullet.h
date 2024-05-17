@@ -25,7 +25,11 @@ public:
 	int speed = 7;
 	int max_speed = 15;
 
-	bool status = false; // 총알 발사 상태
+	bool status = true; // 장전 상태
+
+	bool bullet_move_status = false; // 총알 이동하는지 체크
+
+	bool through = false; // 관통 상태
 
 	bool left = false;
 	bool right = false;

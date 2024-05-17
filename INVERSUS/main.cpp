@@ -141,7 +141,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                     if (findFalseBullet(mainBullets, b) && b != nullptr) {
                         bulletScaleDown(b, mainBlock);
                         b->left = true;
-                        b->status = true;
+                        b->bullet_move_status = true;
                         if (vk_count >= 15 && vk_status) {
                             b->speed = b->max_speed;
                         }
@@ -156,7 +156,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                     if (findFalseBullet(mainBullets, b) && b != nullptr) {
                         bulletScaleDown(b, mainBlock);
                         b->right = true;
-                        b->status = true;
+                        b->bullet_move_status = true;
                         if (vk_count >= 15 && vk_status) {
                             b->speed = b->max_speed;
                         }
@@ -171,7 +171,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                     if (findFalseBullet(mainBullets, b) && b != nullptr) {
                         bulletScaleDown(b, mainBlock);
                         b->up = true;
-                        b->status = true;
+                        b->bullet_move_status = true;
                         if (vk_count >= 15 && vk_status){
                             b->speed = b->max_speed;
                         }
@@ -186,7 +186,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                     if (findFalseBullet(mainBullets, b) && b != nullptr) {
                         bulletScaleDown(b, mainBlock);
                         b->down = true;
-                        b->status = true;
+                        b->bullet_move_status = true;
                         if (vk_count >= 15 && vk_status) {
                             b->speed = b->max_speed;
                         }
@@ -331,8 +331,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 gameUi.mainAsset(mDC, mainBlock);
 
                 for (auto& bullet : mainBullets) { // bullet
-                    if (bullet.status)
-                        bullet.print(mDC, bullet);
+                    bullet.print(mDC, bullet);
                 }
 
             }
@@ -381,25 +380,31 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 moveRedBlock(redBlocks, mainBlock); // redBlock이 mainBlock을 향해감
                 moveChangeBackgroundBlack(redBlocks, blocks); //redBlock이 지나가는 자리는 black으로 바꿈
 
-                for (auto& bullet : mainBullets) { // 총알 보내기
-                    if (bullet.status) {
-                        if (bullet.left) {
-                            OffsetRect(&bullet.rect, -bullet.speed, 0);
+                for (int i = 0; i < mainBullets.size(); ++i) { // 총알 발사 등.
+                    if (mainBullets[i].bullet_move_status) {
+                        if (mainBullets[i].left) {
+                            OffsetRect(&mainBullets[i].rect, -mainBullets[i].speed, 0);
                         }
 
-                        if (bullet.right) {
-                            OffsetRect(&bullet.rect, bullet.speed, 0);
+                        if (mainBullets[i].right) {
+                            OffsetRect(&mainBullets[i].rect, mainBullets[i].speed, 0);
                         }
 
-                        if (bullet.up) {
-                            OffsetRect(&bullet.rect, 0, -bullet.speed);
+                        if (mainBullets[i].up) {
+                            OffsetRect(&mainBullets[i].rect, 0, -mainBullets[i].speed);
                         }
 
-                        if (bullet.down) {
-                            OffsetRect(&bullet.rect, 0, bullet.speed);
+                        if (mainBullets[i].down) {
+                            OffsetRect(&mainBullets[i].rect, 0, mainBullets[i].speed);
                         }
 
-                        checkBulletBlock(bullet, blocks);
+                        checkBulletBlock(mainBullets[i], blocks); // 총알 + 검은 블록 충돌 검사
+                        
+                        if (checkRedBlockBullet(mainBullets[i], redBlocks, mDC)) { // 총알 + 빨간 블록 충돌 검사
+                            //만약 충돌된 상태면 총알 지워버리기
+                            mainBullets.erase(mainBullets.begin() + i);
+                        }
+
                     }
                 }
 

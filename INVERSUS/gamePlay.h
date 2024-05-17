@@ -104,8 +104,9 @@ void moveChangeBackgroundBlack(const std::vector<Block>& redBlocks, std::vector<
 }
 
 bool findFalseBullet(std::vector<Bullet>& mainBullets, Bullet*& b) {
-	for (int i = mainBullets.size()-1; i >= 0; --i) {
-		if (!mainBullets[i].status) {
+	//for (int i = mainBullets.size()-1; i >= 0; --i) {
+	for (int i = 0; i < mainBullets.size(); ++i) {
+		if (!mainBullets[i].bullet_move_status) {
 			b = &mainBullets[i];
 			return true;
 		}
@@ -139,4 +140,22 @@ void checkBulletBlock(const Bullet& bullet, std::vector<Block>& blocks) {
 			}
 		}
 	}
+}
+
+void broken_print(HDC& mDC, COLORREF color) {
+
+}
+
+bool checkRedBlockBullet(Bullet& bullet, std::vector<Block>& redBlocks, HDC& mDC) {
+	RECT ch_rect;
+	for (int i = 0; i < redBlocks.size(); ++i) {
+		if (IntersectRect(&ch_rect, &redBlocks[i].rect, &bullet.rect) && redBlocks[i].status) {
+			broken_print(mDC, RGB(0, 0, 0));
+			redBlocks.erase(redBlocks.begin() + i);
+			if (!bullet.through) {
+				return true;
+			}
+		}
+	}
+	return false;
 }

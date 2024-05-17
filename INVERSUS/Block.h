@@ -13,6 +13,7 @@ public:
 
 	COLORREF borderColor;
 	COLORREF color;
+
 	bool status;
 	Bullet bullet;
 
