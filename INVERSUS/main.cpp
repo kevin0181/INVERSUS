@@ -104,7 +104,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         gameStateManager.setCurrentState(GameState::START);
         gameStateManager.setImage(L"img/Inversus Intro.png");
         PlayMP3(L"sound/main intro.mp3");
-        mainBlock.respImg.Load(mainBlock.mainRespW[c_n].c_str());
 
         for (int i = 0; i < 6; ++i) {
             Bullet bullet;
@@ -377,7 +376,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                     OffsetRect(&mainBlock.rect, 0, -checkCrash(blocks, mainBlock));
                 }
 
-                moveRedBlock(redBlocks, mainBlock); // redBlock이 mainBlock을 향해감
+                if (moveRedBlock(redBlocks, mainBlock, mDC)) { // redBlock이 mainBlock을 향해감 + main + red충돌체크
+                    mainBlock.rect = { 0,0,50,50 };
+                    OffsetRect(&mainBlock.rect, (gameUi.gameBordRect.right / 2) - 25, (gameUi.gameBordRect.bottom / 2) + 30);
+                    SetTimer(hWnd, 2, 100, NULL); // 죽고 난 뒤 생성 타이머
+                }
+
                 moveChangeBackgroundBlack(redBlocks, blocks); //redBlock이 지나가는 자리는 black으로 바꿈
 
                 for (int i = 0; i < mainBullets.size(); ++i) { // 총알 발사 등.

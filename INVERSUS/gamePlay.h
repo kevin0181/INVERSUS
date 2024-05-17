@@ -45,7 +45,11 @@ void blankMain(std::vector<Block>& blocks, Block* block) { // 메인 에셋 생성시, 
 	}
 }
 
-void moveRedBlock(std::vector<Block>& redBlocks, Block& mainBlock) {
+void broken_print(HDC& mDC, COLORREF color) { // 부딪히면 폭팔하는 애니메이션
+
+}
+
+bool moveRedBlock(std::vector<Block>& redBlocks, Block& mainBlock, HDC& mDC) {
 
 	for (Block& redBlock : redBlocks) { 
 		if (redBlock.status) {
@@ -84,8 +88,16 @@ void moveRedBlock(std::vector<Block>& redBlocks, Block& mainBlock) {
 				redBlock.aroundRect.bottom -= redBlock.speed;
 			}
 		}
+		RECT c_rect;
+		// 메인 블럭 + 레드 블럭 부딪히면
+		if (IntersectRect(&c_rect, &redBlock.rect, &mainBlock.rect)) {
+			broken_print(mDC, RGB(0, 0, 0));
+			mainBlock.status = false;
+			return true;
+		}
 	}
 
+	return false;
 }
 
 void moveChangeBackgroundBlack(const std::vector<Block>& redBlocks, std::vector<Block>& blocks) {
@@ -140,10 +152,6 @@ void checkBulletBlock(const Bullet& bullet, std::vector<Block>& blocks) {
 			}
 		}
 	}
-}
-
-void broken_print(HDC& mDC, COLORREF color) {
-
 }
 
 bool checkRedBlockBullet(Bullet& bullet, std::vector<Block>& redBlocks, HDC& mDC) {
