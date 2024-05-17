@@ -29,6 +29,8 @@ IMediaControl* pControl3 = NULL;
 IMediaEvent* pEvent3 = NULL;
 IBasicAudio* pBasicAudio3 = NULL;
 
+extern int backgroundS;
+
 void PlayMP3(const WCHAR* filename) {
     CoInitialize(NULL);
     CoCreateInstance(CLSID_FilterGraph, NULL, CLSCTX_INPROC_SERVER, IID_IGraphBuilder, (void**)&pGraph);
@@ -42,7 +44,7 @@ void PlayMP3(const WCHAR* filename) {
     pControl->Run();
 
     if (pBasicAudio != NULL) {
-        pBasicAudio->put_Volume(-2500); // 볼륨 설정
+        pBasicAudio->put_Volume(-2500); // 초기 볼륨 설정
     }
 
     // 별도의 스레드나 타이머를 사용하여 이벤트 모니터링
@@ -73,6 +75,12 @@ void MonitorMediaEvent() {
             PlayMP3Close(); // 리소스 해제 함수 호출
             break;
         }
+    }
+}
+
+void SetVolume(int volume) {
+    if (pBasicAudio3 != NULL) {
+        pBasicAudio3->put_Volume(volume);
     }
 }
 
@@ -123,7 +131,6 @@ void MonitorSecondMediaEvent() {
     }
 }
 
-
 wstring fileName[3] = {
         L"sound/game Music1.mp3",
         L"sound/game Music2.mp3",
@@ -131,7 +138,6 @@ wstring fileName[3] = {
 };
 
 void GameBackgroundSound(int num) {
-   
     CoInitialize(NULL);
     CoCreateInstance(CLSID_FilterGraph, NULL, CLSCTX_INPROC_SERVER, IID_IGraphBuilder, (void**)&pGraph3);
     pGraph3->QueryInterface(IID_IMediaControl, (void**)&pControl3);
@@ -144,7 +150,7 @@ void GameBackgroundSound(int num) {
     pControl3->Run();
 
     if (pBasicAudio3 != NULL) {
-        pBasicAudio3->put_Volume(-2500); // 볼륨 설정
+        pBasicAudio3->put_Volume(backgroundS); // 초기 볼륨 설정
     }
 
     // 별도의 스레드에서 이벤트 모니터링

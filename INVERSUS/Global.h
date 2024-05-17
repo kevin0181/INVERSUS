@@ -13,3 +13,5 @@ static PlayerSetting playerSetting(&gameStateManager);
 static GameUI gameUi(&gameStateManager);
 static LevelSetting levelSetting(&gameStateManager, &gameUi);
 static Setting setting(&gameStateManager);
+
+static int backgroundS = -2500;

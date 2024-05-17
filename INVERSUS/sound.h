@@ -1,4 +1,5 @@
 #pragma once
+#include"Global.h"
 
 extern std::wstring fileName[3];
 
@@ -17,3 +18,5 @@ void MonitorSecondMediaEvent();
 void GameBackgroundSound(int num);
 
 void CloseGameBackgroundSound();
+
+void SetVolume(int volume); // 볼륨 설정 함수 선언

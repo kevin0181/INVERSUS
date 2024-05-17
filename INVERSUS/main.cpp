@@ -119,7 +119,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
         break;
     }
-    case WM_COMMAND:
+    case WM_CHAR:
+        switch (wParam)
+        {
+        case '[':
+            backgroundS -= 100;
+            if (backgroundS < -10000) backgroundS = -10000; // 최소 볼륨 제한
+            SetVolume(backgroundS);
+            break;
+        case ']':
+            backgroundS += 100;
+            if (backgroundS > 0) backgroundS = 0; // 최대 볼륨 제한
+            SetVolume(backgroundS);
+            break;
+        default:
+            break;
+        }
         break;
     case WM_KEYUP:
         if (gameStateManager.getState() == GameState::GAMEPLAY) { // game start
