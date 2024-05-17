@@ -428,11 +428,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                             mainBullets.erase(mainBullets.begin() + i);
                         }
 
-                        if (checkRedBlockBullet(mainBullets[i], redBlocks, blocks, mDC, gameUi, explodes)) { // 총알 + 빨간 블록 충돌 검사
-                            //만약 충돌된 상태면 총알 지워버리기
-                            mainBullets.erase(mainBullets.begin() + i);
+                        if (mainBullets.size() > 0) {
+                            if (checkRedBlockBullet(mainBullets[i], redBlocks, blocks, mDC, gameUi, explodes)) { // 총알 + 빨간 블록 충돌 검사
+                                //만약 충돌된 상태면 총알 지워버리기
+                                mainBullets.erase(mainBullets.begin() + i);
+                            }
                         }
-                       
                     }
                 }
             }
