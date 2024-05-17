@@ -6,8 +6,8 @@ private:
 public:
 	//int capacity; //총알 수
 	RECT rect;
-	COLORREF color = RGB(0, 0, 0);
-	int speed = 6;
+	COLORREF color = RGB(0, 0, 255);
+	int speed = 7;
 
 	bool status = false; // 총알 발사 상태
 
@@ -26,6 +26,5 @@ public:
 		// 원래 펜으로 복구
 		SelectObject(mDC, oldBrush);
 		DeleteObject(hBrush);
-
 	}
 };
