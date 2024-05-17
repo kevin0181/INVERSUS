@@ -129,3 +129,14 @@ void bulletScaleDown(Bullet*& b, const Block& mainBlock) {
 	b->rect.right = centerX + newWidth / 2;
 	b->rect.bottom = centerY + newHeight / 2;
 }
+
+void checkBulletBlock(const Bullet& bullet, std::vector<Block>& blocks) {
+	RECT ch_rect;
+	for (auto& block : blocks) {
+		if (block.status) {
+			if (IntersectRect(&ch_rect, &block.rect, &bullet.rect)) {
+				block.status = false;
+			}
+		}
+	}
+}

@@ -375,7 +375,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 }
 
                 moveRedBlock(redBlocks, mainBlock); // redBlock이 mainBlock을 향해감
-                //moveChangeBackgroundBlack(redBlocks, blocks); //redBlock이 지나가는 자리는 black으로 바꿈
+                moveChangeBackgroundBlack(redBlocks, blocks); //redBlock이 지나가는 자리는 black으로 바꿈
 
                 for (auto& bullet : mainBullets) { // 총알 보내기
                     if (bullet.status) {
@@ -394,6 +394,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                         if (bullet.down) {
                             OffsetRect(&bullet.rect, 0, bullet.speed);
                         }
+
+                        checkBulletBlock(bullet, blocks);
                     }
                 }
 
