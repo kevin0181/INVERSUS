@@ -383,7 +383,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 }
 
                 if (moveRedBlock(redBlocks, mainBlock, mDC, explodes)) { // redBlock이 mainBlock을 향해감 + main + red충돌체크
-                    mainBlock.rect = { 0,0,50,50 };
+                    mainBlock.rect = { 0,0,50,50 }; //main block 리스폰 부분
+                    mainBlock.left = false;
+                    mainBlock.right = false;
+                    mainBlock.up = false;
+                    mainBlock.down = false;
                     OffsetRect(&mainBlock.rect, (gameUi.gameBordRect.right / 2) - 25, (gameUi.gameBordRect.bottom / 2) + 30);
                     SetTimer(hWnd, 2, 100, NULL); // 죽고 난 뒤 생성 타이머
                 }
@@ -495,7 +499,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                     redB.aroundRect = { redB.rect.left - cellSize, redB.rect.top - cellSize,redB.rect.right + cellSize,redB.rect.bottom + cellSize };
                     redBlocks.push_back(redB);
                 }
-                KillTimer(hWnd, 4);
+                //KillTimer(hWnd, 4);
                 SetTimer(hWnd, 3, 100, NULL);
             }
             break;
