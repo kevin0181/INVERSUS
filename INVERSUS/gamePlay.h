@@ -1,5 +1,9 @@
 #pragma once
 
+void broken_print(HDC& mDC, COLORREF color, RECT rect) { // 부딪히면 폭팔하는 애니메이션
+
+}
+
 int checkCrash(const std::vector<Block>& blocks, const Block& mainBlock) {
 	RECT checkRect;
 
@@ -50,10 +54,6 @@ void blankMain(std::vector<Block>& blocks, const Block* block, std::vector<Block
 	}
 }
 
-void broken_print(HDC& mDC, COLORREF color) { // 부딪히면 폭팔하는 애니메이션
-
-}
-
 bool moveRedBlock(std::vector<Block>& redBlocks, Block& mainBlock, HDC& mDC) {
 
 	for (Block& redBlock : redBlocks) { 
@@ -97,7 +97,7 @@ bool moveRedBlock(std::vector<Block>& redBlocks, Block& mainBlock, HDC& mDC) {
 		// 메인 블럭 + 레드 블럭 부딪히면
 		if (IntersectRect(&c_rect, &redBlock.rect, &mainBlock.rect)) {
 			if (redBlock.status) {
-				broken_print(mDC, RGB(0, 0, 0));
+				broken_print(mDC, RGB(0, 0, 0), mainBlock.rect);
 				mainBlock.status = false;
 				return true;
 			}
@@ -165,7 +165,7 @@ bool checkRedBlockBullet(Bullet& bullet, std::vector<Block>& redBlocks, std::vec
 	RECT ch_rect;
 	for (int i = 0; i < redBlocks.size(); ++i) {
 		if (IntersectRect(&ch_rect, &redBlocks[i].rect, &bullet.rect) && redBlocks[i].status) {
-			broken_print(mDC, RGB(0, 0, 0));
+			broken_print(mDC, RGB(255, 0, 0), redBlocks[i].rect);
 			
 			RECT r_ch = redBlocks[i].rect; // 없어질 검은 부분
 			InflateRect(&r_ch, gameUi.cellSize, gameUi.cellSize);
