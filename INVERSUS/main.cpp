@@ -3,6 +3,7 @@
 #include <random>
 #include <vector>
 #include <string>
+#include <set>
 
 #include "sound.h"
 #include "PlayerSetting.h"
@@ -12,6 +13,8 @@
 #include "GameUI.h"
 #include "Global.h"
 #include "CountDown.h"
+#include "Block.h"
+#include "gamePlay.h"
 
 using namespace std;
 
@@ -72,7 +75,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 
 random_device rd;
 mt19937 gen(rd());
-uniform_int_distribution<int> uid_RGB(0, 255);
+uniform_int_distribution<int> uid_red_speed(1, 2);
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
     PAINTSTRUCT ps;
@@ -80,19 +84,49 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     HBITMAP hBitmap;
 
     static RECT rect;
-    
+
+    static vector<Block> blocks;
+    static Block mainBlock(RGB(0, 0, 0), RGB(0, 0, 0), { 0,0, 50, 50 }, false);
+
+    static int c_n = 0; //response 이미지
+    static int r_n = 0;
+
+    static vector<Block> redBlocks;
+
     switch (uMsg)
     {
     case WM_CREATE:
-    {
+    {   
+        GetClientRect(hWnd, &rect);
         gameStateManager.setCurrentState(GameState::START);
         gameStateManager.setImage(L"img/Inversus Intro.png");
         PlayMP3(L"sound/main intro.mp3");
+        mainBlock.respImg.Load(mainBlock.mainRespW[c_n].c_str());
         break;
     }
     case WM_COMMAND:
         break;
     case WM_KEYUP:
+        if (gameStateManager.getState() == GameState::GAMEPLAY) { // game start
+
+            switch (wParam)
+            {
+            case 65:
+                mainBlock.left = false;
+                break;
+            case 68:
+                mainBlock.right = false;
+                break;
+            case 87:
+                mainBlock.up = false;
+                break;
+            case 83:
+                mainBlock.down = false;
+                break;
+            default:
+                break;
+            }
+        }
         break;
     case WM_KEYDOWN:  // 키보드 키가 눌렸을 때
 
@@ -103,15 +137,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 KillTimer(hWnd, 1);
                 setting.setting(wParam, hWnd);
                 gameStateManager.setCurrentState(GameState::SETTING);
+                InvalidateRect(hWnd, NULL, false);
                 break;
             }
             if (gameStateManager.getState() == GameState::SETTING) { // setting -> game play
                 SetTimer(hWnd, 1, 1, NULL);
                 gameStateManager.setImage(L"img/gamePlay/score bar.png");
                 gameStateManager.setCurrentState(GameState::GAMEPLAY);
+                InvalidateRect(hWnd, NULL, false);
                 break;
             }
-            InvalidateRect(hWnd, NULL, false);
             break;
         }
 
@@ -136,68 +171,82 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         }
 
         if (gameStateManager.getState() == GameState::LEVEL) { // game level 선택
-            levelSetting.level_setting(wParam, hWnd);
+            levelSetting.level_setting(wParam, hWnd, rect, mainBlock, blocks);
+            gameUi.setBlackBlock(blocks, gameUi.cellSize); // 검정 블럭 설정
+            blankMain(blocks, &mainBlock); // 빈 부분 만들기
+            redBlocks.clear();
+            mainBlock.status = false;
             InvalidateRect(hWnd, NULL, false);
             break;
         }
 
         if (gameStateManager.getState() == GameState::GAMEPLAY) { // game start
             
+            switch (wParam)
+            {
+            case 65:
+                mainBlock.left = true;
+                break;
+            case 68:
+                mainBlock.right = true;
+                break;
+            case 87:
+                mainBlock.up = true;
+                break;
+            case 83:
+                mainBlock.down = true;
+                break;
+            default:
+                break;
+            }
         }
 
         break;
-    case WM_LBUTTONDOWN:
-        
-        break;
-    case WM_LBUTTONUP:
-        break;
-    case WM_RBUTTONDOWN:
-        break;
-    case WM_RBUTTONUP:
-        break;
-    case WM_MOUSEMOVE:
-        break;
-    case WM_CHAR:
-        switch (wParam)
-        {
-        default:
-            break;
-        }
-        InvalidateRect(hWnd, NULL, false);
-        break;
     case WM_PAINT:
     {
-        GetClientRect(hWnd, &rect);
+        
         hDC = BeginPaint(hWnd, &ps);
         mDC = CreateCompatibleDC(hDC);
         hBitmap = CreateCompatibleBitmap(hDC, rect.right, rect.bottom);
         SelectObject(mDC, (HBITMAP)hBitmap);
-        FillRect(mDC, &rect, (HBRUSH)GetStockObject(WHITE_BRUSH));
 
-        RECT gameBord = rect;
+        FillRect(mDC, &rect, (HBRUSH)GetStockObject(WHITE_BRUSH));
 
         gameStateManager.DrawImage(mDC, rect); // 전체배경
 
         if (gameStateManager.getState() == GameState::GAMEPLAY) {
 
-            int line_size = (gameStateManager.getLevel() * 10);
-            int cellSize = (rect.right) / line_size;
-
-            for (int x = 0; x <= line_size; ++x) {
-                if (x * cellSize + 130 > rect.bottom) {
-                    gameBord.bottom = (x - 1) * cellSize + 130;
-                    break;
-                }
-                MoveToEx(mDC, 0, x * cellSize + 130, NULL);
-                LineTo(mDC, rect.right, x * cellSize + 130);
-            }
-            for (int y = 0; y <= line_size; ++y) {
-                MoveToEx(mDC, y * cellSize, 130, NULL);
-                LineTo(mDC, y * cellSize, gameBord.bottom);
+            for (int x = 0; x <= gameUi.line_size; ++x) {
+                MoveToEx(mDC, 0, x * gameUi.cellSize + 130, NULL);
+                LineTo(mDC, rect.right, x * gameUi.cellSize + 130);
             }
 
-            gameUi.setGameBord(gameBord); //게임 보드 사이즈 설정
+            for (int y = 0; y <= gameUi.line_size; ++y) {
+                MoveToEx(mDC, y * gameUi.cellSize, 130, NULL);
+                LineTo(mDC, y * gameUi.cellSize, gameUi.gameBordRect.bottom);
+            }
+
+            gameUi.printBlackBlock(blocks, mDC);
             gameUi.drawGameUI(mDC, gameUi, rect);
+
+            
+            for (auto& redB : redBlocks) {
+                if (redB.status) {
+                    redB.print_red_Block(mDC, redB);
+                }
+                else {
+                    redB.print_red_res(mDC, redB, r_n, gameUi.cellSize);
+                }
+            }
+
+            if (mainBlock.status) { //살아 있을 경우
+                gameUi.mainAsset(mDC, mainBlock);
+            }
+            else { //죽고 난 뒤, 리스폰
+                //resRet(mDC, mainBlock.rect, mainBlock.respImg);
+                mainBlock.print_main_res(mDC, mainBlock, c_n, gameUi.cellSize);
+            }
+
         }
 
         if (gameStateManager.getState() == GameState::SETTING) { //setting draw
@@ -214,13 +263,124 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     case WM_TIMER:
         switch (wParam)
         {
+        case 1: //main block move
+            if (mainBlock.status) {
+                if (mainBlock.left) {
+                    OffsetRect(&mainBlock.rect, -mainBlock.speed, 0);
+                    OffsetRect(&mainBlock.rect, checkCrash(blocks, mainBlock), 0);
+                }
+
+                if (mainBlock.right) {
+                    OffsetRect(&mainBlock.rect, mainBlock.speed, 0);
+                    OffsetRect(&mainBlock.rect, -checkCrash(blocks, mainBlock), 0);
+                }
+
+                if (mainBlock.up) {
+                    OffsetRect(&mainBlock.rect, 0, -mainBlock.speed);
+                    OffsetRect(&mainBlock.rect, 0, checkCrash(blocks, mainBlock));
+                }
+
+                if (mainBlock.down) {
+                    OffsetRect(&mainBlock.rect, 0, mainBlock.speed);
+                    OffsetRect(&mainBlock.rect, 0, -checkCrash(blocks, mainBlock));
+                }
+
+                moveRedBlock(redBlocks, mainBlock); // redBlock이 mainBlock을 향해감
+                InvalidateRect(hWnd, NULL, false);
+            }
+            break;
+        case 2: // main block resp 타이머
+        {
+            /*static int count = 0;
+            c_n++;
+            if (c_n == 12) {
+                c_n = 0;
+                count++;
+            }
+
+            if (count == 3) {
+                count = 0;
+                mainBlock.status = true;
+                KillTimer(hWnd, 2);
+                break;
+            }
+
+            mainBlock.respImg.Destroy();
+            mainBlock.respImg.Load(mainBlock.mainRespW[c_n].c_str());
+            InvalidateRect(hWnd, NULL, false);*/
+
+            static int count = 0;
+            c_n++;
+            if (c_n == 12) {
+                c_n = 0;
+                count++;
+            }
+
+            if (count == 3) {
+                count = 0;
+                mainBlock.status = true;
+                KillTimer(hWnd, 2);
+                break;
+            }
+
+            InvalidateRect(hWnd, NULL, false);
+            break;
+        }
+        case 3: //red block resp 타이머
+        {
+            static int r_count = 0;
+            r_n++;
+            if (r_n == 12) {
+                r_n = 0;
+                r_count++;
+            }
+
+            if (r_count == 3) {
+                r_count = 0;
+                for (Block& redB : redBlocks) {
+                    redB.status = true;
+                }
+                KillTimer(hWnd, 3);
+                break;
+            }
+            break;
+        }
+        case 4: //red block 생성 타이머
+            if (mainBlock.status && redBlocks.size() <= 0) { // 메인 블럭이 활성화 되어 있는 상태에만 redBlock 생성
+                uniform_int_distribution<int> uid_redBlock(1, gameStateManager.getLevel() * 2 + 2);
+                uniform_int_distribution<int> uid_redBlockRect(1, blocks.size());
+
+                int rand = uid_redBlock(gen); // redBlock 개수
+                vector<int> rand_i; //redBlock 수
+                set<int> uniqueNumbers; // 중복 방지를 위한 집합
+
+                while (rand_i.size() < rand) {
+                    int num = uid_redBlockRect(gen);
+
+                    // 중복 여부 검사
+                    if (uniqueNumbers.find(num) == uniqueNumbers.end()) {
+                        uniqueNumbers.insert(num);
+                        rand_i.push_back(num);
+                    }
+                }
+
+                int cellSize = gameUi.cellSize;
+                for (int i = 0; i < rand_i.size(); ++i) {
+                    Block redB(RGB(255, 0, 0), RGB(0, 0, 0), blocks[rand_i[i]].rect, false);
+                    redB.speed = uid_red_speed(gen);
+                    redB.aroundRect = { redB.rect.left - cellSize, redB.rect.top - cellSize,redB.rect.right + cellSize,redB.rect.bottom + cellSize };
+                    redBlocks.push_back(redB);
+                }
+                KillTimer(hWnd, 4);
+                SetTimer(hWnd, 3, 100, NULL);
+            }
+            break;
         case 10: //count down
-            setCountDown(gameUi, hWnd);
+            setCountDown(gameUi, hWnd, mainBlock);
             break;
         default:
             break;
         }
-        InvalidateRect(hWnd, NULL, false);
         break;
     case WM_DESTROY:
         PostQuitMessage(0);

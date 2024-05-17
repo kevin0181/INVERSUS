@@ -1,17 +1,12 @@
+#include <vector>
+
 #include "GameUI.h"
 
 void GameUI::drawGameUI(HDC& mDC, GameUI& gameUi, RECT rect) {
 
-	HBRUSH hBrush;
-	HBRUSH oldBrush;
-
 	// main asset
 	if (gameUi.countDownStatus) { //count down
-		hBrush = CreateSolidBrush(RGB(200, 200, 200));
-		oldBrush = (HBRUSH)SelectObject(mDC, hBrush);
-		Rectangle(mDC, 0, 0, 500, 500);
-		SelectObject(mDC, oldBrush);
-		DeleteObject(hBrush);
+		//mainAsset(mDC, rect, gameUi);
 	}
 
 	// hp bar
@@ -22,6 +17,57 @@ void GameUI::drawGameUI(HDC& mDC, GameUI& gameUi, RECT rect) {
 
 	// score
 	
+}
+
+void GameUI::printBlackBlock(std::vector<Block> blocks, HDC& mDC) { //검정 블록 출력
+
+	for (int i = 0; i < blocks.size(); ++i) {
+
+		if (!blocks[i].status)
+			continue;
+
+		// 검은색 브러쉬와 회색 펜 생성
+		HBRUSH hBrush = CreateSolidBrush(blocks[i].color);
+		HPEN hPen = CreatePen(PS_SOLID, 1, blocks[i].borderColor);
+		// 현재 펜과 브러쉬를 선택
+		HBRUSH oldBrush = (HBRUSH)SelectObject(mDC, hBrush);
+		HPEN oldPen = (HPEN)SelectObject(mDC, hPen);
+		Rectangle(mDC, blocks[i].rect.left, blocks[i].rect.top, blocks[i].rect.right, blocks[i].rect.bottom);
+		// 원래 펜과 브러쉬로 복원
+		SelectObject(mDC, oldBrush);
+		SelectObject(mDC, oldPen);
+
+		// 브러쉬와 펜 자원 해제
+		DeleteObject(hBrush);
+		DeleteObject(hPen);
+	}
+
+}
+
+void GameUI::setBlackBlock(std::vector<Block>& blocks, int cellSize) { // 검정 블럭 보드 크기에 맞춰서 설정
+	blocks.clear();
+	for (int y = gameBordRect.top; y < gameBordRect.bottom; y += cellSize) {
+		for (int x = gameBordRect.left; x < gameBordRect.right; x += cellSize) {
+			RECT blockRect = { x, y, x + cellSize, y + cellSize };
+			Block b(RGB(0, 0, 0), RGB(125, 125, 125), blockRect);
+			blocks.push_back(b);
+		}
+	}
+}
+
+void GameUI::mainAsset(HDC& mDC, Block& mainBlock) {
+
+	HBRUSH hBrush;
+	HBRUSH oldBrush;
+
+	hBrush = CreateSolidBrush(mainBlock.color);
+	oldBrush = (HBRUSH)SelectObject(mDC, hBrush);
+
+	RoundRect(mDC, mainBlock.rect.left, mainBlock.rect.top, mainBlock.rect.right, mainBlock.rect.bottom, 20, 20);
+
+	SelectObject(mDC, oldBrush);
+	DeleteObject(hBrush);
+
 }
 
 void GameUI::drawHP(HDC& mDC, const RECT& rect, int hp, GameUI& gameUi) {
@@ -67,3 +113,5 @@ void GameUI::drawExp(HDC& mDC, const RECT& rect, int exp) {
 	SelectObject(mDC, oldBrush);
 	DeleteObject(hBrush);
 }
+
+
