@@ -11,17 +11,17 @@ C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\gamePlay.h(332,17): warning C4267: 
   (소스 파일 'main.cpp'을(를) 컴파일하는 중)
   
 C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(68,19): warning C4244: 'return': 'WPARAM'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(310,79): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(310,79): warning C4267:         with
-C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(310,79): warning C4267:         [
-C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(310,79): warning C4267:             _Ty=int
-C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(310,79): warning C4267:         ]
-C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(515,28): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(541,36): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(630,44): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(700,78): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(700,78): warning C4267:         with
-C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(700,78): warning C4267:         [
-C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(700,78): warning C4267:             _Ty=int
-C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(700,78): warning C4267:         ]
+C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(324,79): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(324,79): warning C4267:         with
+C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(324,79): warning C4267:         [
+C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(324,79): warning C4267:             _Ty=int
+C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(324,79): warning C4267:         ]
+C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(537,28): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(563,36): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(652,44): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(741,78): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(741,78): warning C4267:         with
+C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(741,78): warning C4267:         [
+C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(741,78): warning C4267:             _Ty=int
+C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(741,78): warning C4267:         ]
   INVERSUS.vcxproj -> C:\Users\영넨이\Desktop\INVERSUS\x64\Debug\INVERSUS_v1.exe

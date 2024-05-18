@@ -78,6 +78,17 @@ uniform_int_distribution<int> uid_red_speed(1, 2);
 uniform_int_distribution<int> uid_special_block(1, 7);
 uniform_int_distribution<int> uid_red_rand(0, 1);
 
+static double rotatingBulletAngle = 0.0;
+static const double ROTATING_BULLET_RADIUS = 100.0;
+
+void UpdateRotatingBulletPosition(Block& mainBlock, Bullet& rotatingBullet, double angle) {
+    POINT center = { (mainBlock.rect.left + mainBlock.rect.right) / 2, (mainBlock.rect.top + mainBlock.rect.bottom) / 2 };
+    rotatingBullet.rect.left = static_cast<LONG>(center.x + ROTATING_BULLET_RADIUS * cos(angle) - 10);
+    rotatingBullet.rect.top = static_cast<LONG>(center.y + ROTATING_BULLET_RADIUS * sin(angle) - 10);
+    rotatingBullet.rect.right = rotatingBullet.rect.left + 20;
+    rotatingBullet.rect.bottom = rotatingBullet.rect.top + 20;
+}
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
     PAINTSTRUCT ps;
@@ -102,6 +113,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     static vector<Block> redBlocks;
     static vector<Block> specialBlocks;
 
+    static Bullet rotatingBullet;
+    static bool rotatingBulletStatus = false;
+
     static vector<Explosion> explodes;
 
     static int move_cnt = 0;
@@ -117,7 +131,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         gameStateManager.setCurrentState(GameState::START);
         gameStateManager.setImage(L"img/Inversus Intro.png");
         PlayMP3(L"sound/main intro.mp3");
-
+        rotatingBullet.color = RGB(0, 255, 0);
         SetTimer(hWnd, 6, 100, NULL); // press bullet timer
 
         break;
@@ -413,6 +427,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                     }
                 }
             }
+
+            if (rotatingBullet.status) {
+                HBRUSH hBrush = CreateSolidBrush(rotatingBullet.color);
+                HBRUSH oldBrush = (HBRUSH)SelectObject(mDC, hBrush);
+                Ellipse(mDC, rotatingBullet.rect.left, rotatingBullet.rect.top, rotatingBullet.rect.right, rotatingBullet.rect.bottom);
+                SelectObject(mDC, oldBrush);
+                DeleteObject(hBrush);
+            }
             
             for (auto& redB : redBlocks) {
                 if (redB.status) {
@@ -651,6 +673,25 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                         }
                     }
                 }
+            }
+
+            {
+                static double angle1 = 0.0;
+                POINT center = { (mainBlock.rect.left + mainBlock.rect.right) / 2, (mainBlock.rect.top + mainBlock.rect.bottom) / 2 };
+                rotateBullets2(rotatingBullet, center, angle1);
+                angle1 += 5.0; // 각도 증가
+                if (angle1 >= 360.0) {
+                    angle1 -= 360.0;
+                }
+            }
+
+            if (!rotatingBulletStatus && gameUi.getScore() >= 1000) {
+                rotatingBullet.rect = mainBlock.rect; // Initial size of the bullet
+                InflateRect(&rotatingBullet.rect, -20, -20);
+                rotatingBullet.color = RGB(0, 255, 0); // Yellow color for visibility
+                rotatingBullet.status = true;
+                rotatingBulletAngle = 0.0;
+                rotatingBulletStatus = true;
             }
 
             InvalidateRect(hWnd, NULL, false);

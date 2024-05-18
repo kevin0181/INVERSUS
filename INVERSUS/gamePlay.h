@@ -348,3 +348,24 @@ void rotateBullets(std::vector<Bullet>& bullets, const POINT& center, double ang
 		}
 	}
 }
+
+void rotateBullets2(Bullet& rotatingBullet, const POINT& center, double angle) {
+	double radians = angle * (M_PI / 180.0);
+	int numBullets = 3;
+	double angleStep = 360.0 / numBullets;
+
+	for (int i = 0; i < numBullets; ++i) {
+		double currentAngle = i * angleStep - angle; // Subtract angle for counterclockwise rotation
+		double currentRadians = currentAngle * (M_PI / 180.0);
+		int width = rotatingBullet.rect.right - rotatingBullet.rect.left;
+		int height = rotatingBullet.rect.bottom - rotatingBullet.rect.top;
+		int radius = 70; // 중심으로부터의 거리
+		int x = static_cast<int>(radius * cos(currentRadians));
+		int y = static_cast<int>(radius * sin(currentRadians));
+
+		rotatingBullet.rect.left = center.x + x - width / 2;
+		rotatingBullet.rect.top = center.y + y - height / 2;
+		rotatingBullet.rect.right = rotatingBullet.rect.left + width;
+		rotatingBullet.rect.bottom = rotatingBullet.rect.top + height;
+	}
+}
