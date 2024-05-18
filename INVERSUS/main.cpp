@@ -161,6 +161,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                     break;
                 case VK_LEFT:
                 {
+                    PlaySecondMP3(L"sound/gun sound 2.MP3");
                     Bullet* b = nullptr;
                     if (findFalseBullet(mainBullets, b) && b != nullptr) {
                         bulletScaleDown(b, mainBlock);
@@ -178,6 +179,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 }
                 case VK_RIGHT:
                 {
+                    PlaySecondMP3(L"sound/gun sound 2.MP3");
                     Bullet* b = nullptr;
                     if (findFalseBullet(mainBullets, b) && b != nullptr) {
                         bulletScaleDown(b, mainBlock);
@@ -195,6 +197,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 }
                 case VK_UP:
                 {
+                    PlaySecondMP3(L"sound/gun sound 2.MP3");
                     Bullet* b = nullptr;
                     if (findFalseBullet(mainBullets, b) && b != nullptr) {
                         bulletScaleDown(b, mainBlock);
@@ -212,6 +215,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 }
                 case VK_DOWN:
                 {
+                    PlaySecondMP3(L"sound/gun sound 2.MP3");
                     Bullet* b = nullptr;
                     if (findFalseBullet(mainBullets, b) && b != nullptr) {
                         bulletScaleDown(b, mainBlock);
@@ -553,6 +557,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
                     if (uid_drop_bullet_status(gen) == 0) {
                         if (explodes.size() >= 1) {
+                            PlaySecondMP3(L"sound/broken sound.MP3");
 
                             uniform_int_distribution<int> uid_drop_bullet_num(1, 3);
 
@@ -579,7 +584,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                             dropBullet.push_back(b);
                         }
                     }
-
                     it = explodes.erase(it);
                     moveRect(gameUi, blocks, move_cnt, hWnd); // 화면 흔들림
                     gameUi.setScore(gameUi.getScore() + 100 * combo); // 기본 죽였을때 점수
