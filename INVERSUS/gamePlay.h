@@ -193,7 +193,6 @@ void aroundBroken(std::vector<Block>& redBlocks, Block& redBlock, std::vector<Ex
 			}
 
 			redBlocks.erase(redBlocks.begin() + i);
-			--i;
 		}
 	}
 }
@@ -214,9 +213,9 @@ bool checkRedBlockBullet(Bullet& bullet, std::vector<Block>& redBlocks, std::vec
 			}
 
 			// game score 및 주변 터짐
-			//aroundBroken(redBlocks, redBlocks[i], explodes, blocks, combo);
+			aroundBroken(redBlocks, redBlocks[i], explodes, blocks, combo);
 
-			redBlocks.erase(redBlocks.begin() + i);
+			//redBlocks.erase(redBlocks.begin() + i);
 
 			if (!bullet.through) {
 				return true;
