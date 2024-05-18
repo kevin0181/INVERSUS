@@ -589,6 +589,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                     gameUi.setScore(gameUi.getScore() + 100 * combo); // 기본 죽였을때 점수
                     gameUi.setExp(gameUi.getExp() + 5);
                     if (gameUi.getExp() >= 100) {
+                        if (gameUi.getHp() < 300) {
+                            gameUi.setHp(gameUi.getHp() + 30);
+                        }
                         gameUi.setExp(0);
                     }
                 }
