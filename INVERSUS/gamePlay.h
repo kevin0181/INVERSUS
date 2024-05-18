@@ -1,6 +1,8 @@
 #pragma once
 #include"Explodes.h"
 
+#define M_PI 3.14159265358979323846
+
 int checkCrash(const std::vector<Block>& blocks, const Block& mainBlock,const GameUI& gameUi, const std::vector<Block>& specailBlocks) {
 	RECT checkRect;
 
@@ -264,6 +266,7 @@ void print_combo(HDC& mDC, const int& combo, RECT rect) {
 #define SHAKE_DURATION 100 // duration in milliseconds
 #define SHAKE_INTERVAL 10 // interval in milliseconds
 #define SHAKE_MAGNITUDE 5 // shake intensity
+
 void moveRect(GameUI& gameUi, std::vector<Block>& blocks, int& move_cnt, HWND hWnd) {
 	gameUi.originalGameBordRect = gameUi.gameBordRect;  // Save the original position
 	for (auto& block : blocks) {
@@ -271,4 +274,26 @@ void moveRect(GameUI& gameUi, std::vector<Block>& blocks, int& move_cnt, HWND hW
 	}
 	move_cnt = SHAKE_DURATION / SHAKE_INTERVAL;
 	SetTimer(hWnd, SHAKE_TIMER, SHAKE_INTERVAL, NULL); // Start the shake timer
+}
+
+void rotateBullets(std::vector<Bullet>& bullets, const POINT& center, double angle) {
+	double radians = angle * (M_PI / 180.0);
+	int numBullets = bullets.size();
+	double angleStep = 360.0 / numBullets;
+	for (int i = 0; i < numBullets; ++i) {
+		if (!bullets[i].bullet_move_status) {
+			double currentAngle = i * angleStep + angle;
+			double currentRadians = currentAngle * (M_PI / 180.0);
+			int width = bullets[i].rect.right - bullets[i].rect.left;
+			int height = bullets[i].rect.bottom - bullets[i].rect.top;
+			int radius = 15; // 중심으로부터의 거리
+			int x = static_cast<int>(radius * cos(currentRadians));
+			int y = static_cast<int>(radius * sin(currentRadians));
+
+			bullets[i].rect.left = center.x + x - width / 2;
+			bullets[i].rect.top = center.y + y - height / 2;
+			bullets[i].rect.right = bullets[i].rect.left + width;
+			bullets[i].rect.bottom = bullets[i].rect.top + height;
+		}
+	}
 }

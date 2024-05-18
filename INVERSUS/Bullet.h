@@ -36,6 +36,10 @@ public:
 	bool up = false;
 	bool down = false;
 
+	void bullet_default_print(HDC& mDC, Bullet& bullet) {
+		Ellipse(mDC, bullet.rect.left, bullet.rect.top, bullet.rect.right, bullet.rect.bottom);
+	}
+
 	void print(HDC& mDC, Bullet& bullet) {
 		// 꼬리 길이 및 단계 수 설정
 		int tailLength = 100;

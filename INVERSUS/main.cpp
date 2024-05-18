@@ -273,11 +273,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             gameUi.setHp(300);
             gameUi.setExp(0);
 
-            mainBullets.clear();
-            for (int i = 0; i < 6; ++i) {
-                Bullet bullet;
-                mainBullets.push_back(bullet);
-            }
+            mainBullets.clear(); //총알 빈값으로
 
             if (gameStateManager.getLevel() == 4) { //통과하지 못하는 special블럭 생성
                 specialBlocks.clear();
@@ -388,7 +384,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             }
 
             for (auto& bullet : mainBullets) { // bullet
-                bullet.print(mDC, bullet);
+                if (bullet.bullet_move_status) {
+                    bullet.print(mDC, bullet);
+                }
+                else {
+                    if (mainBlock.status)
+                        bullet.bullet_default_print(mDC, bullet); //총알 회전
+                }
             }
 
             // 폭발 그리기
@@ -512,6 +514,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
             gameUi.setScore(gameUi.getScore() + 1);
 
+            {
+                static double angle = 0.0;
+                POINT center = { (mainBlock.rect.left + mainBlock.rect.right) / 2, (mainBlock.rect.top + mainBlock.rect.bottom) / 2 };
+                rotateBullets(mainBullets, center, angle);
+                angle += 5.0; // 각도 증가
+                if (angle >= 360.0) {
+                    angle -= 360.0;
+                }
+            }
+
             InvalidateRect(hWnd, NULL, false);
             break;
         case 2: // main block resp 타이머
@@ -592,6 +604,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 reloadCnt++;
                 if (reloadCnt >= 15) {
                     Bullet bullet;
+                    bullet.rect = mainBlock.rect;
+                    bullet.rect.top += 20;
+                    bullet.rect.left += 20;
+                    bullet.rect.right -= 20;
+                    bullet.rect.bottom -= 20;
                     mainBullets.push_back(bullet);
                     reloadCnt = 0;
                 }
