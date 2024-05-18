@@ -268,7 +268,7 @@ void print_combo(HDC& mDC, const int& combo, RECT rect) {
 #define SHAKE_TIMER 7
 #define SHAKE_DURATION 100 // duration in milliseconds
 #define SHAKE_INTERVAL 10 // interval in milliseconds
-#define SHAKE_MAGNITUDE 2 // shake intensity
+#define SHAKE_MAGNITUDE 1 // shake intensity
 
 void moveRect(GameUI& gameUi, std::vector<Block>& blocks, int& move_cnt, HWND hWnd) {
 	gameUi.originalGameBordRect = gameUi.gameBordRect;  // Save the original position
