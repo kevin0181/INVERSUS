@@ -50,6 +50,7 @@ void GameUI::setBlackBlock(std::vector<Block>& blocks, int cellSize) { // 검정 �
 		for (int x = gameBordRect.left; x < gameBordRect.right; x += cellSize) {
 			RECT blockRect = { x, y, x + cellSize, y + cellSize };
 			Block b(RGB(0, 0, 0), RGB(125, 125, 125), blockRect);
+			b.originalRect = b.rect; // 원래 위치로 리셋
 			blocks.push_back(b);
 		}
 	}
