@@ -22,6 +22,9 @@ private:
 public:
 	//int capacity; //총알 수
 	RECT rect;
+    RECT rect_l;
+    RECT rect_r;
+
 	COLORREF color = RGB(0, 0, 0);
 	COLORREF borderColor = RGB(0, 0, 0);
 	int speed = 7;
@@ -170,25 +173,25 @@ public:
 
         // 업그레이드된 총알 그리기
         if (bullet.upgradeBullet) {
-            RECT extraBullet1 = bullet.rect;
-            RECT extraBullet2 = bullet.rect;
+            bullet.rect_l = bullet.rect;
+            bullet.rect_r = bullet.rect;
 
             if (bullet.left || bullet.right) {
-                extraBullet1.top -= 30; // 위쪽으로 20 픽셀 이동
-                extraBullet1.bottom -= 30;
-                extraBullet2.top += 30; // 아래쪽으로 20 픽셀 이동
-                extraBullet2.bottom += 30;
+                bullet.rect_l.top -= 30; // 위쪽으로 20 픽셀 이동
+                bullet.rect_l.bottom -= 30;
+                bullet.rect_r.top += 30; // 아래쪽으로 20 픽셀 이동
+                bullet.rect_r.bottom += 30;
             }
             else if (bullet.up || bullet.down) {
-                extraBullet1.left -= 30; // 왼쪽으로 20 픽셀 이동
-                extraBullet1.right -= 30;
-                extraBullet2.left += 30; // 오른쪽으로 20 픽셀 이동
-                extraBullet2.right += 30;
+                bullet.rect_l.left -= 30; // 왼쪽으로 20 픽셀 이동
+                bullet.rect_l.right -= 30;
+                bullet.rect_r.left += 30; // 오른쪽으로 20 픽셀 이동
+                bullet.rect_r.right += 30;
             }
 
 
-            drawBullet(extraBullet1, bullet.color);
-            drawBullet(extraBullet2, bullet.color);
+            drawBullet(bullet.rect_l, bullet.color);
+            drawBullet(bullet.rect_r, bullet.color);
         }
     }
 

@@ -1,23 +1,23 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: 중간 디렉터리(x64\Debug\)에 다른 프로젝트(INVERSUS.vcxproj)에서 공유하는 파일이 포함되어 있습니다.  이로 인해 잘못된 정리 및 다시 빌드 동작이 수행될 수 있습니다.
   모듈 종속성의 소스를 검사하는 중...
+  Block.h
   Global.h
   GameUI.h
-  Block.h
   컴파일하는 중...
-  Global.h
-  Block.h
   GameUI.h
+  Block.h
+  Global.h
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\atlmfc\include\atlalloc.h(617,34): message : 죄송합니다. 'C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\atlmfc\include\atlalloc.h(621,5)'에서 인식할 수 없는 식 또는 문으로 인해 'bool ATL::_ATL_SAFE_ALLOCA_IMPL::_AtlVerifyStackAvailable(SIZE_T)'에 대한 'inline' 함수 정의를 모듈에 쓸 수 없습니다.
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\atlmfc\include\atlalloc.h(617,34): message : 가능한 경우 다음 웹 사이트에 재현을 제공해 주시기 바랍니다. https://developercommunity.visualstudio.com
   (소스 파일 'Block.h'을(를) 컴파일하는 중)
   
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\atlmfc\include\atlalloc.h(617,34): message : 죄송합니다. 'C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\atlmfc\include\atlalloc.h(621,5)'에서 인식할 수 없는 식 또는 문으로 인해 'bool ATL::_ATL_SAFE_ALLOCA_IMPL::_AtlVerifyStackAvailable(SIZE_T)'에 대한 'inline' 함수 정의를 모듈에 쓸 수 없습니다.
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\atlmfc\include\atlalloc.h(617,34): message : 가능한 경우 다음 웹 사이트에 재현을 제공해 주시기 바랍니다. https://developercommunity.visualstudio.com
-  (소스 파일 'Global.h'을(를) 컴파일하는 중)
-  
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\atlmfc\include\atlalloc.h(617,34): message : 죄송합니다. 'C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\atlmfc\include\atlalloc.h(621,5)'에서 인식할 수 없는 식 또는 문으로 인해 'bool ATL::_ATL_SAFE_ALLOCA_IMPL::_AtlVerifyStackAvailable(SIZE_T)'에 대한 'inline' 함수 정의를 모듈에 쓸 수 없습니다.
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\atlmfc\include\atlalloc.h(617,34): message : 가능한 경우 다음 웹 사이트에 재현을 제공해 주시기 바랍니다. https://developercommunity.visualstudio.com
   (소스 파일 'GameUI.h'을(를) 컴파일하는 중)
+  
+  (소스 파일 'Global.h'을(를) 컴파일하는 중)
   
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\atlmfc\include\atlstr.h(190,12): warning C5260: 상수 변수 'ATL::AtlUtil::legacyBufSize'에 포함된 헤더 파일 컨텍스트에는 내부 연결이 있지만 가져온 헤더 단위 컨텍스트에는 외부 연결이 있습니다. 번역 단위 간에 공유할 경우 '인라인'으로 선언하거나 이 번역 단위에 대해 로컬로 사용하려는 의도를 표현하려면 '정적'으로 선언하는 것이 좋습니다.
   (소스 파일 'Block.h'을(를) 컴파일하는 중)
