@@ -115,11 +115,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         gameStateManager.setImage(L"img/Inversus Intro.png");
         PlayMP3(L"sound/main intro.mp3");
 
-        for (int i = 0; i < 6; ++i) {
-            Bullet bullet;
-            mainBullets.push_back(bullet);
-        }
-
         SetTimer(hWnd, 6, 100, NULL); // press bullet timer
 
         break;
