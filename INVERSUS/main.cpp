@@ -286,7 +286,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             mainBullets.clear(); //총알 빈값으로
             dropBullet.clear();
 
-            if (gameStateManager.getLevel() == 4) { //통과하지 못하는 special블럭 생성
+            if (gameStateManager.getLevel() == 4 || gameStateManager.getLevel() == 3) { //통과하지 못하는 special블럭 생성
                 specialBlocks.clear();
                 int spe_n = uid_special_block(gen);
                 
@@ -374,7 +374,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             gameUi.printBlackBlock(blocks, mDC);
             gameUi.drawGameUI(mDC, gameUi, rect);
 
-            if (gameStateManager.getLevel() == 4) { // specail block print
+            if (gameStateManager.getLevel() == 4 || gameStateManager.getLevel() == 3) { // specail block print
                 for (int i = 0; i < specialBlocks.size(); ++i) {
                     if (specialBlocks[i].status) {
                         specialBlocks[i].print_special_Block(mDC, specialBlocks[i]);
@@ -498,8 +498,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                         checkBulletBlock(mainBullets[i], blocks); // 총알 + 검은 블록 충돌 검사
 
                         RECT r;
-                        if (!IntersectRect(&r, &mainBullets[i].rect, &gameUi.gameBordRect)) {
+                        if (!IntersectRect(&r, &mainBullets[i].rect, &gameUi.gameBordRect)) { //총알이 화면 밖으로 나가면 지우기
                             mainBullets.erase(mainBullets.begin() + i);
+                        }
+
+                        for (int j = 0; j < specialBlocks.size(); ++j) {
+                            if (mainBullets[i].special && IntersectRect(&r, &specialBlocks[j].rect, &mainBullets[i].rect)) {
+                                Explosion ex(specialBlocks[j].rect, specialBlocks[j].color);
+                                explodes.push_back(ex);
+                                specialBlocks.erase(specialBlocks.begin() + j);
+                                mainBullets.erase(mainBullets.begin() + i);
+                            }
+                            else if(!mainBullets[i].special && IntersectRect(&r, &specialBlocks[j].rect, &mainBullets[i].rect)){
+                                mainBullets.erase(mainBullets.begin() + i);
+                            }
                         }
 
                         if (mainBullets.size() > 0) {

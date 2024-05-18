@@ -193,6 +193,7 @@ void aroundBroken(std::vector<Block>& redBlocks, Block& redBlock, std::vector<Ex
 			}
 
 			redBlocks.erase(redBlocks.begin() + i);
+			--i;
 		}
 	}
 }
