@@ -75,6 +75,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 random_device rd;
 mt19937 gen(rd());
 uniform_int_distribution<int> uid_red_speed(1, 2);
+uniform_int_distribution<int> uid_special_block(1, 7);
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
@@ -98,6 +99,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     static RECT comboRect;
 
     static vector<Block> redBlocks;
+    static vector<Block> specialBlocks;
 
     static vector<Explosion> explodes;
 
@@ -275,6 +277,26 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             mainBlock.status = false;
             gameUi.setHp(300);
             gameUi.setExp(0);
+
+            mainBullets.clear();
+            for (int i = 0; i < 6; ++i) {
+                Bullet bullet;
+                mainBullets.push_back(bullet);
+            }
+
+            if (gameStateManager.getLevel() == 4) { //통과하지 못하는 special블럭 생성
+                specialBlocks.clear();
+                int spe_n = uid_special_block(gen);
+                
+                for (int i = 0; i < spe_n; ++i) {
+                    uniform_int_distribution<int> uid_sp_block2(1, blocks.size());
+                    Block spB;
+                    spB.rect = blocks[uid_sp_block2(gen)].rect;
+                    spB.color = RGB(0, 0, 255);
+                    specialBlocks.push_back(spB);
+                }
+            }
+
             InvalidateRect(hWnd, NULL, false);
             break;
         }
@@ -345,6 +367,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             gameUi.printBlackBlock(blocks, mDC);
             gameUi.drawGameUI(mDC, gameUi, rect);
 
+            if (gameStateManager.getLevel() == 4) { // specail block print
+                for (int i = 0; i < specialBlocks.size(); ++i) {
+                    specialBlocks[i].print_special_Block(mDC, specialBlocks[i]);
+                }
+            }
             
             for (auto& redB : redBlocks) {
                 if (redB.status) {

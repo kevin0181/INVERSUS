@@ -23,6 +23,19 @@ void Block::print_red_Block(HDC& mDC,const Block& redBlock) {
 	DeleteObject(hBrush);
 }
 
+void Block::print_special_Block(HDC& mDC, const Block& block) {
+	HBRUSH hBrush;
+	HBRUSH oldBrush;
+
+	hBrush = CreateSolidBrush(block.color);
+	oldBrush = (HBRUSH)SelectObject(mDC, hBrush);
+
+	Rectangle(mDC, block.rect.left, block.rect.top, block.rect.right, block.rect.bottom);
+
+	SelectObject(mDC, oldBrush);
+	DeleteObject(hBrush);
+}
+
 void Block::print_red_res(HDC& mDC, const Block& redBlock, const int& r_n, const int& cellSize) {
 
 	int maxShrink = 30;  // 최대 축소 크기

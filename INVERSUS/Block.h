@@ -66,6 +66,7 @@ public:
 
 	void print_red_res(HDC& mDC,const Block& redBlock, const int& r_n, const int& cellSize);
 	void print_main_res(HDC& mDC, const Block& mainBlock, const int& c_n, const int& cellSize);
+	void print_special_Block(HDC& mDC, const Block& specialBlock);
 
 	void setRect(RECT rect) {
 		this->rect = rect;
