@@ -1,5 +1,6 @@
 #pragma once
 #include <Windows.h>
+#define M_PI 3.14159265358979323846
 
 class Bullet {
 private:
@@ -44,18 +45,36 @@ public:
 	}
 
 	void bullet_drop_print(HDC& mDC, Bullet& bullet) {
-		HBRUSH hBrush = CreateSolidBrush(bullet.color);
-		HBRUSH oldBrush = (HBRUSH)SelectObject(mDC, hBrush);
+		int numBullets = bullet.capacity;
+		double angleStep = 360.0 / numBullets;
+		int radius = 20; // 중심으로부터의 거리
+		int width = bullet.rect.right - bullet.rect.left;
+		int height = bullet.rect.bottom - bullet.rect.top;
 
-		HPEN hPen = CreatePen(PS_SOLID, 1, bullet.borderColor);
-		HPEN oldPen = (HPEN)SelectObject(mDC, hPen);
+		for (int i = 0; i < numBullets; ++i) {
+			double angle = i * angleStep;
+			double radians = angle * (M_PI / 180.0);
+			int x = static_cast<int>(radius * cos(radians));
+			int y = static_cast<int>(radius * sin(radians));
 
-		Ellipse(mDC, bullet.rect.left, bullet.rect.top, bullet.rect.right, bullet.rect.bottom);
+			int left = bullet.rect.left + x - width / 2;
+			int top = bullet.rect.top + y - height / 2;
+			int right = left + width;
+			int bottom = top + height;
 
-		SelectObject(mDC, oldPen);
-		SelectObject(mDC, oldBrush);
-		DeleteObject(hBrush);
-		DeleteObject(hPen);
+			HBRUSH hBrush = CreateSolidBrush(bullet.color);
+			HBRUSH oldBrush = (HBRUSH)SelectObject(mDC, hBrush);
+
+			HPEN hPen = CreatePen(PS_SOLID, 1, bullet.borderColor);
+			HPEN oldPen = (HPEN)SelectObject(mDC, hPen);
+
+			Ellipse(mDC, left, top, right, bottom);
+
+			SelectObject(mDC, oldPen);
+			SelectObject(mDC, oldBrush);
+			DeleteObject(hBrush);
+			DeleteObject(hPen);
+		}
 	}
 
 	void print(HDC& mDC, Bullet& bullet) {

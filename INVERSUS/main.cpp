@@ -276,6 +276,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             gameUi.setExp(0);
 
             mainBullets.clear(); //총알 빈값으로
+            dropBullet.clear();
 
             if (gameStateManager.getLevel() == 4) { //통과하지 못하는 special블럭 생성
                 specialBlocks.clear();
@@ -514,7 +515,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
                             Bullet b;
                             b.status = true;
-                            b.rect = it->rect;
+                            b.rect = { 0,0,50,50 };
+                            OffsetRect(&b.rect, it->rect.left, it->rect.top);
                             b.rect.top += 20;
                             b.rect.left += 20;
                             b.rect.right -= 20;
