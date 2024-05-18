@@ -6,7 +6,7 @@ void Block::print_red_Block(HDC& mDC,const Block& redBlock) {
 
 	SetBkMode(mDC, TRANSPARENT);
 
-	hBrush = CreateHatchBrush(HS_DIAGCROSS, RGB(255, 0, 0));
+	hBrush = CreateHatchBrush(HS_DIAGCROSS, redBlock.color);
 	oldBrush = (HBRUSH)SelectObject(mDC, hBrush);
 
 	RoundRect(mDC, redBlock.aroundRect.left, aroundRect.top, aroundRect.right, aroundRect.bottom, 20, 20);

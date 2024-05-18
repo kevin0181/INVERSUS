@@ -18,6 +18,8 @@ public:
 	bool status;
 	Bullet bullet;
 
+	bool red_special = false;
+
 	bool left = false;
 	bool right = false;
 	bool up = false;

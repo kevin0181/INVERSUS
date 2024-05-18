@@ -76,6 +76,7 @@ random_device rd;
 mt19937 gen(rd());
 uniform_int_distribution<int> uid_red_speed(1, 2);
 uniform_int_distribution<int> uid_special_block(1, 7);
+uniform_int_distribution<int> uid_red_rand(0, 1);
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
@@ -707,8 +708,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                     Block redB(RGB(255, 0, 0), RGB(0, 0, 0), blocks[rand_i[i]].rect, false);
                     redB.speed = uid_red_speed(gen);
                     redB.aroundRect = { redB.rect.left - cellSize, redB.rect.top - cellSize,redB.rect.right + cellSize,redB.rect.bottom + cellSize };
+                    
+                    if (uid_red_rand(gen) == 0) {
+                        redB.color = RGB(255, 123, 123);
+                        redB.red_special = true;
+                    }
+
                     redBlocks.push_back(redB);
                 }
+
+                
+
                 //KillTimer(hWnd, 4);
                 if (gameUi.getScore() > 10000) { //score 10000점 넘으면 빠른 스폰
                     SetTimer(hWnd, 3, 20, NULL);
