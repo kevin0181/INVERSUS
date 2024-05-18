@@ -690,7 +690,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                     redBlocks.push_back(redB);
                 }
                 //KillTimer(hWnd, 4);
-                SetTimer(hWnd, 3, 100, NULL);
+                if (gameUi.getScore() > 10000) { //score 10000점 넘으면 빠른 스폰
+                    SetTimer(hWnd, 3, 20, NULL);
+                }
+                else if (gameUi.getScore() > 3000) {
+                    SetTimer(hWnd, 3, 80, NULL);
+                }
+                else if (gameUi.getScore() > 6000) {
+                    SetTimer(hWnd, 3, 50, NULL);
+                }
+                else if (gameUi.getScore() > 8000) {
+                    SetTimer(hWnd, 3, 30, NULL);
+                }
+                else {
+                    SetTimer(hWnd, 3, 100, NULL);
+                }
             }
             break;
         case 6: //press bullet
