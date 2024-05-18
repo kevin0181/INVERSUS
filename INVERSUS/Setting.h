@@ -20,4 +20,10 @@ public:
 	int getMusic_n() {
 		return music_n;
 	}
+
+	bool getInvincibility() const {
+		return invincibility;
+	}
+
+	
 };

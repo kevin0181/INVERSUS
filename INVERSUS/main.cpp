@@ -407,7 +407,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                     OffsetRect(&mainBlock.rect, 0, -checkCrash(blocks, mainBlock, gameUi));
                 }
 
-                if (moveRedBlock(redBlocks, mainBlock, mDC, explodes)) { // redBlock이 mainBlock을 향해감 + main + red충돌체크
+                if (moveRedBlock(redBlocks, mainBlock, mDC, explodes, setting)) { // redBlock이 mainBlock을 향해감 + main + red충돌체크
 
                     gameUi.setHp(gameUi.getHp() - 30);
 
@@ -424,7 +424,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                     OffsetRect(&mainBlock.rect, (gameUi.gameBordRect.right / 2) - 25, (gameUi.gameBordRect.bottom / 2) + 30);
                     SetTimer(hWnd, 2, 100, NULL); // 죽고 난 뒤 생성 타이머
                 }
-
+                
                 moveChangeBackgroundBlack(redBlocks, blocks); //redBlock이 지나가는 자리는 black으로 바꿈
 
                 for (int i = 0; i < mainBullets.size(); ++i) { // 총알 발사 등.

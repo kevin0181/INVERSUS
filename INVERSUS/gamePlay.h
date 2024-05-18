@@ -57,7 +57,7 @@ void blankMain(std::vector<Block>& blocks, const Block* block, std::vector<Block
 	}
 }
 
-bool moveRedBlock(std::vector<Block>& redBlocks, Block& mainBlock, HDC& mDC, std::vector<Explosion>& explodes) {
+bool moveRedBlock(std::vector<Block>& redBlocks, Block& mainBlock, HDC& mDC, std::vector<Explosion>& explodes,const Setting& setting) {
 
 	for (Block& redBlock : redBlocks) { 
 		if (redBlock.status) {
@@ -98,7 +98,7 @@ bool moveRedBlock(std::vector<Block>& redBlocks, Block& mainBlock, HDC& mDC, std
 		}
 		RECT c_rect;
 		// 메인 블럭 + 레드 블럭 부딪히면
-		if (IntersectRect(&c_rect, &redBlock.rect, &mainBlock.rect)) {
+		if (IntersectRect(&c_rect, &redBlock.rect, &mainBlock.rect)&& !setting.getInvincibility()) {
 			if (redBlock.status) {
 				Explosion b(mainBlock.rect, mainBlock.color);
 				explodes.push_back(b);
