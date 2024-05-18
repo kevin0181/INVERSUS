@@ -513,7 +513,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                         }
 
                         for (int j = 0; j < specialBlocks.size(); ++j) {
-                            if (mainBullets[i].special && IntersectRect(&r, &specialBlocks[j].rect, &mainBullets[i].rect)) {
+                            if (mainBullets[i].special && IntersectRect(&r, &specialBlocks[j].rect, &mainBullets[i].rect)) { //스페셜 블록 부딫히면 삭제
                                 Explosion ex(specialBlocks[j].rect, specialBlocks[j].color);
                                 explodes.push_back(ex);
                                 specialBlocks.erase(specialBlocks.begin() + j);
