@@ -24,6 +24,8 @@ public:
 	RECT rect;
     RECT rect_l;
     RECT rect_r;
+    bool upgradeBullet_l = false;
+    bool upgradeBullet_r = false;
 
 	COLORREF color = RGB(0, 0, 0);
 	COLORREF borderColor = RGB(0, 0, 0);
@@ -37,7 +39,6 @@ public:
 	bool bullet_move_status = false; // 총알 이동하는지 체크
 
 	bool through = false; // 관통 상태
-	bool upgradeBullet = false;
 
 	bool left = false;
 	bool right = false;
@@ -171,28 +172,32 @@ public:
         // 기본 총알 그리기
         drawBullet(bullet.rect, bullet.color);
 
-        // 업그레이드된 총알 그리기
-        if (bullet.upgradeBullet) {
-            bullet.rect_l = bullet.rect;
-            bullet.rect_r = bullet.rect;
+    //    // 업그레이드된 총알 그리기
+    //    if (bullet.upgradeBullet_l) { //한쪽
+    //        bullet.rect_l = bullet.rect;
 
-            if (bullet.left || bullet.right) {
-                bullet.rect_l.top -= 30; // 위쪽으로 20 픽셀 이동
-                bullet.rect_l.bottom -= 30;
-                bullet.rect_r.top += 30; // 아래쪽으로 20 픽셀 이동
-                bullet.rect_r.bottom += 30;
-            }
-            else if (bullet.up || bullet.down) {
-                bullet.rect_l.left -= 30; // 왼쪽으로 20 픽셀 이동
-                bullet.rect_l.right -= 30;
-                bullet.rect_r.left += 30; // 오른쪽으로 20 픽셀 이동
-                bullet.rect_r.right += 30;
-            }
+    //        if (bullet.left || bullet.right) {
+    //            bullet.rect_l.top -= 30; // 위쪽으로 20 픽셀 이동
+    //            bullet.rect_l.bottom -= 30;
+    //        }
+    //        else if (bullet.up || bullet.down) {
+    //            bullet.rect_l.left -= 30; // 왼쪽으로 20 픽셀 이동
+    //            bullet.rect_l.right -= 30;
+    //        }
+    //        drawBullet(bullet.rect_l, bullet.color);
+    //    }
 
-
-            drawBullet(bullet.rect_l, bullet.color);
-            drawBullet(bullet.rect_r, bullet.color);
-        }
+    //    if (bullet.upgradeBullet_r) { // 한쪽
+    //        bullet.rect_r = bullet.rect;
+    //        if (bullet.left || bullet.right) {
+    //            bullet.rect_r.top += 30; // 아래쪽으로 20 픽셀 이동
+    //            bullet.rect_r.bottom += 30;
+    //        }
+    //        else if (bullet.up || bullet.down) {
+    //            bullet.rect_r.left += 30; // 오른쪽으로 20 픽셀 이동
+    //            bullet.rect_r.right += 30;
+    //        }
+    //        drawBullet(bullet.rect_r, bullet.color);
+    //    }
     }
-
 };

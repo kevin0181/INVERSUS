@@ -170,9 +170,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                             b->color = RGB(0, 0, 0);
                         b->left = true;
                         b->bullet_move_status = true;
-                        if (vk_count >= 15 && vk_status) {
-                            b->speed = b->max_speed;
-                            b->upgradeBullet = true;
+                        if (gameUi.getScore() >= 1000) {
+                            if (vk_count >= 15 && vk_status) {
+                                b->speed = b->max_speed;
+                                /*b->upgradeBullet_l = true;
+                                b->upgradeBullet_r = true;*/ //ÃÑ¾Ë 3°³
+                            }
                         }
                     }
                     vk_count = 0;
@@ -189,9 +192,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                             b->color = RGB(0, 0, 0);
                         b->right = true;
                         b->bullet_move_status = true;
-                        if (vk_count >= 15 && vk_status) {
-                            b->speed = b->max_speed;
-                            b->upgradeBullet = true;
+                        if (gameUi.getScore() >= 1000) {
+                            if (vk_count >= 15 && vk_status) {
+                                b->speed = b->max_speed;
+                            }
                         }
                     }
                     vk_count = 0;
@@ -208,9 +212,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                             b->color = RGB(0, 0, 0);
                         b->up = true;
                         b->bullet_move_status = true;
-                        if (vk_count >= 15 && vk_status){
-                            b->speed = b->max_speed;
-                            b->upgradeBullet = true;
+                        if (gameUi.getScore() >= 1000) {
+                            if (vk_count >= 15 && vk_status) {
+                                b->speed = b->max_speed;
+                            }
                         }
                     }
                     vk_count = 0;
@@ -227,9 +232,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                             b->color = RGB(0, 0, 0);
                         b->down = true;
                         b->bullet_move_status = true;
-                        if (vk_count >= 15 && vk_status) {
-                            b->speed = b->max_speed;
-                            b->upgradeBullet = true;
+                        if (gameUi.getScore() >= 1000) {
+                            if (vk_count >= 15 && vk_status) {
+                                b->speed = b->max_speed;
+                            }
                         }
                     }
                     vk_count = 0;
