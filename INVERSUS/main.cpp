@@ -291,6 +291,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 for (int i = 0; i < spe_n; ++i) {
                     uniform_int_distribution<int> uid_sp_block2(1, blocks.size());
                     Block spB;
+                    spB.status = true;
                     spB.rect = blocks[uid_sp_block2(gen)].rect;
                     spB.color = RGB(0, 0, 255);
                     specialBlocks.push_back(spB);
@@ -369,7 +370,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
             if (gameStateManager.getLevel() == 4) { // specail block print
                 for (int i = 0; i < specialBlocks.size(); ++i) {
-                    specialBlocks[i].print_special_Block(mDC, specialBlocks[i]);
+                    if (specialBlocks[i].status) {
+                        specialBlocks[i].print_special_Block(mDC, specialBlocks[i]);
+                    }
                 }
             }
             
@@ -424,22 +427,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             if (mainBlock.status) {
                 if (mainBlock.left) {
                     OffsetRect(&mainBlock.rect, -mainBlock.speed, 0);
-                    OffsetRect(&mainBlock.rect, checkCrash(blocks, mainBlock, gameUi), 0);
+                    OffsetRect(&mainBlock.rect, checkCrash(blocks, mainBlock, gameUi, specialBlocks), 0);
                 }
 
                 if (mainBlock.right) {
                     OffsetRect(&mainBlock.rect, mainBlock.speed, 0);
-                    OffsetRect(&mainBlock.rect, -checkCrash(blocks, mainBlock, gameUi), 0);
+                    OffsetRect(&mainBlock.rect, -checkCrash(blocks, mainBlock, gameUi, specialBlocks), 0);
                 }
 
                 if (mainBlock.up) {
                     OffsetRect(&mainBlock.rect, 0, -mainBlock.speed);
-                    OffsetRect(&mainBlock.rect, 0, checkCrash(blocks, mainBlock, gameUi));
+                    OffsetRect(&mainBlock.rect, 0, checkCrash(blocks, mainBlock, gameUi, specialBlocks));
                 }
 
                 if (mainBlock.down) {
                     OffsetRect(&mainBlock.rect, 0, mainBlock.speed);
-                    OffsetRect(&mainBlock.rect, 0, -checkCrash(blocks, mainBlock, gameUi));
+                    OffsetRect(&mainBlock.rect, 0, -checkCrash(blocks, mainBlock, gameUi, specialBlocks));
                 }
 
                 if (moveRedBlock(redBlocks, mainBlock, mDC, explodes, setting)) { // redBlock이 mainBlock을 향해감 + main + red충돌체크
