@@ -675,6 +675,24 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 }
             }
 
+
+            for (int i = redBlocks.size() - 1; i >= 0; --i) { // À§¼º ÃÑ¾ËÀÌ¶û ºÎµúÈ÷¸é ÅÍÁü
+                RECT ch_rect;
+                if (IntersectRect(&ch_rect, &redBlocks[i].rect, &rotatingBullet.rect)) {
+                    // Æø¹ß
+                    Explosion b(redBlocks[i].rect, redBlocks[i].color);
+                    explodes.push_back(b);
+                    RECT r_ch = redBlocks[i].rect; // ¾ø¾îÁú °ËÀº ºÎºÐ
+                    InflateRect(&r_ch, gameUi.cellSize, gameUi.cellSize);
+                    for (auto& block : blocks) {
+                        if (IntersectRect(&ch_rect, &r_ch, &block.rect)) {
+                            block.status = false;
+                        }
+                    }
+                    redBlocks.erase(redBlocks.begin() + i);
+                }
+            }
+
             {
                 static double angle1 = 0.0;
                 POINT center = { (mainBlock.rect.left + mainBlock.rect.right) / 2, (mainBlock.rect.top + mainBlock.rect.bottom) / 2 };
@@ -685,13 +703,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 }
             }
 
-            if (!rotatingBulletStatus && gameUi.getScore() >= 1000) {
+            if (!rotatingBulletStatus && gameUi.getScore() >= 10000) {
                 rotatingBullet.rect = mainBlock.rect; // Initial size of the bullet
                 InflateRect(&rotatingBullet.rect, -20, -20);
                 rotatingBullet.color = RGB(0, 255, 0); // Yellow color for visibility
                 rotatingBullet.status = true;
                 rotatingBulletAngle = 0.0;
                 rotatingBulletStatus = true;
+            }
+
+            if (gameUi.getScore() >= 5000) {
+                gameUi.max_reload_cnt = 10;
             }
 
             InvalidateRect(hWnd, NULL, false);

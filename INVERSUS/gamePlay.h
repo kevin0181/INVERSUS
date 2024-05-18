@@ -216,7 +216,8 @@ void aroundBroken(std::vector<Block>& redBlocks, Block& redBlock, std::vector<Ex
 	}
 }
 
-bool checkRedBlockBullet(Bullet& bullet, std::vector<Block>& redBlocks, std::vector<Block>& blocks, HDC& mDC, const GameUI& gameUi, std::vector<Explosion>& explodes, int& combo) {
+bool checkRedBlockBullet(Bullet& bullet, std::vector<Block>& redBlocks, std::vector<Block>& blocks, HDC& mDC,
+	const GameUI& gameUi, std::vector<Explosion>& explodes, int& combo) {
 	RECT ch_rect;
 	for (int i = redBlocks.size() - 1; i >= 0; --i) {
 		if (IntersectRect(&ch_rect, &redBlocks[i].rect, &bullet.rect) && redBlocks[i].status) {
@@ -359,7 +360,7 @@ void rotateBullets2(Bullet& rotatingBullet, const POINT& center, double angle) {
 		double currentRadians = currentAngle * (M_PI / 180.0);
 		int width = rotatingBullet.rect.right - rotatingBullet.rect.left;
 		int height = rotatingBullet.rect.bottom - rotatingBullet.rect.top;
-		int radius = 70; // 중심으로부터의 거리
+		int radius = 110; // 중심으로부터의 거리
 		int x = static_cast<int>(radius * cos(currentRadians));
 		int y = static_cast<int>(radius * sin(currentRadians));
 
