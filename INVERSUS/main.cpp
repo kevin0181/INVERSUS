@@ -285,6 +285,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
             mainBullets.clear(); //총알 빈값으로
             dropBullet.clear();
+            explodes.clear();
 
             if (gameStateManager.getLevel() == 4 || gameStateManager.getLevel() == 3) { //통과하지 못하는 special블럭 생성
                 specialBlocks.clear();
@@ -302,6 +303,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
             InvalidateRect(hWnd, NULL, false);
             break;
+        }
+
+        if (gameStateManager.getState() == GameState::GAMEOVER && wParam == VK_RETURN) {
+            gameStateManager.setCurrentState(GameState::START);
+            gameStateManager.setImage(L"img/Inversus Intro.png");
+            PlayMP3(L"sound/main intro.mp3");
         }
 
         if (gameStateManager.getState() == GameState::GAMEPLAY) { // game start
@@ -468,11 +475,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
                 if (moveRedBlock(redBlocks, mainBlock, mDC, explodes, setting)) { // redBlock이 mainBlock을 향해감 + main + red충돌체크
 
-                    gameUi.setHp(gameUi.getHp() - 30);
+                    gameUi.setHp(gameUi.getHp() - 100);
 
                     if (gameUi.getHp() <= 0) {
                         //game over
-
+                        gameStateManager.setCurrentState(GameState::GAMEOVER);
+                        gameStateManager.setImage(L"img/gamePlay/game over.png");
+                        CloseGameBackgroundSound();
+                        PlaySecondMP3(L"sound/game over.MP3"); // 버튼 사운드
+                        KillTimer(hWnd, 1);
                     }
 
                     mainBlock.rect = { 0,0,50,50 }; //main block 리스폰 부분
