@@ -172,6 +172,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                         b->bullet_move_status = true;
                         if (vk_count >= 15 && vk_status) {
                             b->speed = b->max_speed;
+                            b->upgradeBullet = true;
                         }
                     }
                     vk_count = 0;
@@ -190,6 +191,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                         b->bullet_move_status = true;
                         if (vk_count >= 15 && vk_status) {
                             b->speed = b->max_speed;
+                            b->upgradeBullet = true;
                         }
                     }
                     vk_count = 0;
@@ -208,6 +210,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                         b->bullet_move_status = true;
                         if (vk_count >= 15 && vk_status){
                             b->speed = b->max_speed;
+                            b->upgradeBullet = true;
                         }
                     }
                     vk_count = 0;
@@ -226,6 +229,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                         b->bullet_move_status = true;
                         if (vk_count >= 15 && vk_status) {
                             b->speed = b->max_speed;
+                            b->upgradeBullet = true;
                         }
                     }
                     vk_count = 0;

@@ -34,6 +34,7 @@ public:
 	bool bullet_move_status = false; // 총알 이동하는지 체크
 
 	bool through = false; // 관통 상태
+	bool upgradeBullet = false;
 
 	bool left = false;
 	bool right = false;
@@ -82,86 +83,113 @@ public:
 		}
 	}
 
-	void print(HDC& mDC, Bullet& bullet) {
-		// 꼬리 길이 및 단계 수 설정
-		int tailLength = 100;
-		int steps = 10;
-		int stepLength = tailLength / steps;
+    void print(HDC& mDC, Bullet& bullet) {
+        // 꼬리 길이 및 단계 수 설정
+        int tailLength = 100;
+        int steps = 10;
+        int stepLength = tailLength / steps;
 
-		// 시작 색상과 끝 색상 설정
-		COLORREF startColor = bullet.color;
-		COLORREF endColor = RGB(255, 255, 255); // 흰색
+        // 시작 색상과 끝 색상 설정
+        COLORREF startColor = bullet.color;
+        COLORREF endColor = RGB(255, 255, 255); // 흰색
 
-		// 꼬리 그리기
-		for (int i = 0; i < steps; ++i) {
-			double t = static_cast<double>(i) / steps;
-			COLORREF currentColor = interpolateColor(startColor, endColor, t);
+        auto drawBullet = [&](RECT rect, COLORREF color) {
+            for (int i = 0; i < steps; ++i) {
+                double t = static_cast<double>(i) / steps;
+                COLORREF currentColor = interpolateColor(startColor, endColor, t);
 
-			HBRUSH hBrush = CreateSolidBrush(currentColor);
-			HBRUSH oldBrush = (HBRUSH)SelectObject(mDC, hBrush);
-			HPEN hPen = (HPEN)SelectObject(mDC, GetStockObject(NULL_PEN));
+                HBRUSH hBrush = CreateSolidBrush(currentColor);
+                HBRUSH oldBrush = (HBRUSH)SelectObject(mDC, hBrush);
+                HPEN hPen = (HPEN)SelectObject(mDC, GetStockObject(NULL_PEN));
 
-			RECT tailRect = bullet.rect;
+                RECT tailRect = rect;
 
-			if (bullet.right) {
-				tailRect.left -= stepLength * i;
-				tailRect.right -= stepLength * i;
-			}
-			else if (bullet.left) {
-				tailRect.left += stepLength * i;
-				tailRect.right += stepLength * i;
-			}
-			else if (bullet.up) {
-				tailRect.top += stepLength * i;
-				tailRect.bottom += stepLength * i;
-			}
-			else if (bullet.down) {
-				tailRect.top -= stepLength * i;
-				tailRect.bottom -= stepLength * i;
-			}
+                if (bullet.right) {
+                    tailRect.left -= stepLength * i;
+                    tailRect.right -= stepLength * i;
+                }
+                else if (bullet.left) {
+                    tailRect.left += stepLength * i;
+                    tailRect.right += stepLength * i;
+                }
+                else if (bullet.up) {
+                    tailRect.top += stepLength * i;
+                    tailRect.bottom += stepLength * i;
+                }
+                else if (bullet.down) {
+                    tailRect.top -= stepLength * i;
+                    tailRect.bottom -= stepLength * i;
+                }
 
-			Rectangle(mDC, tailRect.left, tailRect.top, tailRect.right, tailRect.bottom);
+                Rectangle(mDC, tailRect.left, tailRect.top, tailRect.right, tailRect.bottom);
 
-			// 원래 브러시와 펜으로 복구
-			SelectObject(mDC, oldBrush);
-			SelectObject(mDC, hPen);
-			DeleteObject(hBrush);
-		}
+                // 원래 브러시와 펜으로 복구
+                SelectObject(mDC, oldBrush);
+                SelectObject(mDC, hPen);
+                DeleteObject(hBrush);
+            }
 
-		// 총알의 머리 부분을 둥글게 그린다
-		HBRUSH hBrush = CreateSolidBrush(bullet.color);
-		HBRUSH oldBrush = (HBRUSH)SelectObject(mDC, hBrush);
-		HPEN hPen = (HPEN)SelectObject(mDC, GetStockObject(NULL_PEN));
+            // 총알의 머리 부분을 둥글게 그린다
+            HBRUSH hBrush = CreateSolidBrush(bullet.color);
+            HBRUSH oldBrush = (HBRUSH)SelectObject(mDC, hBrush);
+            HPEN hPen = (HPEN)SelectObject(mDC, GetStockObject(NULL_PEN));
 
-		if (bullet.right) {
-			RECT headRect = bullet.rect;
-			headRect.right += 10; // 둥근 부분을 위해 약간 확장
-			Rectangle(mDC, bullet.rect.left, bullet.rect.top, bullet.rect.right, bullet.rect.bottom);
-			Ellipse(mDC, bullet.rect.right - 10, bullet.rect.top, bullet.rect.right + 5, bullet.rect.bottom);
-		}
-		else if (bullet.left) {
-			RECT headRect = bullet.rect;
-			headRect.left -= 10; // 둥근 부분을 위해 약간 확장
-			Rectangle(mDC, bullet.rect.left, bullet.rect.top, bullet.rect.right, bullet.rect.bottom);
-			Ellipse(mDC, bullet.rect.left - 5, bullet.rect.top, bullet.rect.left + 10, bullet.rect.bottom);
-		}
-		else if (bullet.up) {
-			RECT headRect = bullet.rect;
-			headRect.top -= 10; // 둥근 부분을 위해 약간 확장
-			Rectangle(mDC, bullet.rect.left, bullet.rect.top, bullet.rect.right, bullet.rect.bottom);
-			Ellipse(mDC, bullet.rect.left, bullet.rect.top - 5, bullet.rect.right, bullet.rect.top + 10);
-		}
-		else if (bullet.down) {
-			RECT headRect = bullet.rect;
-			headRect.bottom += 10; // 둥근 부분을 위해 약간 확장
-			Rectangle(mDC, bullet.rect.left, bullet.rect.top, bullet.rect.right, bullet.rect.bottom);
-			Ellipse(mDC, bullet.rect.left, bullet.rect.bottom - 10, bullet.rect.right, bullet.rect.bottom + 5);
-		}
+            if (bullet.right) {
+                RECT headRect = rect;
+                headRect.right += 10; // 둥근 부분을 위해 약간 확장
+                Rectangle(mDC, rect.left, rect.top, rect.right, rect.bottom);
+                Ellipse(mDC, rect.right - 10, rect.top, rect.right + 5, rect.bottom);
+            }
+            else if (bullet.left) {
+                RECT headRect = rect;
+                headRect.left -= 10; // 둥근 부분을 위해 약간 확장
+                Rectangle(mDC, rect.left, rect.top, rect.right, rect.bottom);
+                Ellipse(mDC, rect.left - 5, rect.top, rect.left + 10, rect.bottom);
+            }
+            else if (bullet.up) {
+                RECT headRect = rect;
+                headRect.top -= 10; // 둥근 부분을 위해 약간 확장
+                Rectangle(mDC, rect.left, rect.top, rect.right, rect.bottom);
+                Ellipse(mDC, rect.left, rect.top - 5, rect.right, rect.top + 10);
+            }
+            else if (bullet.down) {
+                RECT headRect = rect;
+                headRect.bottom += 10; // 둥근 부분을 위해 약간 확장
+                Rectangle(mDC, rect.left, rect.top, rect.right, rect.bottom);
+                Ellipse(mDC, rect.left, rect.bottom - 10, rect.right, rect.bottom + 5);
+            }
 
-		// 원래 브러시와 펜으로 복구
-		SelectObject(mDC, oldBrush);
-		SelectObject(mDC, hPen);
-		DeleteObject(hBrush);
-	}
+            // 원래 브러시와 펜으로 복구
+            SelectObject(mDC, oldBrush);
+            SelectObject(mDC, hPen);
+            DeleteObject(hBrush);
+        };
+
+        // 기본 총알 그리기
+        drawBullet(bullet.rect, bullet.color);
+
+        // 업그레이드된 총알 그리기
+        if (bullet.upgradeBullet) {
+            RECT extraBullet1 = bullet.rect;
+            RECT extraBullet2 = bullet.rect;
+
+            if (bullet.left || bullet.right) {
+                extraBullet1.top -= 30; // 위쪽으로 20 픽셀 이동
+                extraBullet1.bottom -= 30;
+                extraBullet2.top += 30; // 아래쪽으로 20 픽셀 이동
+                extraBullet2.bottom += 30;
+            }
+            else if (bullet.up || bullet.down) {
+                extraBullet1.left -= 30; // 왼쪽으로 20 픽셀 이동
+                extraBullet1.right -= 30;
+                extraBullet2.left += 30; // 오른쪽으로 20 픽셀 이동
+                extraBullet2.right += 30;
+            }
+
+
+            drawBullet(extraBullet1, bullet.color);
+            drawBullet(extraBullet2, bullet.color);
+        }
+    }
 
 };
