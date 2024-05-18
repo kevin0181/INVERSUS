@@ -30,7 +30,7 @@ public:
 	int capacity = 0; //용량
 
 	bool status = true; // 장전 상태
-
+	bool special = false;
 	bool bullet_move_status = false; // 총알 이동하는지 체크
 
 	bool through = false; // 관통 상태
@@ -41,7 +41,11 @@ public:
 	bool down = false;
 
 	void bullet_default_print(HDC& mDC, Bullet& bullet) {
+		HBRUSH hBrush = CreateSolidBrush(bullet.color);
+		HBRUSH oldBrush = (HBRUSH)SelectObject(mDC, hBrush);
 		Ellipse(mDC, bullet.rect.left, bullet.rect.top, bullet.rect.right, bullet.rect.bottom);
+		SelectObject(mDC, oldBrush);
+		DeleteObject(hBrush);
 	}
 
 	void bullet_drop_print(HDC& mDC, Bullet& bullet) {

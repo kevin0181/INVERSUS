@@ -19,13 +19,15 @@ private:
 	int exp; //°æÇèÄ¡
 	int hp;
 	int score;
-
+	
 public:
 
 	int countDown = 0;
 	bool countDownStatus = false;
 	int line_size = 0;
 	int cellSize = 0;
+
+	int max_reload_cnt = 6;
 
 	RECT gameBordRect;
 

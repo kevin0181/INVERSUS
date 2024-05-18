@@ -164,6 +164,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                     Bullet* b = nullptr;
                     if (findFalseBullet(mainBullets, b) && b != nullptr) {
                         bulletScaleDown(b, mainBlock);
+                        if (!b->special)
+                            b->color = RGB(0, 0, 0);
                         b->left = true;
                         b->bullet_move_status = true;
                         if (vk_count >= 15 && vk_status) {
@@ -179,6 +181,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                     Bullet* b = nullptr;
                     if (findFalseBullet(mainBullets, b) && b != nullptr) {
                         bulletScaleDown(b, mainBlock);
+                        if (!b->special)
+                            b->color = RGB(0, 0, 0);
                         b->right = true;
                         b->bullet_move_status = true;
                         if (vk_count >= 15 && vk_status) {
@@ -194,6 +198,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                     Bullet* b = nullptr;
                     if (findFalseBullet(mainBullets, b) && b != nullptr) {
                         bulletScaleDown(b, mainBlock);
+                        if (!b->special)
+                            b->color = RGB(0, 0, 0);
                         b->up = true;
                         b->bullet_move_status = true;
                         if (vk_count >= 15 && vk_status){
@@ -209,6 +215,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                     Bullet* b = nullptr;
                     if (findFalseBullet(mainBullets, b) && b != nullptr) {
                         bulletScaleDown(b, mainBlock);
+                        if (!b->special)
+                            b->color = RGB(0, 0, 0);
                         b->down = true;
                         b->bullet_move_status = true;
                         if (vk_count >= 15 && vk_status) {
@@ -509,7 +517,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                     uniform_int_distribution<int> uid_drop_bullet_status(0, 1);
 
                     if (uid_drop_bullet_status(gen) == 0) {
-                        if (explodes.size() >= 2) {
+                        if (explodes.size() >= 1) {
 
                             uniform_int_distribution<int> uid_drop_bullet_num(1, 3);
 
@@ -524,6 +532,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                             if (uid_drop_bullet_status(gen) == 0) {
                                 b.color = RGB(255, 0, 0);
                                 b.borderColor = RGB(255, 0, 0);
+                                b.special = true;
                                 b.capacity = uid_drop_bullet_num(gen);
                             }
                             else {
@@ -558,6 +567,36 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 angle += 5.0; // 각도 증가
                 if (angle >= 360.0) {
                     angle -= 360.0;
+                }
+            }
+
+            RECT ch_sp_rect;
+            for (int i = 0; i < dropBullet.size(); ++i) { // 드랍된 총알 먹음
+                if (IntersectRect(&ch_sp_rect, &mainBlock.rect, &dropBullet[i].rect)) {
+                    int size = dropBullet[i].capacity;
+                    int currentBulletCount = mainBullets.size();
+                    int maxBulletsToAdd = gameUi.max_reload_cnt - currentBulletCount;
+
+                    if (maxBulletsToAdd > 0) {
+                        int bulletsToAdd = min(size, maxBulletsToAdd);
+                        for (int j = 0; j < bulletsToAdd; ++j) {
+                            Bullet b;
+                            b.color = dropBullet[i].color;
+                            b.borderColor = dropBullet[i].borderColor;
+                            b.special = dropBullet[i].special;
+                            b.rect = mainBlock.rect;
+                            b.rect.top += 20;
+                            b.rect.left += 20;
+                            b.rect.right -= 20;
+                            b.rect.bottom -= 20;
+                            mainBullets.push_back(b);
+                        }
+                        dropBullet[i].capacity -= bulletsToAdd;
+                        if (dropBullet[i].capacity <= 0) {
+                            dropBullet.erase(dropBullet.begin() + i);
+                            --i; // Adjust the index after erasing an element
+                        }
+                    }
                 }
             }
 
@@ -637,10 +676,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 vk_count++;
             }
 
-            if (mainBullets.size() < 6) { //재장전
+            if (mainBullets.size() < gameUi.max_reload_cnt) { //재장전
                 reloadCnt++;
                 if (reloadCnt >= 15) {
                     Bullet bullet;
+                    bullet.color = RGB(255, 255, 255);
                     bullet.rect = mainBlock.rect;
                     bullet.rect.top += 20;
                     bullet.rect.left += 20;
