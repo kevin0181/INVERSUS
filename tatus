@@ -1,0 +1,527 @@
+[33mcommit eaf169f103acbd140fd222fe3a366e6e5b417e13[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Sat May 18 16:29:17 2024 +0900
+
+    화면 흔들림 사이즈 변경 및 연쇄 터지는거 오류있는듯 일단 주석처리했는데 추가적으로 해결해야됨. 그리고 exe파일들어가면 안켜지는데 알아봐야할듯
+
+[33mcommit 418d08f3d535fb06578a87084e4c85a70daa6957[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Sat May 18 16:20:33 2024 +0900
+
+    해결한 코드인데 만약 이상하면 후로 되돌아가면됨
+
+[33mcommit 5162cf5dd7fd13d3518eca09d9e84457e88cea03[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Sat May 18 16:19:08 2024 +0900
+
+    총알의 마지막발이 벽에 부딫히면 오류나는 코드인데. 해결 하기 전 코드
+
+[33mcommit dad8836a4a5e0177c688bea71da99561224b5c44[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Sat May 18 16:07:56 2024 +0900
+
+    화면 흔들림 크기 줄임
+
+[33mcommit 8c76a8efaa416cb53b0207b1779705481503cd72[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Sat May 18 16:00:10 2024 +0900
+
+    score가 오를수록 점점 red block의 빠른 스폰 구현함
+
+[33mcommit e5c125b7ce89ded2cf2a86ecbaeec5c34fed09b4[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Sat May 18 15:37:39 2024 +0900
+
+    드랍된 총알 움직이게 만들기 완료
+
+[33mcommit 10247cdb4a605c2a0c9344e24e8ab0384d739649[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Sat May 18 15:25:55 2024 +0900
+
+    고수에도 파란 블럭 추가 및 파란블럭 부시기 가능 및 검은 총알이면 총알 없어지게 만듬
+
+[33mcommit 3d90a8fc91e2a604767e80eedf80b31682c3ee44[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Sat May 18 15:05:34 2024 +0900
+
+    총알 드랍한거 먹으면 필요한 개수만큼만 먹음
+
+[33mcommit 146714b3deaeacaab1efafa50ca5e7c65822301a[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Sat May 18 14:28:17 2024 +0900
+
+    총알 드랍성공
+
+[33mcommit e75fa662983d778befdb31f8dfbdeb499bc0bf4c[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Sat May 18 14:00:27 2024 +0900
+
+    총알 드랍되긴함일단
+
+[33mcommit 284a83ccce2bbf6954c631088d3202b8e4b27578[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Sat May 18 13:25:26 2024 +0900
+
+    총알 회전 성공
+
+[33mcommit 944a27e2c15a316a7f75f3980fcac089c0bb3b81[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Sat May 18 12:50:45 2024 +0900
+
+    총알 하기 전
+
+[33mcommit 0ad39a273fbf279802dd1ebcb5b7a606e6a6009b[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Sat May 18 12:41:31 2024 +0900
+
+    스페셜 블록은 못지나가게 만듬
+
+[33mcommit 0e6611df0e8023b0a080b392c463aa8531c6cad9[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Sat May 18 12:36:55 2024 +0900
+
+    specail 블럭 생성
+
+[33mcommit 62e6e7860f9079542ad74093cf5f7bf4b0932eb9[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Sat May 18 11:23:52 2024 +0900
+
+    화면 흔들림 효과 적용
+
+[33mcommit 5e87b14d7e66d9a7002ca05541d23c33d8b7d26a[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Sat May 18 10:42:03 2024 +0900
+
+    무적모드 만듬
+
+[33mcommit 04d21f74c46ba33eb263c375b5be5d45faada03d[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Sat May 18 03:33:44 2024 +0900
+
+    볼륨 조작 만듬
+
+[33mcommit 324773454c83b888cced8e262ed64b3794f5389f[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Sat May 18 02:35:01 2024 +0900
+
+    esc 눌렀을때 이미지 v2버전으로 바꿈
+
+[33mcommit f9c2266bca013d9087aaaf974f5c770e66b78522[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Sat May 18 02:27:26 2024 +0900
+
+    combo터트리면 화면에 보이게 만듬
+
+[33mcommit 4d6b2c86fb5a7897a68efd5cfbf1e50320cf5e3a[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Sat May 18 01:42:27 2024 +0900
+
+    연속으로 터지는거 구현 완
+
+[33mcommit 9fa84b6a14639b32046ded3a97d7d4ebbdb345e0[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Sat May 18 01:11:16 2024 +0900
+
+    총알 vector오류 나는거 해결
+
+[33mcommit 4797986de71ebfd5fdb94c5c83eee2cd2f225ed0[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Sat May 18 00:59:14 2024 +0900
+
+    hp랑 경험치 깍이게 만들었음 || 총알의 마지막발에 red block에 맞으면 오류나는듯
+
+[33mcommit e1287f5dd7a6a9dca24102e733be177a78503711[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Sat May 18 00:26:24 2024 +0900
+
+    게임 보드 크기 못나가게 다시 수정, 및 총알 재장전 하는중
+
+[33mcommit 9ff3f33f850d2d29d72d84ba8ce72db7de00c8d1[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Sat May 18 00:12:21 2024 +0900
+
+    메인돌이 보드 밖으로 못나가게 수정했음
+
+[33mcommit 04c7c03b988cc1d4717824507e9e76cbed88afdf[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Sat May 18 00:06:18 2024 +0900
+
+    총알이 벽끝에 닿으면 없어지게 만듬
+
+[33mcommit 029f842f4f3b57ef9f3fc5d531d7954d53736355[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Fri May 17 23:57:34 2024 +0900
+
+    빨간 블록 정상적으로 재생성됨
+
+[33mcommit 44c70c70d15e5223e66e7392c5937caa19fbfcb3[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Fri May 17 23:50:27 2024 +0900
+
+    빨간색 연쇄 폭발하는 부분 이상함 나중에 수정해야됨
+
+[33mcommit c3aaba4eacf1f68c2e4da674176f476072eeba76[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Fri May 17 23:26:32 2024 +0900
+
+    폭발 애니메이션 완
+
+[33mcommit b1395f4b4f74d5e6fea8a2e45321ba34187a6799[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Fri May 17 22:44:35 2024 +0900
+
+    gif 하기 전
+
+[33mcommit 23e5c90d54c5e3bfaa65f0e29e54e90ddc31aaa8[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Fri May 17 22:31:31 2024 +0900
+
+    메인 블럭 재생성시, 재생성 자리 부분 검은 블럭 레드블럭 없앰
+
+[33mcommit a8573bd2156291de07e6c85220dd60b1e50c1792[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Fri May 17 22:25:43 2024 +0900
+
+    레드 블럭 부시면 주변 검은 블록 부시기 성공
+
+[33mcommit c91fe6e96fe606d5ba172057de457cd56869acca[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Fri May 17 22:15:47 2024 +0900
+
+    죽고 난뒤에 다시 리스폰 하게 만듬
+
+[33mcommit 3deff34f9b4de51e28a980ea55886711f68c7736[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Fri May 17 22:05:17 2024 +0900
+
+    bullet이 red block만나면 같이 없어지게 만듬
+
+[33mcommit f1b793c82ca62bc4aed21afea502d376c64beaa3[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Fri May 17 21:21:00 2024 +0900
+
+    총알 속도빠르게 하는거 해결
+
+[33mcommit 68c207f019dbb92e4b977df3a4e619034eb9206a[m
+Author: youngbeen you <kevin018111@gmail.com>
+Date:   Fri May 17 18:29:12 2024 +0900
+
+    1
+
+[33mcommit d15a9e3d44c200dc8a0c3bfec369159ad1be9831[m
+Author: youngbeen you <kevin018111@gmail.com>
+Date:   Fri May 17 18:20:01 2024 +0900
+
+    그라데이션 총알 나가게 만듬
+
+[33mcommit 52acc56e3b96731f3d027cf4287d4007d4238158[m
+Author: youngbeen you <kevin018111@gmail.com>
+Date:   Fri May 17 18:04:32 2024 +0900
+
+    총알 날라가는거 꾹누르면 빠르게 나가는거 완전 됨
+
+[33mcommit 437b3a9160f0cf966e444cb57c0f79e2a9eae836[m
+Author: youngbeen you <kevin018111@gmail.com>
+Date:   Fri May 17 17:44:16 2024 +0900
+
+    bullet press timer로 변경
+
+[33mcommit aa16a82c13408a60dfa89e35bc2718878c8b8e70[m
+Author: youngbeen you <kevin018111@gmail.com>
+Date:   Fri May 17 17:40:02 2024 +0900
+
+    총알빠르게 날리는ㄱ거 꾹누르면서 메인 블럭움직이면 안되는거 해결해야됨
+
+[33mcommit 38b5e5da30c5f97177ed70847c26ae93358b5204[m
+Author: youngbeen you <kevin018111@gmail.com>
+Date:   Fri May 17 17:16:26 2024 +0900
+
+    총알 방향으로 나가게 만듬
+
+[33mcommit 33612ee656d802cb90e3db12f02811525ef40441[m
+Author: youngbeen you <kevin018111@gmail.com>
+Date:   Fri May 17 14:14:50 2024 +0900
+
+    red block이 지나가는 자리는 검정색으로 변경 완료
+
+[33mcommit 35a2ad75b69210683fdbac3121515ac793d0095c[m
+Author: youngbeen you <kevin018111@gmail.com>
+Date:   Fri May 17 12:00:33 2024 +0900
+
+    확인
+
+[33mcommit ce3183339652296e2dd7ba027f8e64de89b9e68f[m
+Author: youngbeen you <kevin018111@gmail.com>
+Date:   Fri May 17 12:00:03 2024 +0900
+
+    ignore 변경
+
+[33mcommit 326809de29332b0bb2584cad56a204f967b99b77[m
+Author: youngbeen you <kevin018111@gmail.com>
+Date:   Fri May 17 11:59:39 2024 +0900
+
+    Stop tracking x64 folder
+
+[33mcommit 55ef3ee3117966dd7823785215c0b4d2ce7ffef5[m
+Author: youngbeen you <kevin018111@gmail.com>
+Date:   Fri May 17 11:56:41 2024 +0900
+
+    ignore 변경
+
+[33mcommit 827b291d33a103d78a95d3dab6be312cb4ca6eab[m
+Merge: b401a36 c284556
+Author: youngbeen you <59413865+kevin0181@users.noreply.github.com>
+Date:   Fri May 17 11:50:24 2024 +0900
+
+    Merge pull request #2 from kevin0181/save1
+    
+    Save1
+
+[33mcommit c284556fcd5ecc6b432e715931f0b79f32ffbc4e[m[33m ([m[1;31morigin/save1[m[33m, [m[1;32msave1[m[33m)[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Fri May 17 01:23:09 2024 +0900
+
+    esc눌러서 안되던거 해결
+
+[33mcommit 984e15cb1d8eff0e8d9739df3ac0e285294033a5[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Fri May 17 00:17:06 2024 +0900
+
+    메인 블럭 그림말고 api쓰는걸로 변경했음
+
+[33mcommit b55f9326b2a84258d81fcf98fb81b627babecd51[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Thu May 16 23:35:10 2024 +0900
+
+    화면 invalid를 많이해서 초고수에서 움직일때 오류나는 느낌나는거 같아서 invalid 줄였음
+
+[33mcommit 1c55162079109c0d40e7962a4b53e21f10a82700[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Thu May 16 20:52:29 2024 +0900
+
+    빨간 블럭 빗금해야되ㅣㅁ
+
+[33mcommit a2e2e267117d3fb598633a52d8dd48d2dfad1734[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Thu May 16 18:51:47 2024 +0900
+
+    레드 블록 생성보이는거랑 생성되고나서 보이게 하는거 성공
+
+[33mcommit 840f6a6ba52bd834873c82fbf5ca286475280593[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Thu May 16 16:32:20 2024 +0900
+
+    red img 추가 및 중복안된 수 뽑기 했음
+
+[33mcommit 2e237c7a6511269fbaeb00062c7929f641f4a86b[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Thu May 16 13:25:30 2024 +0900
+
+    생성시 나오는 이펙트 타이머 변경
+
+[33mcommit 4da478d4421057fc9a8aaef3622dfeb850f11240[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Thu May 16 13:19:54 2024 +0900
+
+    카운트 다운 시간 변경
+
+[33mcommit 1296d202add4b1201e1959a63f94383a51972d71[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Thu May 16 02:30:34 2024 +0900
+
+    메인 에셋 생성되는 gif같은 느낌 만듬
+
+[33mcommit 24db9856f800d51f94e53262e2e063c3e749c98b[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Wed May 15 21:20:04 2024 +0900
+
+    빈공간 만드는 코드 위치 변경
+
+[33mcommit 57ba938083b257cc204ecab59b38af3ca5e6fc70[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Wed May 15 20:16:31 2024 +0900
+
+    검은돌과 메인 돌 충돌체크 후 못가게 막기 성공
+
+[33mcommit 473ea04b544bb816d490d9d96aae9f0da2abf147[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Wed May 15 19:29:26 2024 +0900
+
+    메인 에셋 자연스럽게 움직이게 만듬
+
+[33mcommit 37f97310cd6da2634536ab9e95169626e61b4626[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Wed May 15 19:10:46 2024 +0900
+
+    가운데 빈칸으로 만들기 성공
+
+[33mcommit 69322047d531ebb6685bb2e1aa8e0d1f0ca3a8a1[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Wed May 15 18:59:34 2024 +0900
+
+    블럭 가운데 부분 빈칸으로 만든느 함수 작성중
+
+[33mcommit 15eafa60febe12422b6294f39fe22bddc3512f3c[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Wed May 15 17:39:38 2024 +0900
+
+    메인 에셋 가운데 정렬
+
+[33mcommit e4799fa51dbb0b33897935263ebebca3412d30b3[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Wed May 15 12:53:09 2024 +0900
+
+    메인 에셋나옴
+
+[33mcommit 8cf6959e5b6377826631bb92dda3724c201af682[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Wed May 15 02:45:25 2024 +0900
+
+    검은 블럭나오게 만듬
+
+[33mcommit 9940b62f4a292c38f812bf6f2efc1526000779e2[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Wed May 15 02:40:06 2024 +0900
+
+    알고리즘 변경
+
+[33mcommit b401a365eb537a48319137bb2c54bd3e8d18440a[m
+Merge: 7d5408d db1d8db
+Author: youngbeen you <59413865+kevin0181@users.noreply.github.com>
+Date:   Tue May 14 18:35:29 2024 +0900
+
+    Merge pull request #1 from kevin0181/setting
+    
+    Setting
+
+[33mcommit db1d8db916a2001240dfcdc4016e41692a910d15[m[33m ([m[1;31morigin/setting[m[33m)[m
+Author: youngbeen you <kevin018111@gmail.com>
+Date:   Tue May 14 18:32:42 2024 +0900
+
+    가오갤 노래 넣음
+
+[33mcommit 8b2c439c9d5da62cba1657eaebed08e734a3278b[m
+Author: youngbeen you <kevin018111@gmail.com>
+Date:   Tue May 14 18:30:01 2024 +0900
+
+    3브금 넣기 전
+
+[33mcommit 42f0cb6aff2d1a3ed5ee12842ab32e8146c17482[m
+Author: youngbeen you <kevin018111@gmail.com>
+Date:   Tue May 14 18:16:33 2024 +0900
+
+    세팅 부분 글자 넣기 성공
+
+[33mcommit 177c1b1923e196ba12b96cc9778d095dbd233abb[m
+Author: youngbeen you <kevin018111@gmail.com>
+Date:   Tue May 14 17:57:24 2024 +0900
+
+    esc누를때 카운트 다운중이면 못누르게 막음
+
+[33mcommit 360dab064eb366e1bee1379df4e81d1e58234c12[m
+Author: youngbeen you <kevin018111@gmail.com>
+Date:   Tue May 14 17:26:20 2024 +0900
+
+    세팅 부분 코드 추가
+
+[33mcommit fb12fe19057ae706ed4d2264a89ee53969b0c72c[m[33m ([m[1;31morigin/img[m[33m)[m
+Author: youngbeen you <kevin018111@gmail.com>
+Date:   Tue May 14 15:20:21 2024 +0900
+
+     세팅 부분 작성중
+
+[33mcommit bb38d1209fa307a14d299ce9c27c59a8d539ab0c[m
+Author: youngbeen you <kevin018111@gmail.com>
+Date:   Tue May 14 14:43:43 2024 +0900
+
+    player 및 난이도 선택 시, 위로가면 -1 로 가는 오류 해결
+
+[33mcommit 5865a5686abddfb1e448ff270adf0ee4da1832d5[m
+Author: youngbeen you <kevin018111@gmail.com>
+Date:   Tue May 14 13:37:28 2024 +0900
+
+    이미지 다시 변경
+
+[33mcommit b19539bb48ef73372c2c8963764ad0ffe71cf1f5[m
+Author: youngbeen you <kevin018111@gmail.com>
+Date:   Tue May 14 13:32:37 2024 +0900
+
+    이미지 이상해진거 다시 되돌림
+
+[33mcommit 7d5408d95d06b32d5bd546c2d0fdf62cdeb6aa4d[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Tue May 14 00:38:09 2024 +0900
+
+    게임소리꺼지면 연속으로 들리게 만들어야됨
+
+[33mcommit f79fd376196f11387df8a36fa9f690e334f2a7a1[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Mon May 13 22:36:07 2024 +0900
+
+    게임 백그라운드 사운드 변경
+
+[33mcommit 7e22432a29b77c31aa73c915c72f67e55816d09e[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Mon May 13 19:31:26 2024 +0900
+
+    체력바 ui 추가
+
+[33mcommit 66c71b1aa16ebbc17633f050a8cc6d7b22644360[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Mon May 13 16:31:33 2024 +0900
+
+    게임 들어가서 카운트다운 하게 만드는중
+
+[33mcommit 15865b6d56b5c07b7f297ec2152834e460336240[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Mon May 13 15:26:10 2024 +0900
+
+    gameStatusManager 전역변수로 변경
+
+[33mcommit 37345c3b8545283bfabee9de0e73c0f3987324d2[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Mon May 13 04:07:40 2024 +0900
+
+    바둑판 그리기 완
+
+[33mcommit b73cd14c31a8fb7c88e67210af1cdafa995801d3[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Mon May 13 01:49:37 2024 +0900
+
+    Game ui 배치해야됨
+
+[33mcommit e2bc6412c73b03939b34691f53568ecb8eb3cb2d[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Sun May 12 23:05:28 2024 +0900
+
+    이미지 버전2로 변경
+
+[33mcommit af7a9742c69bbe43c2b02bd544200edf0798d3ff[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Sun May 12 22:54:00 2024 +0900
+
+    git ignore add
+
+[33mcommit 57473ef9898933a87a7668f4f1d4c6d7c28de6e2[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Sun May 12 22:49:41 2024 +0900
+
+    전체 폴더
+
+[33mcommit d97a47bb922528c852f57468f9fd8392be621bd9[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Sun May 12 22:48:02 2024 +0900
+
+    INVERSUS add
+
+[33mcommit 6f74cc3bf1f4bcb0c93d13900cdcb552f80b0aeb[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Sun May 12 22:05:55 2024 +0900
+
+    data add
+
+[33mcommit 74bc01061d64c0f81916bcbfffab463dba9e9d7b[m
+Author: unknown <kevin018111@gmail.com>
+Date:   Sun May 12 22:05:12 2024 +0900
+
+    add img

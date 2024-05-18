@@ -175,9 +175,11 @@ void checkBulletBlock(const Bullet& bullet, std::vector<Block>& blocks) {
 	}
 }
 
-void aroundBroken(std::vector<Block>& redBlocks, Block& redBlock, std::vector<Explosion>& explodes, std::vector<Block>& blocks, int& combo) { //연쇄폭발.
+void aroundBroken(std::vector<Block>& redBlocks, Block& redBlock, std::vector<Explosion>& explodes, std::vector<Block>& blocks, const GameUI& gameUi, int& combo) {
 	RECT ch_rect;
 	combo = 0;
+	std::vector<int> indicesToErase;
+
 	for (int i = redBlocks.size() - 1; i >= 0; --i) {
 		if (IntersectRect(&ch_rect, &redBlocks[i].rect, &redBlock.aroundRect)) {
 			combo++;
@@ -191,13 +193,17 @@ void aroundBroken(std::vector<Block>& redBlocks, Block& redBlock, std::vector<Ex
 					block.status = false;
 				}
 			}
-
-			redBlocks.erase(redBlocks.begin() + i);
+			indicesToErase.push_back(i);
 		}
+	}
+
+	// redBlocks 벡터에서 삭제할 블록들을 처리
+	for (int i : indicesToErase) {
+		redBlocks.erase(redBlocks.begin() + i);
 	}
 }
 
-bool checkRedBlockBullet(Bullet& bullet, std::vector<Block>& redBlocks, std::vector<Block>& blocks, HDC& mDC,const GameUI& gameUi, std::vector<Explosion>& explodes, int& combo) {
+bool checkRedBlockBullet(Bullet& bullet, std::vector<Block>& redBlocks, std::vector<Block>& blocks, HDC& mDC, const GameUI& gameUi, std::vector<Explosion>& explodes, int& combo) {
 	RECT ch_rect;
 	for (int i = redBlocks.size() - 1; i >= 0; --i) {
 		if (IntersectRect(&ch_rect, &redBlocks[i].rect, &bullet.rect) && redBlocks[i].status) {
@@ -212,8 +218,7 @@ bool checkRedBlockBullet(Bullet& bullet, std::vector<Block>& redBlocks, std::vec
 				}
 			}
 
-			// game score 및 주변 터짐
-			aroundBroken(redBlocks, redBlocks[i], explodes, blocks, combo);
+			aroundBroken(redBlocks, redBlocks[i], explodes, blocks, gameUi, combo); // 함수 호출
 
 			//redBlocks.erase(redBlocks.begin() + i);
 
@@ -224,6 +229,7 @@ bool checkRedBlockBullet(Bullet& bullet, std::vector<Block>& redBlocks, std::vec
 	}
 	return false;
 }
+
 
 void print_score(HDC& mDC, const GameUI& gameUi) { // const 제거
     // 폰트 생성
