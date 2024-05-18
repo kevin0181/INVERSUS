@@ -445,7 +445,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         switch (wParam)
         {
         case 1: //main block move
-
             if (mainBlock.status) {
                 if (mainBlock.left) {
                     OffsetRect(&mainBlock.rect, -mainBlock.speed, 0);
@@ -484,10 +483,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                     OffsetRect(&mainBlock.rect, (gameUi.gameBordRect.right / 2) - 25, (gameUi.gameBordRect.bottom / 2) + 30);
                     SetTimer(hWnd, 2, 100, NULL); // 죽고 난 뒤 생성 타이머
                 }
-                
+
                 moveChangeBackgroundBlack(redBlocks, blocks); //redBlock이 지나가는 자리는 black으로 바꿈
 
-                for (int i = 0; i < mainBullets.size(); ++i) { // 총알 발사 등.
+                for (int i = mainBullets.size() - 1; i >= 0; --i) { // 총알 발사 등.
                     if (mainBullets[i].bullet_move_status) {
                         if (mainBullets[i].left) {
                             OffsetRect(&mainBullets[i].rect, -mainBullets[i].speed, 0);
@@ -508,25 +507,28 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                         checkBulletBlock(mainBullets[i], blocks); // 총알 + 검은 블록 충돌 검사
 
                         RECT r;
-                        if (!IntersectRect(&r, &mainBullets[i].rect, &gameUi.gameBordRect)) { //총알이 화면 밖으로 나가면 지우기
+                        if (!IntersectRect(&r, &mainBullets[i].rect, &gameUi.gameBordRect)) { // 총알이 화면 밖으로 나가면 지우기
                             mainBullets.erase(mainBullets.begin() + i);
+                            continue;
                         }
 
                         for (int j = 0; j < specialBlocks.size(); ++j) {
-                            if (mainBullets[i].special && IntersectRect(&r, &specialBlocks[j].rect, &mainBullets[i].rect)) { //스페셜 블록 부딫히면 삭제
+                            if (mainBullets[i].special && IntersectRect(&r, &specialBlocks[j].rect, &mainBullets[i].rect)) { // 스페셜 블록 부딫히면 삭제
                                 Explosion ex(specialBlocks[j].rect, specialBlocks[j].color);
                                 explodes.push_back(ex);
                                 specialBlocks.erase(specialBlocks.begin() + j);
                                 mainBullets.erase(mainBullets.begin() + i);
+                                break;
                             }
-                            else if(!mainBullets[i].special && IntersectRect(&r, &specialBlocks[j].rect, &mainBullets[i].rect)){
+                            else if (!mainBullets[i].special && IntersectRect(&r, &specialBlocks[j].rect, &mainBullets[i].rect)) {
                                 mainBullets.erase(mainBullets.begin() + i);
+                                break;
                             }
                         }
 
                         if (mainBullets.size() > 0) {
                             if (checkRedBlockBullet(mainBullets[i], redBlocks, blocks, mDC, gameUi, explodes, combo)) { // 총알 + 빨간 블록 충돌 검사
-                                //만약 충돌된 상태면 총알 지워버리기
+                                // 만약 충돌된 상태면 총알 지워버리기
                                 mainBullets.erase(mainBullets.begin() + i);
                             }
                         }
@@ -568,7 +570,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                     }
 
                     it = explodes.erase(it);
-                    moveRect(gameUi, blocks, move_cnt, hWnd); //화면 흔들림
+                    moveRect(gameUi, blocks, move_cnt, hWnd); // 화면 흔들림
                     gameUi.setScore(gameUi.getScore() + 100 * combo); // 기본 죽였을때 점수
                     gameUi.setExp(gameUi.getExp() + 5);
                     if (gameUi.getExp() >= 100) {
