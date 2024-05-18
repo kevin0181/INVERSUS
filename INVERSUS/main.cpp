@@ -100,6 +100,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     static vector<Block> blocks;
     static Block mainBlock(RGB(0, 0, 0), RGB(0, 0, 0), { 0,0, 50, 50 }, false); //player 1
     static vector<Bullet> mainBullets; //player 1 bullet
+
     static int vk_count = 0; //press bullet count
     static bool vk_status = false;
     static int reloadCnt = 0; // 재장전 쿨타임 1발씩.
@@ -122,6 +123,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     static bool boardLineStatus = false;
 
     static vector<Bullet> dropBullet;
+
+    static vector<Bullet> mainBullets2; //player 2 bullet
+    static Block mainBlock2(RGB(0, 0, 0), RGB(0, 0, 0), { 0,0, 50, 50 }, false); //player 2
+    static int vk_count2 = 0; //press bullet count for player 2
+    static bool vk_status2 = false;
+    static int reloadCnt2 = 0; // 재장전 쿨타임 1발씩 for player 2.
 
     switch (uMsg)
     {
@@ -260,6 +267,114 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                     break;
                 }
             }
+
+            if (mainBlock2.status) {
+                switch (wParam)
+                {
+                case 'J':
+                    mainBlock2.left = false;
+                    break;
+                case 'L':
+                    mainBlock2.right = false;
+                    break;
+                case 'I':
+                    mainBlock2.up = false;
+                    break;
+                case 'K':
+                    mainBlock2.down = false;
+                    break;
+                case VK_NUMPAD4:
+                {
+                    PlaySecondMP3(L"sound/gun sound 2.MP3");
+                    Bullet* b = nullptr;
+                    if (findFalseBullet(mainBullets2, b) && b != nullptr) {
+                        bulletScaleDown(b, mainBlock2);
+                        if (!b->special)
+                            b->color = RGB(0, 0, 0);
+                        b->left = true;
+                        b->bullet_move_status = true;
+                        if (gameUi.getScore() >= 1000) {
+                            if (vk_count2 >= 15 && vk_status2) {
+                                b->speed = b->max_speed;
+                                /*b->upgradeBullet_l = true;
+                                b->upgradeBullet_r = true;*/ //총알 3개
+                            }
+                        }
+                    }
+                    vk_count2 = 0;
+                    vk_status2 = false;
+                    break;
+                }
+                case VK_NUMPAD6:
+                {
+                    PlaySecondMP3(L"sound/gun sound 2.MP3");
+                    Bullet* b = nullptr;
+                    if (findFalseBullet(mainBullets2, b) && b != nullptr) {
+                        bulletScaleDown(b, mainBlock2);
+                        if (!b->special)
+                            b->color = RGB(0, 0, 0);
+                        b->right = true;
+                        b->bullet_move_status = true;
+                        if (gameUi.getScore() >= 1000) {
+                            if (vk_count2 >= 15 && vk_status2) {
+                                b->speed = b->max_speed;
+                                /*b->upgradeBullet_l = true;
+                                b->upgradeBullet_r = true;*/ //총알 3개
+                            }
+                        }
+                    }
+                    vk_count2 = 0;
+                    vk_status2 = false;
+                    break;
+                }
+                case VK_NUMPAD8:
+                {
+                    PlaySecondMP3(L"sound/gun sound 2.MP3");
+                    Bullet* b = nullptr;
+                    if (findFalseBullet(mainBullets2, b) && b != nullptr) {
+                        bulletScaleDown(b, mainBlock2);
+                        if (!b->special)
+                            b->color = RGB(0, 0, 0);
+                        b->up = true;
+                        b->bullet_move_status = true;
+                        if (gameUi.getScore() >= 1000) {
+                            if (vk_count2 >= 15 && vk_status2) {
+                                b->speed = b->max_speed;
+                                /*b->upgradeBullet_l = true;
+                                b->upgradeBullet_r = true;*/ //총알 3개
+                            }
+                        }
+                    }
+                    vk_count2 = 0;
+                    vk_status2 = false;
+                    break;
+                }
+                case VK_NUMPAD2:
+                {
+                    PlaySecondMP3(L"sound/gun sound 2.MP3");
+                    Bullet* b = nullptr;
+                    if (findFalseBullet(mainBullets2, b) && b != nullptr) {
+                        bulletScaleDown(b, mainBlock2);
+                        if (!b->special)
+                            b->color = RGB(0, 0, 0);
+                        b->down = true;
+                        b->bullet_move_status = true;
+                        if (gameUi.getScore() >= 1000) {
+                            if (vk_count2 >= 15 && vk_status2) {
+                                b->speed = b->max_speed;
+                                /*b->upgradeBullet_l = true;
+                                b->upgradeBullet_r = true;*/ //총알 3개
+                            }
+                        }
+                    }
+                    vk_count2 = 0;
+                    vk_status2 = false;
+                    break;
+                }
+                default:
+                    break;
+                }
+            }
         }
         break;
     case WM_KEYDOWN:  // 키보드 키가 눌렸을 때
@@ -305,7 +420,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         }
 
         if (gameStateManager.getState() == GameState::LEVEL) { // game level 선택
-            levelSetting.level_setting(wParam, hWnd, rect, mainBlock, blocks);
+            levelSetting.level_setting(wParam, hWnd, rect, mainBlock, blocks, mainBlock2);
             gameUi.setBlackBlock(blocks, gameUi.cellSize); // 검정 블럭 설정
             redBlocks.clear();
             mainBlock.status = false;
@@ -367,6 +482,38 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                     vk_status = true;
                     break;
                 case VK_DOWN:
+                    vk_status = true;
+                    break;
+                default:
+                    break;
+                }
+            }
+
+            if (mainBlock2.status) {
+                switch (wParam)
+                {
+                case 'J':
+                    mainBlock.left = true;
+                    break;
+                case 'L':
+                    mainBlock.right = true;
+                    break;
+                case 'I':
+                    mainBlock.up = true;
+                    break;
+                case 'K':
+                    mainBlock.down = true;
+                    break;
+                case VK_NUMPAD4:
+                    vk_status = true;
+                    break;
+                case VK_NUMPAD6:
+                    vk_status = true;
+                    break;
+                case VK_NUMPAD8:
+                    vk_status = true;
+                    break;
+                case VK_NUMPAD2:
                     vk_status = true;
                     break;
                 default:
@@ -451,7 +598,24 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 mainBlock.print_main_res(mDC, mainBlock, c_n, gameUi.cellSize);
             }
 
+            if (mainBlock2.status) { //살아 있을 경우
+                gameUi.mainAsset(mDC, mainBlock2);
+            }
+            else { //죽고 난 뒤, 리스폰
+                mainBlock2.print_main_res(mDC, mainBlock2, c_n, gameUi.cellSize);
+            }
+
             for (auto& bullet : mainBullets) { // bullet
+                if (bullet.bullet_move_status) {
+                    bullet.print(mDC, bullet);
+                }
+                else {
+                    if (mainBlock.status)
+                        bullet.bullet_default_print(mDC, bullet); //총알 회전
+                }
+            }
+
+            for (auto& bullet : mainBullets2) { // bullet
                 if (bullet.bullet_move_status) {
                     bullet.print(mDC, bullet);
                 }
@@ -582,6 +746,105 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                     }
                 }
             }
+
+            // ----------------------------------
+
+            if (mainBlock2.status) {
+                if (mainBlock2.left) {
+                    OffsetRect(&mainBlock2.rect, -mainBlock2.speed, 0);
+                    OffsetRect(&mainBlock2.rect, checkCrash(blocks, mainBlock2, gameUi, specialBlocks), 0);
+                }
+
+                if (mainBlock2.right) {
+                    OffsetRect(&mainBlock2.rect, mainBlock2.speed, 0);
+                    OffsetRect(&mainBlock2.rect, -checkCrash(blocks, mainBlock2, gameUi, specialBlocks), 0);
+                }
+
+                if (mainBlock2.up) {
+                    OffsetRect(&mainBlock2.rect, 0, -mainBlock2.speed);
+                    OffsetRect(&mainBlock2.rect, 0, checkCrash(blocks, mainBlock2, gameUi, specialBlocks));
+                }
+
+                if (mainBlock2.down) {
+                    OffsetRect(&mainBlock2.rect, 0, mainBlock2.speed);
+                    OffsetRect(&mainBlock2.rect, 0, -checkCrash(blocks, mainBlock2, gameUi, specialBlocks));
+                }
+
+                if (moveRedBlock(redBlocks, mainBlock2, mDC, explodes, setting, specialBlocks)) { // redBlock이 mainBlock을 향해감 + main + red충돌체크
+
+                    gameUi.setHp(gameUi.getHp() - 60);
+
+                    if (gameUi.getHp() <= 0) {
+                        //game over
+                        gameStateManager.setCurrentState(GameState::GAMEOVER);
+                        gameStateManager.setImage(L"img/gamePlay/game over.png");
+                        CloseGameBackgroundSound();
+                        PlaySecondMP3(L"sound/game over.MP3"); // 버튼 사운드
+                        KillTimer(hWnd, 1);
+                    }
+
+                    mainBlock2.rect = { 0,0,50,50 }; //main block 리스폰 부분
+                    mainBlock2.left = false;
+                    mainBlock2.right = false;
+                    mainBlock2.up = false;
+                    mainBlock2.down = false;
+                    OffsetRect(&mainBlock2.rect, (gameUi.gameBordRect.right / 2) - 25, (gameUi.gameBordRect.bottom / 2) + 30);
+                    SetTimer(hWnd, 2, 100, NULL); // 죽고 난 뒤 생성 타이머
+                }
+
+                moveChangeBackgroundBlack(redBlocks, blocks); //redBlock이 지나가는 자리는 black으로 바꿈
+
+                for (int i = mainBullets2.size() - 1; i >= 0; --i) { // 총알 발사 등.
+                    if (mainBullets2[i].bullet_move_status) {
+                        if (mainBullets2[i].left) {
+                            OffsetRect(&mainBullets2[i].rect, -mainBullets2[i].speed, 0);
+                        }
+
+                        if (mainBullets2[i].right) {
+                            OffsetRect(&mainBullets2[i].rect, mainBullets2[i].speed, 0);
+                        }
+
+                        if (mainBullets2[i].up) {
+                            OffsetRect(&mainBullets2[i].rect, 0, -mainBullets2[i].speed);
+                        }
+
+                        if (mainBullets2[i].down) {
+                            OffsetRect(&mainBullets2[i].rect, 0, mainBullets2[i].speed);
+                        }
+
+                        checkBulletBlock(mainBullets2[i], blocks); // 총알 + 검은 블록 충돌 검사
+
+                        RECT r;
+                        if (!IntersectRect(&r, &mainBullets2[i].rect, &gameUi.gameBordRect)) { // 총알이 화면 밖으로 나가면 지우기
+                            mainBullets2.erase(mainBullets2.begin() + i);
+                            continue;
+                        }
+
+                        for (int j = specialBlocks.size() - 1; j >= 0; --j) {
+                            if (mainBullets2[i].special && IntersectRect(&r, &specialBlocks[j].rect, &mainBullets2[i].rect)) { // 스페셜 블록 부딫히면 삭제
+                                Explosion ex(specialBlocks[j].rect, specialBlocks[j].color);
+                                explodes.push_back(ex);
+                                specialBlocks.erase(specialBlocks.begin() + j);
+                                mainBullets2.erase(mainBullets2.begin() + i);
+                                break;
+                            }
+                            else if (!mainBullets2[i].special && IntersectRect(&r, &specialBlocks[j].rect, &mainBullets2[i].rect)) {
+                                mainBullets2.erase(mainBullets2.begin() + i);
+                                break;
+                            }
+                        }
+
+                        if (mainBullets2.size() > 0) {
+                            if (checkRedBlockBullet(mainBullets2[i], redBlocks, blocks, mDC, gameUi, explodes, combo)) { // 총알 + 빨간 블록 충돌 검사
+                                // 만약 충돌된 상태면 총알 지워버리기
+                                mainBullets2.erase(mainBullets2.begin() + i);
+                            }
+                        }
+                    }
+                }
+            }
+
+            //-------------------------------------
 
             for (auto it = explodes.begin(); it != explodes.end(); ) { // 폭발 애니메이션 프레임
                 if (!it->update()) {
