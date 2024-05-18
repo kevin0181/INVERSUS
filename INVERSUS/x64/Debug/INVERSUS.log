@@ -1,59 +1,5 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: 중간 디렉터리(x64\Debug\)에 다른 프로젝트(INVERSUS.vcxproj)에서 공유하는 파일이 포함되어 있습니다.  이로 인해 잘못된 정리 및 다시 빌드 동작이 수행될 수 있습니다.
   모듈 종속성의 소스를 검사하는 중...
-  Global.h
-  Block.h
-  GameState.h
-  GameUI.h
-  컴파일하는 중...
-  GameState.h
-  Block.h
-  GameUI.h
-  Global.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\atlmfc\include\atlalloc.h(617,34): message : 죄송합니다. 'C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\atlmfc\include\atlalloc.h(621,5)'에서 인식할 수 없는 식 또는 문으로 인해 'bool ATL::_ATL_SAFE_ALLOCA_IMPL::_AtlVerifyStackAvailable(SIZE_T)'에 대한 'inline' 함수 정의를 모듈에 쓸 수 없습니다.
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\atlmfc\include\atlalloc.h(617,34): message : 가능한 경우 다음 웹 사이트에 재현을 제공해 주시기 바랍니다. https://developercommunity.visualstudio.com
-  (소스 파일 'Block.h'을(를) 컴파일하는 중)
-  
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\atlmfc\include\atlalloc.h(617,34): message : 죄송합니다. 'C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\atlmfc\include\atlalloc.h(621,5)'에서 인식할 수 없는 식 또는 문으로 인해 'bool ATL::_ATL_SAFE_ALLOCA_IMPL::_AtlVerifyStackAvailable(SIZE_T)'에 대한 'inline' 함수 정의를 모듈에 쓸 수 없습니다.
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\atlmfc\include\atlalloc.h(617,34): message : 가능한 경우 다음 웹 사이트에 재현을 제공해 주시기 바랍니다. https://developercommunity.visualstudio.com
-  (소스 파일 'GameUI.h'을(를) 컴파일하는 중)
-  
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\atlmfc\include\atlalloc.h(617,34): message : 죄송합니다. 'C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\atlmfc\include\atlalloc.h(621,5)'에서 인식할 수 없는 식 또는 문으로 인해 'bool ATL::_ATL_SAFE_ALLOCA_IMPL::_AtlVerifyStackAvailable(SIZE_T)'에 대한 'inline' 함수 정의를 모듈에 쓸 수 없습니다.
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\atlmfc\include\atlalloc.h(617,34): message : 가능한 경우 다음 웹 사이트에 재현을 제공해 주시기 바랍니다. https://developercommunity.visualstudio.com
-  (소스 파일 'Global.h'을(를) 컴파일하는 중)
-  
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\atlmfc\include\atlstr.h(190,12): warning C5260: 상수 변수 'ATL::AtlUtil::legacyBufSize'에 포함된 헤더 파일 컨텍스트에는 내부 연결이 있지만 가져온 헤더 단위 컨텍스트에는 외부 연결이 있습니다. 번역 단위 간에 공유할 경우 '인라인'으로 선언하거나 이 번역 단위에 대해 로컬로 사용하려는 의도를 표현하려면 '정적'으로 선언하는 것이 좋습니다.
-  (소스 파일 'Block.h'을(를) 컴파일하는 중)
-  
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\atlmfc\include\atlimage.h(62,11): warning C5260: 상수 변수 'ATL::CIMAGE_DC_CACHE_SIZE'에 포함된 헤더 파일 컨텍스트에는 내부 연결이 있지만 가져온 헤더 단위 컨텍스트에는 외부 연결이 있습니다. 번역 단위 간에 공유할 경우 '인라인'으로 선언하거나 이 번역 단위에 대해 로컬로 사용하려는 의도를 표현하려면 '정적'으로 선언하는 것이 좋습니다.
-  (소스 파일 'Block.h'을(를) 컴파일하는 중)
-  
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um\GdiplusEnums.h(27,13): warning C5260: 상수 변수 'Gdiplus::FlatnessDefault'에 포함된 헤더 파일 컨텍스트에는 내부 연결이 있지만 가져온 헤더 단위 컨텍스트에는 외부 연결이 있습니다. 번역 단위 간에 공유할 경우 '인라인'으로 선언하거나 이 번역 단위에 대해 로컬로 사용하려는 의도를 표현하려면 '정적'으로 선언하는 것이 좋습니다.
-  (소스 파일 'Block.h'을(를) 컴파일하는 중)
-  
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\atlmfc\include\atlstr.h(190,12): warning C5260: 상수 변수 'ATL::AtlUtil::legacyBufSize'에 포함된 헤더 파일 컨텍스트에는 내부 연결이 있지만 가져온 헤더 단위 컨텍스트에는 외부 연결이 있습니다. 번역 단위 간에 공유할 경우 '인라인'으로 선언하거나 이 번역 단위에 대해 로컬로 사용하려는 의도를 표현하려면 '정적'으로 선언하는 것이 좋습니다.
-  (소스 파일 'GameUI.h'을(를) 컴파일하는 중)
-  
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\atlmfc\include\atlimage.h(62,11): warning C5260: 상수 변수 'ATL::CIMAGE_DC_CACHE_SIZE'에 포함된 헤더 파일 컨텍스트에는 내부 연결이 있지만 가져온 헤더 단위 컨텍스트에는 외부 연결이 있습니다. 번역 단위 간에 공유할 경우 '인라인'으로 선언하거나 이 번역 단위에 대해 로컬로 사용하려는 의도를 표현하려면 '정적'으로 선언하는 것이 좋습니다.
-  (소스 파일 'GameUI.h'을(를) 컴파일하는 중)
-  
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um\GdiplusEnums.h(27,13): warning C5260: 상수 변수 'Gdiplus::FlatnessDefault'에 포함된 헤더 파일 컨텍스트에는 내부 연결이 있지만 가져온 헤더 단위 컨텍스트에는 외부 연결이 있습니다. 번역 단위 간에 공유할 경우 '인라인'으로 선언하거나 이 번역 단위에 대해 로컬로 사용하려는 의도를 표현하려면 '정적'으로 선언하는 것이 좋습니다.
-  (소스 파일 'GameUI.h'을(를) 컴파일하는 중)
-  
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\atlmfc\include\atlstr.h(190,12): warning C5260: 상수 변수 'ATL::AtlUtil::legacyBufSize'에 포함된 헤더 파일 컨텍스트에는 내부 연결이 있지만 가져온 헤더 단위 컨텍스트에는 외부 연결이 있습니다. 번역 단위 간에 공유할 경우 '인라인'으로 선언하거나 이 번역 단위에 대해 로컬로 사용하려는 의도를 표현하려면 '정적'으로 선언하는 것이 좋습니다.
-  (소스 파일 'Global.h'을(를) 컴파일하는 중)
-  
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\atlmfc\include\atlimage.h(62,11): warning C5260: 상수 변수 'ATL::CIMAGE_DC_CACHE_SIZE'에 포함된 헤더 파일 컨텍스트에는 내부 연결이 있지만 가져온 헤더 단위 컨텍스트에는 외부 연결이 있습니다. 번역 단위 간에 공유할 경우 '인라인'으로 선언하거나 이 번역 단위에 대해 로컬로 사용하려는 의도를 표현하려면 '정적'으로 선언하는 것이 좋습니다.
-  (소스 파일 'Global.h'을(를) 컴파일하는 중)
-  
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um\GdiplusEnums.h(27,13): warning C5260: 상수 변수 'Gdiplus::FlatnessDefault'에 포함된 헤더 파일 컨텍스트에는 내부 연결이 있지만 가져온 헤더 단위 컨텍스트에는 외부 연결이 있습니다. 번역 단위 간에 공유할 경우 '인라인'으로 선언하거나 이 번역 단위에 대해 로컬로 사용하려는 의도를 표현하려면 '정적'으로 선언하는 것이 좋습니다.
-  (소스 파일 'Global.h'을(를) 컴파일하는 중)
-  
-  Block.cpp
-  GameStateManager.cpp
-  GameUI.cpp
-C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\GameUI.cpp(76,9): warning C4101: 'oldBrush' :참조되지 않은 지역 변수입니다.
-  LevelSetting.cpp
-  PlayerSetting.cpp
   main.cpp
 C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\gamePlay.h(172,13): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   (소스 파일 'main.cpp'을(를) 컴파일하는 중)
@@ -62,18 +8,9 @@ C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\gamePlay.h(193,13): warning C4267: 
   (소스 파일 'main.cpp'을(를) 컴파일하는 중)
   
 C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(68,19): warning C4244: 'return': 'WPARAM'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(526,78): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(526,78): warning C4267:         with
-C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(526,78): warning C4267:         [
-C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(526,78): warning C4267:             _Ty=int
-C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(526,78): warning C4267:         ]
-  Setting.cpp
-C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\Setting.cpp(106,111): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\Setting.cpp(114,104): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\Setting.cpp(117,104): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  sound.cpp
-C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\sound.cpp(63,34): warning C4101: 'e' :참조되지 않은 지역 변수입니다.
-C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\sound.cpp(116,34): warning C4101: 'e' :참조되지 않은 지역 변수입니다.
-C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\sound.cpp(169,34): warning C4101: 'e' :참조되지 않은 지역 변수입니다.
-  코드를 생성하고 있습니다...
+C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(534,78): warning C4267: '인수': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(534,78): warning C4267:         with
+C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(534,78): warning C4267:         [
+C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(534,78): warning C4267:             _Ty=int
+C:\Users\영넨이\Desktop\INVERSUS\INVERSUS\main.cpp(534,78): warning C4267:         ]
   INVERSUS.vcxproj -> C:\Users\영넨이\Desktop\INVERSUS\x64\Debug\INVERSUS_v1.exe

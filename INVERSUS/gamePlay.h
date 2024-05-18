@@ -188,7 +188,7 @@ void aroundBroken(std::vector<Block>& redBlocks, Block& redBlock, std::vector<Ex
 	}
 }
 
-bool checkRedBlockBullet(Bullet& bullet, std::vector<Block>& redBlocks, std::vector<Block>& blocks, HDC& mDC, const GameUI& gameUi, std::vector<Explosion>& explodes, int& combo) {
+bool checkRedBlockBullet(Bullet& bullet, std::vector<Block>& redBlocks, std::vector<Block>& blocks, HDC& mDC,const GameUI& gameUi, std::vector<Explosion>& explodes, int& combo) {
 	RECT ch_rect;
 	for (int i = redBlocks.size() - 1; i >= 0; --i) {
 		if (IntersectRect(&ch_rect, &redBlocks[i].rect, &bullet.rect) && redBlocks[i].status) {
@@ -251,4 +251,17 @@ void print_combo(HDC& mDC, const int& combo, RECT rect) {
 	RECT scoreRect = rect;
 	InflateRect(&scoreRect, 10, 0);
 	DrawText(mDC, scoreText.c_str(), -1, &scoreRect, DT_LEFT | DT_TOP | DT_SINGLELINE);
+}
+
+#define SHAKE_TIMER 7
+#define SHAKE_DURATION 100 // duration in milliseconds
+#define SHAKE_INTERVAL 10 // interval in milliseconds
+#define SHAKE_MAGNITUDE 5 // shake intensity
+void moveRect(GameUI& gameUi, std::vector<Block>& blocks, int& move_cnt, HWND hWnd) {
+	gameUi.originalGameBordRect = gameUi.gameBordRect;  // Save the original position
+	for (auto& block : blocks) {
+		block.originalRect = block.rect;  // 각 블록의 원래 위치 저장
+	}
+	move_cnt = SHAKE_DURATION / SHAKE_INTERVAL;
+	SetTimer(hWnd, SHAKE_TIMER, SHAKE_INTERVAL, NULL); // Start the shake timer
 }

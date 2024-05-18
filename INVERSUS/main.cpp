@@ -101,6 +101,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
     static vector<Explosion> explodes;
 
+    static int move_cnt = 0;
+    static bool boardLineStatus = false;
+
     switch (uMsg)
     {
     case WM_CREATE:
@@ -131,6 +134,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             backgroundS += 100;
             if (backgroundS > 0) backgroundS = 0; // 최대 볼륨 제한
             SetVolume(backgroundS);
+            break;
+        case 'l':
+            boardLineStatus = !boardLineStatus;
             break;
         default:
             break;
@@ -324,16 +330,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
         if (gameStateManager.getState() == GameState::GAMEPLAY) {
 
-            for (int x = 0; x <= gameUi.line_size; ++x) {
-                MoveToEx(mDC, 0, x * gameUi.cellSize + 130, NULL);
-                LineTo(mDC, rect.right, x * gameUi.cellSize + 130);
-            }
+            if (boardLineStatus) {
+                for (int x = 0; x <= gameUi.line_size; ++x) {
+                    MoveToEx(mDC, 0, x * gameUi.cellSize + 130, NULL);
+                    LineTo(mDC, rect.right, x * gameUi.cellSize + 130);
+                }
 
-            for (int y = 0; y <= gameUi.line_size; ++y) {
-                MoveToEx(mDC, y * gameUi.cellSize, 130, NULL);
-                LineTo(mDC, y * gameUi.cellSize, gameUi.gameBordRect.bottom);
+                for (int y = 0; y <= gameUi.line_size; ++y) {
+                    MoveToEx(mDC, y * gameUi.cellSize, 130, NULL);
+                    LineTo(mDC, y * gameUi.cellSize, gameUi.gameBordRect.bottom);
+                }
             }
-
+            
             gameUi.printBlackBlock(blocks, mDC);
             gameUi.drawGameUI(mDC, gameUi, rect);
 
@@ -465,7 +473,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             for (auto it = explodes.begin(); it != explodes.end(); ) { // 폭발 애니메이션 프레임
                 if (!it->update()) {
                     it = explodes.erase(it);
-                    
+                    moveRect(gameUi, blocks, move_cnt, hWnd);
                     gameUi.setScore(gameUi.getScore() + 100 * combo); // 기본 죽였을때 점수
                     gameUi.setExp(gameUi.getExp() + 5);
                     if (gameUi.getExp() >= 100) {
@@ -564,6 +572,42 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 }
             }
 
+            break;
+        case 7:
+            if (move_cnt > 0) {
+                static std::random_device rd;
+                static std::mt19937 gen(rd());
+                static std::uniform_int_distribution<int> dist(-SHAKE_MAGNITUDE, SHAKE_MAGNITUDE);
+
+                // 무작위 오프셋 적용
+                int offsetX = dist(gen);
+                int offsetY = dist(gen);
+
+                // 게임 보드 흔들림 적용
+                gameUi.gameBordRect = gameUi.originalGameBordRect; // 원래 위치로 리셋
+                OffsetRect(&gameUi.gameBordRect, offsetX, offsetY);
+
+                // 각 블록에 흔들림 적용
+                for (auto& block : blocks) {
+                    block.rect = block.originalRect; // 원래 위치로 리셋
+                    OffsetRect(&block.rect, offsetX, offsetY);
+                }
+
+                --move_cnt;
+
+                InvalidateRect(hWnd, NULL, false); // 화면 갱신 요청
+            }
+            else {
+                KillTimer(hWnd, SHAKE_TIMER); // 타이머 중지
+                gameUi.gameBordRect = gameUi.originalGameBordRect; // 원래 위치로 리셋
+
+                // 각 블록 원래 위치로 리셋
+                for (auto& block : blocks) {
+                    block.rect = block.originalRect;
+                }
+
+                InvalidateRect(hWnd, NULL, false); // 최종 화면 갱신 요청
+            }
             break;
         case 10: //count down
             setCountDown(gameUi, hWnd, mainBlock);

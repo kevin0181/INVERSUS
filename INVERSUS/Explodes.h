@@ -11,7 +11,7 @@ public:
 
     bool update() {
         ++frame;
-        return frame < 5; // 프레임
+        return frame < 9; // 프레임
     }
 
     void draw(HDC& mDC,const Explosion& ex) const {
@@ -23,7 +23,7 @@ public:
         std::mt19937 gen(rd());
         std::uniform_int_distribution<int> distX(ex.rect.left, ex.rect.right);
         std::uniform_int_distribution<int> distY(ex.rect.top, ex.rect.bottom);
-        std::uniform_int_distribution<int> distSize(5, 50); // 원의 크기 범위
+        std::uniform_int_distribution<int> distSize(20, 50); // 원의 크기 범위
 
         // 여러 개의 원을 그려 폭발 효과 생성
         for (int i = 0; i < 10; ++i) { // 폭발 조각의 개수

@@ -29,6 +29,8 @@ public:
 
 	RECT gameBordRect;
 
+	RECT originalGameBordRect;
+
 	GameUI(GameStateManager* instance) :gameStateManager(instance), hp(300), exp(0), score(0) {};
 	
 	void setMDC(HDC* mDC) {

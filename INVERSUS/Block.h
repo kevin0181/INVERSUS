@@ -10,6 +10,7 @@ public:
 	
 	RECT rect;
 	RECT aroundRect;
+	RECT originalRect; // 블록의 원래 위치를 저장
 
 	COLORREF borderColor;
 	COLORREF color;
