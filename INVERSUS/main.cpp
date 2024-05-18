@@ -416,7 +416,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 dropBulletAngle -= 360.0;
             }
 
-
             gameUi.printBlackBlock(blocks, mDC);
             gameUi.drawGameUI(mDC, gameUi, rect);
 
@@ -853,7 +852,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
                 --move_cnt;
 
-                InvalidateRect(hWnd, NULL, false); // 화면 갱신 요청
+                //InvalidateRect(hWnd, NULL, false); // 화면 갱신 요청
             }
             else {
                 KillTimer(hWnd, SHAKE_TIMER); // 타이머 중지
@@ -864,7 +863,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                     block.rect = block.originalRect;
                 }
 
-                InvalidateRect(hWnd, NULL, false); // 최종 화면 갱신 요청
+                //InvalidateRect(hWnd, NULL, false); // 최종 화면 갱신 요청
             }
             break;
         case 10: //count down
