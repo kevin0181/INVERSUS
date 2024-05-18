@@ -367,9 +367,19 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 }
             }
             
-            for (int i = 0; i < dropBullet.size(); ++i) { //drop 된 총알
-                dropBullet[i].bullet_drop_print(mDC, dropBullet[i]);
+            // 드랍된 총알 회전 각도 관리
+            static double dropBulletAngle = 0.0;
+
+            for (int i = 0; i < dropBullet.size(); ++i) { // drop된 총알
+                dropBullet[i].bullet_drop_print(mDC, dropBullet[i], dropBulletAngle);
             }
+
+            // dropBulletAngle을 증가시켜 총알이 계속 회전하도록 함
+            dropBulletAngle += 5.0;
+            if (dropBulletAngle >= 360.0) {
+                dropBulletAngle -= 360.0;
+            }
+
 
             gameUi.printBlackBlock(blocks, mDC);
             gameUi.drawGameUI(mDC, gameUi, rect);

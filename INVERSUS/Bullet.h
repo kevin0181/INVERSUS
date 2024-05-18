@@ -48,18 +48,19 @@ public:
 		DeleteObject(hBrush);
 	}
 
-	void bullet_drop_print(HDC& mDC, Bullet& bullet) {
+	void bullet_drop_print(HDC& mDC, Bullet& bullet, double angle) {
 		int numBullets = bullet.capacity;
 		double angleStep = 360.0 / numBullets;
 		int radius = 20; // 중심으로부터의 거리
 		int width = bullet.rect.right - bullet.rect.left;
 		int height = bullet.rect.bottom - bullet.rect.top;
+		double radians = angle * (M_PI / 180.0);
 
 		for (int i = 0; i < numBullets; ++i) {
-			double angle = i * angleStep;
-			double radians = angle * (M_PI / 180.0);
-			int x = static_cast<int>(radius * cos(radians));
-			int y = static_cast<int>(radius * sin(radians));
+			double currentAngle = i * angleStep + angle;
+			double currentRadians = currentAngle * (M_PI / 180.0);
+			int x = static_cast<int>(radius * cos(currentRadians));
+			int y = static_cast<int>(radius * sin(currentRadians));
 
 			int left = bullet.rect.left + x - width / 2;
 			int top = bullet.rect.top + y - height / 2;
