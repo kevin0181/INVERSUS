@@ -22,8 +22,11 @@ public:
 	//int capacity; //총알 수
 	RECT rect;
 	COLORREF color = RGB(0, 0, 0);
+	COLORREF borderColor = RGB(0, 0, 0);
 	int speed = 7;
 	int max_speed = 15;
+	
+	int capacity = 0; //용량
 
 	bool status = true; // 장전 상태
 
@@ -38,6 +41,21 @@ public:
 
 	void bullet_default_print(HDC& mDC, Bullet& bullet) {
 		Ellipse(mDC, bullet.rect.left, bullet.rect.top, bullet.rect.right, bullet.rect.bottom);
+	}
+
+	void bullet_drop_print(HDC& mDC, Bullet& bullet) {
+		HBRUSH hBrush = CreateSolidBrush(bullet.color);
+		HBRUSH oldBrush = (HBRUSH)SelectObject(mDC, hBrush);
+
+		HPEN hPen = CreatePen(PS_SOLID, 1, bullet.borderColor);
+		HPEN oldPen = (HPEN)SelectObject(mDC, hPen);
+
+		Ellipse(mDC, bullet.rect.left, bullet.rect.top, bullet.rect.right, bullet.rect.bottom);
+
+		SelectObject(mDC, oldPen);
+		SelectObject(mDC, oldBrush);
+		DeleteObject(hBrush);
+		DeleteObject(hPen);
 	}
 
 	void print(HDC& mDC, Bullet& bullet) {

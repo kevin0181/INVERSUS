@@ -106,6 +106,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     static int move_cnt = 0;
     static bool boardLineStatus = false;
 
+    static vector<Bullet> dropBullet;
+
     switch (uMsg)
     {
     case WM_CREATE:
@@ -356,6 +358,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 }
             }
             
+            for (int i = 0; i < dropBullet.size(); ++i) { //drop 된 총알
+                dropBullet[i].bullet_drop_print(mDC, dropBullet[i]);
+            }
+
             gameUi.printBlackBlock(blocks, mDC);
             gameUi.drawGameUI(mDC, gameUi, rect);
 
@@ -499,8 +505,37 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
             for (auto it = explodes.begin(); it != explodes.end(); ) { // 폭발 애니메이션 프레임
                 if (!it->update()) {
+                    uniform_int_distribution<int> uid_drop_bullet_status(0, 1);
+
+                    if (uid_drop_bullet_status(gen) == 0) {
+                        if (explodes.size() >= 2) {
+
+                            uniform_int_distribution<int> uid_drop_bullet_num(1, 3);
+
+                            Bullet b;
+                            b.status = true;
+                            b.rect = it->rect;
+                            b.rect.top += 20;
+                            b.rect.left += 20;
+                            b.rect.right -= 20;
+                            b.rect.bottom -= 20;
+                            if (uid_drop_bullet_status(gen) == 0) {
+                                b.color = RGB(255, 0, 0);
+                                b.borderColor = RGB(255, 0, 0);
+                                b.capacity = uid_drop_bullet_num(gen);
+                            }
+                            else {
+                                b.color = RGB(255, 255, 255);
+                                b.borderColor = RGB(0, 0, 0);
+                                b.capacity = uid_drop_bullet_num(gen);
+                            }
+
+                            dropBullet.push_back(b);
+                        }
+                    }
+
                     it = explodes.erase(it);
-                    moveRect(gameUi, blocks, move_cnt, hWnd);
+                    moveRect(gameUi, blocks, move_cnt, hWnd); //화면 흔들림
                     gameUi.setScore(gameUi.getScore() + 100 * combo); // 기본 죽였을때 점수
                     gameUi.setExp(gameUi.getExp() + 5);
                     if (gameUi.getExp() >= 100) {
