@@ -66,9 +66,21 @@ void blankMain(std::vector<Block>& blocks, const Block* block, std::vector<Block
 	}
 }
 
-bool moveRedBlock(std::vector<Block>& redBlocks, Block& mainBlock, HDC& mDC, std::vector<Explosion>& explodes,const Setting& setting) {
+bool moveRedBlock(std::vector<Block>& redBlocks, Block& mainBlock, HDC& mDC, std::vector<Explosion>& explodes, const Setting& setting, const std::vector<Block>& specialBlocks) {
+	auto canMove = [&](Block& redBlock, int deltaX, int deltaY) {
+		RECT r;
+		RECT newRect = redBlock.rect;
+		OffsetRect(&newRect, deltaX, deltaY);
 
-	for (Block& redBlock : redBlocks) { 
+		for (const auto& specialBlock : specialBlocks) {
+			if (redBlock.red_special && IntersectRect(&r, &newRect, &specialBlock.rect)) {
+				return false;
+			}
+		}
+		return true;
+		};
+
+	for (auto& redBlock : redBlocks) {
 		if (redBlock.status) {
 			// mainBlock의 중심 계산
 			int mainCenterX = (mainBlock.rect.left + mainBlock.rect.right) / 2;
@@ -79,35 +91,36 @@ bool moveRedBlock(std::vector<Block>& redBlocks, Block& mainBlock, HDC& mDC, std
 			int redCenterY = (redBlock.rect.top + redBlock.rect.bottom) / 2;
 
 			// mainBlock을 향해 이동할 좌표 계산
-			if (redCenterX < mainCenterX) {
+			if (redCenterX < mainCenterX && canMove(redBlock, redBlock.speed, 0)) {
 				redBlock.rect.left += redBlock.speed;
 				redBlock.rect.right += redBlock.speed;
 				redBlock.aroundRect.left += redBlock.speed;
 				redBlock.aroundRect.right += redBlock.speed;
 			}
-			else if (redCenterX > mainCenterX) {
+			else if (redCenterX > mainCenterX && canMove(redBlock, -redBlock.speed, 0)) {
 				redBlock.rect.left -= redBlock.speed;
 				redBlock.rect.right -= redBlock.speed;
 				redBlock.aroundRect.left -= redBlock.speed;
 				redBlock.aroundRect.right -= redBlock.speed;
 			}
 
-			if (redCenterY < mainCenterY) {
+			if (redCenterY < mainCenterY && canMove(redBlock, 0, redBlock.speed)) {
 				redBlock.rect.top += redBlock.speed;
 				redBlock.rect.bottom += redBlock.speed;
 				redBlock.aroundRect.top += redBlock.speed;
 				redBlock.aroundRect.bottom += redBlock.speed;
 			}
-			else if (redCenterY > mainCenterY) {
+			else if (redCenterY > mainCenterY && canMove(redBlock, 0, -redBlock.speed)) {
 				redBlock.rect.top -= redBlock.speed;
 				redBlock.rect.bottom -= redBlock.speed;
 				redBlock.aroundRect.top -= redBlock.speed;
 				redBlock.aroundRect.bottom -= redBlock.speed;
 			}
 		}
+
 		RECT c_rect;
-		// 메인 블럭 + 레드 블럭 부딪히면
-		if (IntersectRect(&c_rect, &redBlock.rect, &mainBlock.rect)&& !setting.getInvincibility()) {
+		// 메인 블럭과 레드 블럭이 충돌할 때
+		if (IntersectRect(&c_rect, &redBlock.rect, &mainBlock.rect) && !setting.getInvincibility()) {
 			if (redBlock.status) {
 				Explosion b(mainBlock.rect, mainBlock.color);
 				explodes.push_back(b);

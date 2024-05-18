@@ -478,7 +478,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                     OffsetRect(&mainBlock.rect, 0, -checkCrash(blocks, mainBlock, gameUi, specialBlocks));
                 }
 
-                if (moveRedBlock(redBlocks, mainBlock, mDC, explodes, setting)) { // redBlock이 mainBlock을 향해감 + main + red충돌체크
+                if (moveRedBlock(redBlocks, mainBlock, mDC, explodes, setting, specialBlocks)) { // redBlock이 mainBlock을 향해감 + main + red충돌체크
 
                     gameUi.setHp(gameUi.getHp() - 60);
 
