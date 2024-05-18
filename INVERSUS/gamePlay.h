@@ -277,10 +277,40 @@ void print_score(HDC& mDC, const GameUI& gameUi) { // const 제거
 }
 
 void print_combo(HDC& mDC, const int& combo, RECT rect) {
+	// 배경 모드를 투명으로 설정
+	int oldBkMode = SetBkMode(mDC, TRANSPARENT);
+
+	// 폰트 생성 및 선택
+	HFONT hFont = CreateFont(
+		20,                        // 글자 높이
+		0,                         // 글자 폭
+		0,                         // 글자 각도
+		0,                         // 기준선 각도
+		FW_BOLD,                   // 글자 굵기
+		FALSE,                     // 기울임 글자
+		FALSE,                     // 밑줄
+		FALSE,                     // 취소선
+		DEFAULT_CHARSET,           // 문자 집합
+		OUT_DEFAULT_PRECIS,        // 출력 정확도
+		CLIP_DEFAULT_PRECIS,       // 클립 정확도
+		DEFAULT_QUALITY,           // 출력 품질
+		DEFAULT_PITCH | FF_SWISS,  // 글꼴 및 글꼴 패밀리
+		L"Arial");                 // 글꼴 이름
+
+	HFONT hOldFont = (HFONT)SelectObject(mDC, hFont);
+
+	// 콤보 텍스트 출력
 	std::wstring scoreText = L"combo X " + std::to_wstring(combo);
 	RECT scoreRect = rect;
 	InflateRect(&scoreRect, 10, 0);
 	DrawText(mDC, scoreText.c_str(), -1, &scoreRect, DT_LEFT | DT_TOP | DT_SINGLELINE);
+
+	// 이전 폰트 복원 및 새 폰트 삭제
+	SelectObject(mDC, hOldFont);
+	DeleteObject(hFont);
+
+	// 원래 배경 모드로 복원
+	SetBkMode(mDC, oldBkMode);
 }
 
 #define SHAKE_TIMER 7
