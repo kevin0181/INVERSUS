@@ -475,7 +475,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
                 if (moveRedBlock(redBlocks, mainBlock, mDC, explodes, setting)) { // redBlock이 mainBlock을 향해감 + main + red충돌체크
 
-                    gameUi.setHp(gameUi.getHp() - 100);
+                    gameUi.setHp(gameUi.getHp() - 60);
 
                     if (gameUi.getHp() <= 0) {
                         //game over
@@ -523,7 +523,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                             continue;
                         }
 
-                        for (int j = 0; j < specialBlocks.size(); ++j) {
+                        for (int j = specialBlocks.size() - 1; j >= 0; --j) {
                             if (mainBullets[i].special && IntersectRect(&r, &specialBlocks[j].rect, &mainBullets[i].rect)) { // 스페셜 블록 부딫히면 삭제
                                 Explosion ex(specialBlocks[j].rect, specialBlocks[j].color);
                                 explodes.push_back(ex);
