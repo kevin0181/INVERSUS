@@ -668,7 +668,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                         dropBullet[i].capacity -= bulletsToAdd;
                         if (dropBullet[i].capacity <= 0) {
                             dropBullet.erase(dropBullet.begin() + i);
-                            --i; // Adjust the index after erasing an element
+                            --i;
                         }
                     }
                 }
@@ -703,9 +703,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             }
 
             if (!rotatingBulletStatus && gameUi.getScore() >= 10000) {
-                rotatingBullet.rect = mainBlock.rect; // Initial size of the bullet
+                rotatingBullet.rect = mainBlock.rect;
                 InflateRect(&rotatingBullet.rect, -20, -20);
-                rotatingBullet.color = RGB(0, 255, 0); // Yellow color for visibility
+                rotatingBullet.color = RGB(0, 255, 0);
                 rotatingBullet.status = true;
                 rotatingBulletAngle = 0.0;
                 rotatingBulletStatus = true;
